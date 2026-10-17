@@ -8,6 +8,8 @@ w Jeleniej Górze, al. Wojska Polskiego 57 (I piętro). Adres docelowy: https://
 - strona nie używa cookies, zewnętrznych czcionek, map ani skryptów śledzących;
 - pełna specyfikacja (mapa strony, zasady prawne, zakaz reklamy): `docs/specyfikacja.md`.
 
+Lista rzeczy do zrobienia: [TODO.md](TODO.md).
+
 ## Wymagania
 
 - Node.js 20 lub nowszy (https://nodejs.org);
