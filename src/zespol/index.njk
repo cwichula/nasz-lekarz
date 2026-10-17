@@ -53,9 +53,7 @@ ctaText: Chcesz umówić się do lekarza? Zadzwoń do rejestracji
       <li>{{ personCard(doc) }}</li>
       {%- endfor %}
     </ul>
-    {%- if (team.doctors | selectattr("pwz") | length) < (team.doctors | length) %}
-    <p class="note">[DO UZUPEŁNIENIA: numery prawa wykonywania zawodu (PWZ) lekarzy]</p>
-    {%- endif %}
+    {#- Numer PWZ jest opcjonalny (team.json → pwz); pusty się nie wyświetla. #}
     <p class="note">Grafik lekarzy jest tymczasowy. [DO UZUPEŁNIENIA: pełny grafik przyjęć]</p>
   </section>
 

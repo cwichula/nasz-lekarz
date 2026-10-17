@@ -3,7 +3,7 @@
   "name": "Nasz-Lekarz",
   "fullName": "NZOZ „Nasz-Lekarz”",
   "schemaName": "NZOZ Nasz-Lekarz",
-  "legalName": "[DO UZUPEŁNIENIA – pełna nazwa podmiotu z RPWDL]",
+  "legalName": "[DO UZUPEŁNIENIA – pełna nazwa spółki z KRS, np. „Nasz-Lekarz” sp. z o.o.]",
   "url": "https://nasz-lekarz.info",
   "domain": "nasz-lekarz.info",
   "email": "",
@@ -125,12 +125,15 @@
   },
 
   "registry": {
-    "_info": "Dane rejestrowe – OBOWIĄZKOWO uzupełnić przed publikacją.",
-    "legalForm": "",
+    "_info": "Spółka z o.o. – art. 206 KSH wymaga na stronie: firmy (legalName), siedziby i adresu, sądu rejestrowego, numeru KRS, NIP i kapitału zakładowego. Puste pole obowiązkowe pokazuje [DO UZUPEŁNIENIA]; REGON i RPWDL są opcjonalne – puste się nie wyświetlają.",
+    "legalForm": "spółka z ograniczoną odpowiedzialnością",
+    "seat": "",
+    "court": "",
+    "krs": "",
     "nip": "",
+    "shareCapital": "",
     "regon": "",
-    "rpwdl": "",
-    "krs": ""
+    "rpwdl": ""
   },
   "dpo": { "name": "", "email": "" }
 }
