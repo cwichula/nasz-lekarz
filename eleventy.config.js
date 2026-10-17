@@ -78,14 +78,25 @@ export default function (eleventyConfig) {
       .join(", ")
   );
 
-  /** Lekarze przyjmujący w danym dniu: [{name, hours}] */
+  /** Lekarze przyjmujący w danym dniu, według godziny rozpoczęcia: [{name, hours}] */
   eleventyConfig.addFilter("doctorsOn", (doctors, day) =>
     doctors
-      .map((doc) => ({
-        name: doc.name,
-        hours: doc.schedule.filter((s) => s.days.includes(day)).map((s) => `${hm(s.from)}–${hm(s.to)}`).join(", "),
-      }))
+      .map((doc) => {
+        const shifts = doc.schedule.filter((s) => s.days.includes(day));
+        return { name: doc.name, from: shifts[0]?.from || "", hours: shifts.map((s) => `${hm(s.from)}–${hm(s.to)}`).join(", ") };
+      })
       .filter((x) => x.hours)
+      .sort((a, b) => a.from.localeCompare(b.from))
+  );
+
+  /** Wszystkie dyżury lekarzy jako lista [{doc, s}] według godziny rozpoczęcia */
+  eleventyConfig.addFilter("shifts", (doctors) =>
+    doctors.flatMap((doc) => doc.schedule.map((s) => ({ doc, s }))).sort((a, b) => a.s.from.localeCompare(b.s.from))
+  );
+
+  /** Godziny dla pacjenta: roboczy znacznik [DO POTWIERDZENIA] (zostaje w clinic.json) → zdanie zrozumiałe dla pacjenta */
+  eleventyConfig.addFilter("patientHours", (t) =>
+    String(t || "").replace(/\s*\[DO POTWIERDZENIA\]/g, " (godziny mogą się zmienić – zapytaj w rejestracji)")
   );
 
   // Link telefoniczny z numerem z clinic.json: {% tel clinic.phones.rejestracja %}

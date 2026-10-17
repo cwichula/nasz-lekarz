@@ -1,6 +1,6 @@
 // Drobne usprawnienia strony. Bez JS strona działa w pełni – skrypt tylko dodaje wygodę.
 import { isWorkday } from "./holidays.js";
-import { toMin, clinicMode, rangeState, progress, formatDuration } from "./clinic-state.js";
+import { toMin, clinicMode, rangeState, formatDuration } from "./clinic-state.js";
 
 const DAY_NAMES = ["niedziela", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"];
 const DAYS_ACC = ["w niedzielę", "w poniedziałek", "we wtorek", "w środę", "w czwartek", "w piątek", "w sobotę"];
@@ -35,28 +35,40 @@ function nextWorkdayLabel(now) {
   return "w najbliższy dzień roboczy";
 }
 
+/** Jedno słownictwo stanu dla paska górnego (długie) i wąskich ekranów (krótkie) */
+const STATUS_TEXT = {
+  before: (h) => [`Rejestracja nie odbiera – od ${hm(h.regFrom)}`, `Rejestracja od ${hm(h.regFrom)}`],
+  open: (h) => [`Rejestracja odbiera – do ${hm(h.regTo)}`, `Odbieramy do ${hm(h.regTo)}`],
+  soon: (h, left) => [`Rejestracja odbiera jeszcze ${left}`, `Odbieramy jeszcze ${left}`],
+  clinic: (h) => [`Rejestracja nie odbiera – lekarz przyjmuje do ${hm(h.clinicTo)}`, `Lekarz do ${hm(h.clinicTo)}`],
+  after: (h, left, next) => [`Przychodnia zamknięta – otwieramy ${next} o ${hm(h.clinicFrom)}`, `Zamknięte do ${next === "dziś" ? "8:00" : next === "jutro" ? "jutra" : "poniedziałku"}`],
+};
+
+let firstRun = true;
+
 function initStatus() {
   const now = nowInPoland();
   const workday = isWorkday(now.y, now.m, now.d, now.weekday);
+  const root = document.documentElement;
+  const d = root.dataset;
+  const h = { reg: { from: toMin(d.regFrom), to: toMin(d.regTo) }, clinic: { from: toMin(d.clinicFrom), to: toMin(d.clinicTo) } };
+  const mode = clinicMode(now.minutes, workday, h);
+  const changed = root.dataset.mode !== mode;
+  root.dataset.mode = mode;
+  const next = workday && now.minutes < h.clinic.from ? "dziś" : nextWorkdayLabel(now);
+  const left = formatDuration(h.reg.to - now.minutes);
 
+  // Pasek górny: ten sam stan, te same słowa co karta stanu
   document.querySelectorAll("[data-status]").forEach((el) => {
-    const from = el.dataset.from;
-    const to = el.dataset.to;
-    const what = el.dataset.what || "Rejestracja";
-    const open = workday && now.minutes >= toMin(from) && now.minutes < toMin(to);
-    let text;
-    if (open) text = `${what} czynna teraz – do ${hm(to)}`;
-    else if (workday && el.dataset.until && now.minutes >= toMin(to) && now.minutes < toMin(el.dataset.until))
-      text = `${what} nieczynna – przychodnia czynna do ${hm(el.dataset.until)}`;
-    else if (workday && now.minutes < toMin(from)) text = `${what} nieczynna – otwieramy dziś o ${hm(from)}`;
-    else text = `${what} nieczynna – otwieramy ${nextWorkdayLabel(now)} o ${hm(from)}`;
-    el.querySelector("[data-status-text]").textContent = text;
-    el.classList.remove("is-open", "is-closed");
-    el.classList.add(open ? "is-open" : "is-closed");
+    const [long, short] = STATUS_TEXT[mode](d, left, next);
+    el.querySelector("[data-status-text]").textContent = long;
+    const s = el.querySelector("[data-status-short]");
+    if (s) s.textContent = short;
     el.hidden = false;
   });
+  document.querySelectorAll("[data-next-open]").forEach((el) => (el.textContent = next));
 
-  // Wyróżnienie dzisiejszego dnia w tabelach godzin, na osi tygodnia i w kartach lekarzy
+  // Wyróżnienie dzisiejszego dnia w tabelach godzin, w tygodniu i w kartach lekarzy
   document.querySelectorAll(".is-today").forEach((row) => row.classList.remove("is-today"));
   document.querySelectorAll(`[data-day="${now.weekday}"]`).forEach((row) => {
     row.classList.add("is-today");
@@ -64,36 +76,23 @@ function initStatus() {
     if (label) label.hidden = false;
   });
 
-  initStateCard(now, workday);
+  initStateCard(now, h, mode, changed);
   initToday(now, workday);
   initRanges(now, workday);
+  firstRun = false;
 }
 
-/** Karta stanu na stronie głównej: jeden z 5 trybów, odliczanie, pierścień postępu rejestracji */
-function initStateCard(now, workday) {
+/** Karta stanu na stronie głównej: jeden z 5 trybów i odliczanie */
+function initStateCard(now, h, mode, changed) {
   const card = document.querySelector("[data-state]");
-  const h = card
-    ? { reg: { from: toMin(card.dataset.regFrom), to: toMin(card.dataset.regTo) }, clinic: { from: toMin(card.dataset.clinicFrom), to: toMin(card.dataset.clinicTo) } }
-    : null;
-  if (!h) return;
-  const mode = clinicMode(now.minutes, workday, h);
-  const root = document.documentElement;
-  const changed = root.dataset.mode !== mode;
-  root.dataset.mode = mode;
-
+  if (!card) return;
   card.querySelectorAll("[data-mode-panel]").forEach((p) => {
     p.hidden = p.dataset.modePanel !== mode;
   });
   card.querySelectorAll('[data-countdown="reg-from"]').forEach((el) => (el.textContent = formatDuration(h.reg.from - now.minutes)));
   card.querySelectorAll('[data-countdown="reg-to"]').forEach((el) => (el.textContent = formatDuration(h.reg.to - now.minutes)));
-  card.querySelectorAll("[data-next-open]").forEach((el) => {
-    el.textContent = workday && now.minutes < h.clinic.from ? "dziś" : nextWorkdayLabel(now);
-  });
-  // Odliczanie zmienia się co minutę – czytnik ekranu ogłasza tylko zmianę trybu
-  card.querySelector("[aria-live]")?.setAttribute("aria-live", changed ? "polite" : "off");
-
-  // CSSOM (nie atrybut style) – zgodne z CSP style-src 'self'
-  card.style.setProperty("--progress", workday ? progress(now.minutes, h.reg.from, h.reg.to).toFixed(3) : "0");
+  // Przy wejściu na stronę i przy odliczaniu co minutę czytnik milczy – ogłasza tylko zmianę trybu w trakcie wizyty
+  card.querySelector("[data-state-live]")?.setAttribute("aria-live", changed && !firstRun ? "polite" : "off");
   card.classList.add("is-live");
 }
 

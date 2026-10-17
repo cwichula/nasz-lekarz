@@ -1,6 +1,6 @@
 {%- from "macros.njk" import breadcrumbs, cta -%}
 <!doctype html>
-<html lang="pl">
+<html lang="pl" data-reg-from="{{ clinic.hours.rejestracja.from }}" data-reg-to="{{ clinic.hours.rejestracja.to }}" data-clinic-from="{{ clinic.hours.przychodnia.from }}" data-clinic-to="{{ clinic.hours.przychodnia.to }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,7 +59,7 @@
     {%- endif %}
     {{ content | safe }}
     {%- if not noCta %}
-    {{ cta(clinic.phones[ctaPhone or "rejestracja"], ctaText) }}
+    {{ cta(clinic.phones[ctaPhone or "rejestracja"], ctaText, clinic) }}
     {%- endif %}
   </main>
 

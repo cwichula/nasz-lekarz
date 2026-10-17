@@ -30,8 +30,8 @@ ctaText: Chcesz umówić wizytę? Zadzwoń do rejestracji
     <p>Przychodnia jest czynna dłużej niż rejestracja. Lekarze i gabinet zabiegowy przyjmują także poza godzinami rejestracji.</p>
     {{ hoursTable(clinic, team, "Godziny pracy przychodni w tygodniu") }}
     <ul class="hours-list">
-      <li><span>{{ clinic.phones.zabiegowy.label }}</span><strong>{{ clinic.phones.zabiegowy.hoursText }}</strong></li>
-      <li><span>{{ clinic.phones.biuro.label }}</span><strong>{{ clinic.phones.biuro.hoursText }}</strong></li>
+      <li><span>{{ clinic.phones.zabiegowy.label }}</span><strong>{{ clinic.phones.zabiegowy.hoursText | patientHours }}</strong></li>
+      <li><span>{{ clinic.phones.biuro.label }}</span><strong>{{ clinic.phones.biuro.hoursText | patientHours }}</strong></li>
     </ul>
     <p>{{ clinic.hoursNote }} Pełny grafik lekarzy jest na stronie <a href="/zespol/">Zespół</a>.</p>
   </section>

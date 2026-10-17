@@ -1,7 +1,10 @@
+{%- set nc = clinic.nightCare -%}
 <div class="callbar" role="region" aria-label="Szybki kontakt">
 
-  <a class="btn callbar__main callbar__main--day" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg>Zadzwoń: Rejestracja</a>
-  <a class="btn callbar__main callbar__main--night" href="/po-godzinach/"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"></use></svg>Pomoc nocna</a>
+  {#- Główna akcja zależy od trybu (html[data-mode]); bez JS – rejestracja #}
+  <a class="btn callbar__main when-day" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg>Zadzwoń: Rejestracja</a>
+  <a class="btn callbar__main when-clinic" href="/kontakt/#adres"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Przyjdź do {{ clinic.hours.przychodnia.to | hm }}</a>
+  <a class="btn callbar__main when-after" href="tel:{{ nc.phone.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg>Pomoc nocna</a>
 
   <button class="callbar__more" type="button" popovertarget="phones-sheet" data-sheet-toggle aria-controls="phones-sheet">Telefony</button>
 </div>
@@ -9,16 +12,25 @@
 <div class="sheet" id="phones-sheet" popover aria-labelledby="phones-sheet-title">
   <span class="sheet__grip" aria-hidden="true"></span>
   <h2 class="sheet__title" id="phones-sheet-title">Telefony</h2>
+
+  {%- set night -%}
   <ul class="sheet__list">
+    <li><a href="tel:{{ nc.phone.e164 }}"><span class="lbl">Pomoc nocna i świąteczna<span class="sub">{{ nc.addressShort }} · gdy przychodnia jest zamknięta</span></span><span class="num">{{ nc.phone.display }}</span></a></li>
+    <li><a href="tel:{{ clinic.helplines[0].e164 }}"><span class="lbl">Teleporada NFZ<span class="sub">gdy przychodnia jest zamknięta</span></span><span class="num">{{ clinic.helplines[0].display }}</span></a></li>
+  </ul>
+  {%- endset %}
 
+  <div class="when-after">{{ night | safe }}</div>
+  <ul class="sheet__list">
     {%- for key, p in clinic.phones %}
-
-    <li><a href="tel:{{ p.e164 }}"><span class="lbl">{{ p.label }}</span><span class="num">{{ p.display }}</span></a></li>
-
+    <li><a href="tel:{{ p.e164 }}"><span class="lbl">{{ p.label }}{% if key == "rejestracja" %}<span class="sub chip" data-range data-from="{{ clinic.hours.rejestracja.from }}" data-to="{{ clinic.hours.rejestracja.to }}" data-l-now="odbiera teraz" data-l-later="teraz nie odbiera" data-l-done="teraz nie odbiera" data-l-off="teraz nie odbiera" hidden></span>{% endif %}</span><span class="num">{{ p.display }}</span></a></li>
     {%- endfor %}
-
-    <li><a href="tel:{{ clinic.helplines[0].e164 }}"><span class="lbl">Teleporada NFZ</span><span class="num">{{ clinic.helplines[0].display }}</span></a></li>
-    <li class="sheet__alarm"><a href="tel:112"><span class="lbl">Numer alarmowy</span><span class="num">112</span></a></li>
+  </ul>
+  <div class="when-not-after">{{ night | safe }}</div>
+  <ul class="sheet__list sheet__alarm">
+    {%- for e in clinic.emergency %}
+    <li><a href="tel:{{ e.number }}"><span class="lbl">{{ e.label }}</span><span class="num">{{ e.number }}</span></a></li>
+    {%- endfor %}
   </ul>
   <button class="btn btn--soft sheet__close" type="button" popovertarget="phones-sheet" popovertargetaction="hide" data-sheet-close>Zamknij</button>
 </div>

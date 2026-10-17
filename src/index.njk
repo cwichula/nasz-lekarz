@@ -5,23 +5,15 @@ eleventyComputed:
   description: "Lekarz rodzinny i pielęgniarki NFZ w Jeleniej Górze, {{ clinic.address.street }} ({{ clinic.address.floor }}). Wizyty bezpłatne. Rejestracja {{ clinic.hours.rejestracja.days | daysLabel(true) }} {{ clinic.hours.rejestracja | timeRange }}, tel. {{ clinic.phones.rejestracja.display }}."
 ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
 ---
-{%- from "macros.njk" import phoneCards, hoursList, closedBox, tile, personCard, whereBox, statusCard, todayCard, weekSchedule -%}
+{%- from "macros.njk" import phoneCards, closedBox, tile, personCard, whereBox, statusCard, todayCard, weekSchedule -%}
 <section class="hero" aria-labelledby="h1">
   <div class="container">
-    <h1 id="h1">Przychodnia NZOZ „Nasz-Lekarz” – lekarz rodzinny NFZ w Jeleniej Górze</h1>
+    <h1 id="h1"><span class="h1__brand">Przychodnia NZOZ „Nasz-Lekarz” – </span>lekarz rodzinny NFZ w Jeleniej Górze</h1>
     <p class="lead">Podstawowa opieka zdrowotna <strong>bezpłatnie w ramach NFZ</strong>.{% if clinic.foundingNote %} {{ clinic.foundingNote }}{% endif %}</p>
     <div class="hero__grid">
       {{ statusCard(clinic) }}
       {{ todayCard(clinic, team) }}
     </div>
-    <ul class="badges">
-      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Umowa z NFZ</li>
-      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>{{ clinic.hours.przychodnia.days | daysLabel(true) }} {{ clinic.hours.przychodnia | timeRange }}</li>
-      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>{{ clinic.address.street }}, {{ clinic.address.floor }}</li>
-      {%- if clinic.access.lift %}
-      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>{{ clinic.access.liftLabel }}</li>
-      {%- endif %}
-    </ul>
   </div>
 </section>
 
@@ -41,14 +33,11 @@ ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
     <div class="section__head"><h2 id="zadania">Co chcesz załatwić?</h2></div>
     <ul class="tiles">
       {{ tile("/kontakt/#jak-umowic", "stethoscope", "Umówić wizytę", "Telefonicznie lub osobiście w rejestracji") }}
-      {{ tile("/uslugi/wizyty-domowe/", "home", "Wizyta domowa", "Dla osób, które nie mogą przyjść") }}
       {{ tile("/recepty-i-e-uslugi/", "pill", "Recepta na stałe leki", "E-recepta, kod SMS, IKP") }}
       {{ tile("/uslugi/pobieranie-krwi/", "test-tube", "Pobranie krwi", "Rano, " ~ (clinic.hours.pobrania | timeRange)) }}
-      {{ tile("/uslugi/szczepienia/", "syringe", "Szczepienia", "Dorośli i seniorzy") }}
-      {{ tile("/jak-sie-zapisac/", "file-text", "Zapisać się do nas", "Deklaracja POZ – bezpłatnie") }}
-      {{ tile("/uslugi/ekg/", "heart-pulse", "Badanie EKG", "Na zlecenie lekarza rodzinnego") }}
-      {{ tile("/uslugi/pielegniarka-srodowiskowa/", "bandage", "Pielęgniarka środowiskowa – opieka w domu", "Zastrzyki i opatrunki w domu") }}
+      {{ tile("/uslugi/wizyty-domowe/", "home", "Wizyta domowa", "Dla osób, które nie mogą przyjść") }}
     </ul>
+    <p class="tiles__more">Także: <a href="/uslugi/szczepienia/">szczepienia</a>, <a href="/uslugi/ekg/">badanie EKG</a>, <a href="/uslugi/pielegniarka-srodowiskowa/">pielęgniarka środowiskowa w domu</a>, <a href="/jak-sie-zapisac/">zapis do przychodni</a>. <a href="/uslugi/">Wszystkie usługi</a></p>
   </div>
 </section>
 
@@ -56,9 +45,9 @@ ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
   <div class="container">
     <div class="section__head">
       <h2 id="godziny">Godziny pracy</h2>
-      <p>{{ clinic.hoursNote }}</p>
+      <p>Przychodnia {{ clinic.hours.przychodnia.days | daysLabel(true) }} {{ clinic.hours.przychodnia | timeRange }} · rejestracja {{ clinic.hours.rejestracja | timeRange }} · pobieranie krwi {{ clinic.hours.pobrania | timeRange }}. {{ clinic.hoursNote }}</p>
     </div>
-    {{ hoursList(clinic) }}
+    <h3 class="weeklist__title">Kiedy przyjmują lekarze</h3>
     {{ weekSchedule(clinic, team) }}
     <p><a href="/kontakt/#godziny">Pełna tabela godzin i grafik lekarzy</a></p>
     {{ closedBox(clinic) }}

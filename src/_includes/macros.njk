@@ -1,21 +1,21 @@
 {#- Wspólne komponenty. Import: {% from "macros.njk" import phoneCard, hoursTable %} -#}
 
-{#- Karta telefonu – cała karta jest linkiem tel:. range = godziny linii (days/from/to) → plakietka „odbiera teraz” (JS) -#}
+{#- Karta telefonu – cała karta jest linkiem tel:. Nazwa linku: dział + numer; opis: sprawy i godziny. range → plakietka „odbiera teraz” (JS) -#}
 {% macro phoneCard(p, main=false, headingLevel=3, range=null) %}
-<a class="phone-card{% if main %} phone-card--main{% endif %}" href="tel:{{ p.e164 }}">
+{%- set id = "pc-" ~ p.key %}
+<a class="phone-card{% if main %} phone-card--main{% endif %}" href="tel:{{ p.e164 }}" aria-labelledby="{{ id }}-l {{ id }}-n" aria-describedby="{{ id }}-p {{ id }}-h">
   <span class="phone-card__top">
-    <span class="phone-card__label">{{ p.label }}</span>
-    {%- if range %}<span class="chip phone-card__state" data-range data-from="{{ range.from }}" data-to="{{ range.to }}" data-l-now="Odbiera teraz" data-l-later="Teraz nie odbiera" data-l-done="Teraz nie odbiera" data-l-off="Teraz nie odbiera" hidden></span>{% endif %}
+    <span class="phone-card__label" id="{{ id }}-l">{{ p.label }}</span>
+    {%- if range %}<span class="chip phone-card__state" data-range data-from="{{ range.from }}" data-to="{{ range.to }}" data-l-now="Odbiera teraz" data-l-later="Nie odbiera teraz" data-l-done="Nie odbiera teraz" data-l-off="Nie odbiera teraz" hidden></span>{% endif %}
   </span>
-  <span class="phone-card__purpose">{{ p.purpose }}</span>
+  <span class="phone-card__purpose" id="{{ id }}-p">{{ p.purpose }}</span>
   <span class="phone-card__bottom">
     <span class="phone-card__numbox">
-      <span class="phone-card__number">{{ p.display }}</span>
-      <span class="phone-card__hours">{{ p.hoursText }}</span>
+      <span class="phone-card__number" id="{{ id }}-n">{{ p.display }}</span>
+      <span class="phone-card__hours" id="{{ id }}-h">{{ p.hoursText | patientHours }}</span>
     </span>
     <span class="phone-card__call" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-phone-fill"></use></svg></span>
   </span>
-  <span class="visually-hidden">{{ p.callLabel }}</span>
 </a>
 {% endmacro %}
 
@@ -28,9 +28,9 @@
 </div>
 {% endmacro %}
 
-{#- Status rejestracji (wypełniany przez JS; bez JS ukryty) -#}
+{#- Stan rejestracji i przychodni w pasku górnym (wypełniany przez JS z tych samych trybów co karta stanu; bez JS ukryty) -#}
 {% macro status(hours, what="Rejestracja", until="") %}
-<p class="status" data-status data-what="{{ what }}" data-from="{{ hours.from }}" data-to="{{ hours.to }}"{% if until %} data-until="{{ until }}"{% endif %} hidden><span data-status-text>{{ what }}</span></p>
+<p class="status" data-status hidden><span class="status__long" data-status-text>{{ what }}</span><span class="status__short" data-status-short aria-hidden="true"></span></p>
 {% endmacro %}
 
 {#- Tabela godzin tygodniowych: działy w kolumnach, dni w wierszach -#}
@@ -160,15 +160,31 @@
 </article>
 {% endmacro %}
 
-{#- Blok „Masz pytanie? Zadzwoń” na końcu podstrony -#}
-{% macro cta(p, text) %}
+{#- Blok „Masz pytanie? Zadzwoń” na końcu podstrony; po 15:00 i po godzinach pokazuje to, co wtedy działa -#}
+{% macro cta(p, text, clinic) %}
 <section class="cta" aria-labelledby="cta-title">
-  <div class="container cta__inner">
-    <div>
-      <h2 id="cta-title">{{ text or "Masz pytanie? Zadzwoń do nas" }}</h2>
-      <p>{{ p.label }}: {{ p.hoursText }}</p>
+  <div class="container">
+    <div class="cta__inner when-day">
+      <div>
+        <h2 id="cta-title">{{ text or "Masz pytanie? Zadzwoń do nas" }}</h2>
+        <p>{{ p.label }}: {{ p.hoursText | patientHours }}</p>
+      </div>
+      <a class="btn" href="tel:{{ p.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg>{{ p.label }}: {{ p.display }}</a>
     </div>
-    <a class="btn" href="tel:{{ p.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>{{ p.label }}: {{ p.display }}</a>
+    <div class="cta__inner when-clinic">
+      <div>
+        <p class="cta__title">Rejestracja już nie odbiera – lekarz przyjmuje do {{ clinic.hours.przychodnia.to | hm }}</p>
+        <p>Przyjdź bez zapisu: {{ clinic.address.street }}, {{ clinic.address.floor }}. Zapytamy lekarza, czy przyjmie Cię jeszcze dziś.</p>
+      </div>
+      <a class="btn" href="/kontakt/#adres"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Jak dojechać</a>
+    </div>
+    <div class="cta__inner when-after">
+      <div>
+        <p class="cta__title">Przychodnia jest teraz zamknięta</p>
+        <p>Pomoc nocna i świąteczna: {{ clinic.nightCare.addressShort }}, bez skierowania. Zagrożenie życia – 112.</p>
+      </div>
+      <a class="btn" href="tel:{{ clinic.nightCare.phone.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg>Pomoc nocna: {{ clinic.nightCare.phone.display }}</a>
+    </div>
   </div>
 </section>
 {% endmacro %}
@@ -203,90 +219,84 @@
 
 {#- Karta stanu: co można zrobić TERAZ. Bez JS – stałe godziny i numer; JS pokazuje jeden z 5 trybów (assets/js/clinic-state.js) -#}
 {% macro statusCard(clinic) %}
-{%- set reg = clinic.hours.rejestracja %}{% set cl = clinic.hours.przychodnia %}{% set r = clinic.phones.rejestracja %}{% set z = clinic.phones.zabiegowy %}{% set tele = clinic.helplines[0] %}
-<section class="state" data-state data-reg-from="{{ reg.from }}" data-reg-to="{{ reg.to }}" data-clinic-from="{{ cl.from }}" data-clinic-to="{{ cl.to }}" aria-labelledby="state-title">
-  <h2 id="state-title" class="visually-hidden">Czy teraz odbieramy telefon?</h2>
-  <svg class="state__ring" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="26"></circle><circle class="state__ring-value" cx="32" cy="32" r="26"></circle></svg>
+{%- set reg = clinic.hours.rejestracja %}{% set cl = clinic.hours.przychodnia %}{% set r = clinic.phones.rejestracja %}{% set nc = clinic.nightCare %}{% set tele = clinic.helplines[0] %}
+<section class="state" data-state aria-labelledby="state-title">
+  <h2 id="state-title" class="visually-hidden">Czy rejestracja teraz odbiera?</h2>
 
   <div class="state__panel state__static">
-    <p class="chip">{{ r.label }}</p>
+    <p class="chip">Rejestracja – telefon i osobiście</p>
     <p class="state__head">{{ reg.days | daysLabel(true) }} {{ reg | timeRange }}</p>
-    <p class="state__sub">Przychodnia {{ cl.days | daysLabel(true) }} {{ cl | timeRange }}</p>
+    <p class="state__sub">Przychodnia {{ cl.days | daysLabel(true) }} {{ cl | timeRange }}. Lekarz przyjmuje do {{ cl.to | hm }}.</p>
     <div class="btn-row"><a class="btn" href="tel:{{ r.e164 }}">{% icon "phone-fill" %}Zadzwoń {{ r.display }}</a></div>
   </div>
 
-  <div class="state__live" aria-live="polite">
+  <div class="state__live" data-state-live aria-live="off">
     <div class="state__panel" data-mode-panel="before" hidden>
-      <p class="chip">Rejestracja jeszcze nie odbiera</p>
+      <p class="chip">Rejestracja nie odbiera</p>
       <p class="state__head">Rejestracja od {{ reg.from | hm }}</p>
-      <p class="state__sub">za <span data-countdown="reg-from"></span> · pobieranie krwi od {{ clinic.hours.pobrania.from | hm }}</p>
-      <div class="btn-row"><a class="btn" href="tel:{{ r.e164 }}">{% icon "phone-fill" %}Rejestracja {{ r.display }}</a><a class="btn btn--soft" href="/uslugi/pobieranie-krwi/">Pobieranie krwi</a></div>
+      <p class="state__sub">Za <span data-countdown="reg-from"></span>. Pobieranie krwi już od {{ clinic.hours.pobrania.from | hm }}.</p>
+      <div class="btn-row"><a class="btn" href="tel:{{ r.e164 }}">{% icon "phone-fill" %}Rejestracja {{ r.display }}</a></div>
     </div>
     <div class="state__panel" data-mode-panel="open" hidden>
       <p class="chip">Rejestracja odbiera</p>
       <p class="state__head">Odbieramy teraz</p>
-      <p class="state__sub">jeszcze <span data-countdown="reg-to"></span> – do {{ reg.to | hm }}</p>
-      <div class="btn-row"><a class="btn" href="tel:{{ r.e164 }}">{% icon "phone-fill" %}Zadzwoń {{ r.display }}</a><a class="btn btn--soft" href="/jak-sie-zapisac/">Jak się zapisać</a></div>
+      <p class="state__sub">Jeszcze <span data-countdown="reg-to"></span> – do {{ reg.to | hm }}.</p>
+      <div class="btn-row"><a class="btn" href="tel:{{ r.e164 }}">{% icon "phone-fill" %}Zadzwoń {{ r.display }}</a><a class="btn btn--soft" href="/kontakt/#jak-umowic">Jak umówić wizytę</a></div>
+      <p class="state__hint">Linia zajęta? Spróbuj za kilka minut albo zapisz się osobiście w rejestracji ({{ clinic.address.floor }}).</p>
     </div>
     <div class="state__panel" data-mode-panel="soon" hidden>
-      <p class="chip">Rejestracja zamyka się wkrótce</p>
-      <p class="state__head">Odbieramy jeszcze</p>
-      <p class="state__sub">rejestracja zamyka się za <span data-countdown="reg-to"></span></p>
+      <p class="chip">Rejestracja odbiera</p>
+      <p class="state__head">Odbieramy jeszcze <span data-countdown="reg-to"></span></p>
+      <p class="state__sub">Rejestracja zamyka się o {{ reg.to | hm }}.</p>
       <div class="btn-row"><a class="btn" href="tel:{{ r.e164 }}">{% icon "phone-fill" %}Zadzwoń teraz {{ r.display }}</a></div>
+      <p class="state__hint">Linia zajęta? Do {{ cl.to | hm }} możesz też przyjść osobiście – zapytamy lekarza, czy przyjmie Cię dziś.</p>
     </div>
     <div class="state__panel" data-mode-panel="clinic" hidden>
-      <p class="chip">Rejestracja już nie odbiera</p>
+      <p class="chip">Rejestracja nie odbiera</p>
       <p class="state__head">Lekarz przyjmuje do {{ cl.to | hm }}</p>
-      <p class="state__sub">Przyjdź bez zapisu – zapytamy lekarza, czy przyjmie Cię jeszcze dziś.</p>
-      <div class="btn-row"><a class="btn" href="tel:{{ z.e164 }}">{% icon "phone-fill" %}{{ z.label }} {{ z.display }}</a><a class="btn btn--soft" href="#dojazd">Gdzie jesteśmy</a></div>
+      <p class="state__sub">Przyjdź bez zapisu – zapytamy lekarza, czy przyjmie Cię jeszcze dziś. Adres: {{ clinic.address.street }}, {{ clinic.address.floor }}.</p>
+      <div class="btn-row"><a class="btn" href="/kontakt/#adres">{% icon "map-pin" %}Jak dojechać</a></div>
+      <p class="state__hint">Rejestracja telefoniczna znów od {{ reg.from | hm }} w najbliższy dzień roboczy.</p>
     </div>
     <div class="state__panel" data-mode-panel="after" hidden>
-      <p class="chip">Po godzinach</p>
-      <p class="state__head">Przychodnia zamknięta</p>
-      <p class="state__sub">Otwieramy <span data-next-open></span> o {{ cl.from | hm }} · rejestracja od {{ reg.from | hm }}</p>
-      <div class="btn-row"><a class="btn" href="/po-godzinach/">{% icon "moon" %}Pomoc nocna – {{ clinic.nightCare.addressShort }}</a><a class="btn btn--soft" href="tel:{{ tele.e164 }}">Teleporada {{ tele.display }}</a><a class="btn btn--soft btn--alarm" href="tel:112">112</a></div>
+      <p class="chip">Przychodnia zamknięta</p>
+      <p class="state__head">Pomoc nocna: {{ nc.addressShort }}</p>
+      <p class="state__sub">Bez skierowania i bez rejestracji. Przychodnię otwieramy <span data-next-open></span> o {{ cl.from | hm }}.</p>
+      <div class="btn-row"><a class="btn" href="tel:{{ nc.phone.e164 }}">{% icon "phone-fill" %}Pomoc nocna {{ nc.phone.display }}</a><a class="btn btn--soft" href="/po-godzinach/">Adres i godziny</a></div>
+      <p class="state__hint">Teleporada NFZ: <a href="tel:{{ tele.e164 }}">{{ tele.display }}</a>. Zagrożenie życia: <a class="state__alarm" href="tel:112">112</a>.</p>
     </div>
   </div>
-
-  <dl class="state__hours">
-    <div><dt>Rejestracja</dt><dd>{{ reg.days | daysLabel(true) }} {{ reg | timeRange }}</dd></div>
-    <div><dt>Przychodnia</dt><dd>{{ cl.days | daysLabel(true) }} {{ cl | timeRange }}</dd></div>
-    <div><dt>{{ clinic.hours.pobrania.label }}</dt><dd>{{ clinic.hours.pobrania.days | daysLabel(true) }} {{ clinic.hours.pobrania | timeRange }}</dd></div>
-  </dl>
 </section>
 {% endmacro %}
 
 {#- „Dziś w przychodni”: JS zostawia pozycje z dzisiejszym dniem w data-days. Bez JS – przyjęcia lekarzy w tygodniu. -#}
 {% macro todayCard(clinic, team) %}
 <section class="today" data-today aria-labelledby="today-title">
-  <p class="today__day" data-today-name hidden></p>
-  <h2 id="today-title" class="today__title">Dziś w przychodni</h2>
+  <h2 id="today-title" class="today__title">Dziś w przychodni<span class="today__day" data-today-name hidden></span></h2>
   <ul class="today__list today__live" hidden>
-    {%- for doc in team.doctors %}{% for s in doc.schedule %}
-    <li data-days="{{ s.days | join(',') }}"><span><span class="today__what">{{ doc.title }} {{ doc.name }}</span><span class="today__when">{{ s | timeRange }}</span></span><span class="chip" data-range data-from="{{ s.from }}" data-to="{{ s.to }}" data-l-now="Przyjmuje" data-l-later="Od {from}" data-l-done="Już nie" hidden></span></li>
-    {%- endfor %}{% endfor %}
-    {%- for key in ["pobrania", "przychodnia"] %}{% set h = clinic.hours[key] %}
-    <li data-days="{{ h.days | join(',') }}"><span><span class="today__what">{{ h.label }}</span><span class="today__when">{{ h | timeRange }}</span></span><span class="chip" data-range data-from="{{ h.from }}" data-to="{{ h.to }}" data-l-now="{{ 'Trwa' if key == 'pobrania' else 'Otwarta' }}" data-l-later="Od {from}" data-l-done="{{ 'Już nie' if key == 'pobrania' else 'Zamknięta' }}" hidden></span></li>
+    {%- for x in team.doctors | shifts %}
+    <li data-days="{{ x.s.days | join(',') }}"><span class="today__what">{{ x.doc.title }} {{ x.doc.name }}</span><span class="today__when">{{ x.s | timeRange }}</span><span class="chip" data-range data-from="{{ x.s.from }}" data-to="{{ x.s.to }}" data-l-now="Przyjmuje teraz" data-l-later="Przyjmuje od {from}" data-l-done="Dziś już nie przyjmuje" hidden></span></li>
     {%- endfor %}
+    {%- set h = clinic.hours.pobrania %}
+    <li data-days="{{ h.days | join(',') }}"><span class="today__what">{{ h.label }}</span><span class="today__when">{{ h | timeRange }}</span><span class="chip" data-range data-from="{{ h.from }}" data-to="{{ h.to }}" data-l-now="Trwa teraz" data-l-later="Od {from}" data-l-done="Dziś już zakończone" hidden></span></li>
   </ul>
-  <p class="today__closed" data-today-closed hidden>Dziś przychodnia jest nieczynna. {{ clinic.hoursNote }}</p>
+  <p class="today__closed" data-today-closed hidden>Dziś przychodnia jest nieczynna. Otwieramy <span data-next-open></span> o {{ clinic.hours.przychodnia.from | hm }}.</p>
   <ul class="today__list today__fallback">
-    {%- for doc in team.doctors %}{% for s in doc.schedule %}
-    <li><span><span class="today__what">{{ doc.title }} {{ doc.name }}</span><span class="today__when">{{ s.days | daysLabel(true) }} {{ s | timeRange }}</span></span></li>
-    {%- endfor %}{% endfor %}
+    {%- for x in team.doctors | shifts %}
+    <li><span class="today__what">{{ x.doc.title }} {{ x.doc.name }}</span><span class="today__when">{{ x.s.days | daysLabel(true) }} {{ x.s | timeRange }}</span></li>
+    {%- endfor %}
   </ul>
   <a class="today__more" href="/zespol/">Grafik i cały zespół</a>
 </section>
 {% endmacro %}
 
-{#- Tydzień tekstem: każdy dzień roboczy – rejestracja i przyjęcia lekarzy; dzisiejszy dzień wyróżniony (JS) -#}
+{#- Tydzień tekstem: przyjęcia lekarzy w każdy dzień roboczy (według godzin); dzisiejszy dzień wyróżniony (JS) -#}
 {% macro weekSchedule(clinic, team) %}
 <ul class="weeklist">
   {%- for d in [1, 2, 3, 4, 5] %}
   <li class="weeklist__day" data-day="{{ d }}">
     <span class="weeklist__name">{{ d | dayName | capitalize }}<span class="today-label" data-today-label hidden>dziś</span></span>
     <span class="weeklist__items">
-      <span>Rejestracja {{ clinic.hours.rejestracja | timeRange }}</span>
       {%- for x in team.doctors | doctorsOn(d) %}
       <span>{{ x.name }} {{ x.hours }}</span>
       {%- else %}
