@@ -1,10 +1,10 @@
 ---
 layout: layouts/base.njk
-title: Szczepienia Jelenia Góra – dzieci, dorośli, seniorzy
-description: "Szczepienia obowiązkowe dzieci i zalecane dorosłym w Jeleniej Górze: grypa, COVID-19, pneumokoki, RSV. Jak umówić termin w gabinecie zabiegowym przychodni."
-heading: Szczepienia dla dzieci i dorosłych
+title: Szczepienia dla dorosłych Jelenia Góra | NZOZ Nasz-Lekarz
+description: "Szczepienia dla dorosłych i seniorów w Jeleniej Górze: grypa, COVID-19, pneumokoki, RSV. Jak umówić termin w gabinecie zabiegowym przychodni NZOZ Nasz-Lekarz."
+heading: Szczepienia dla dorosłych i seniorów
 eleventyComputed:
-  answer: "Szczepimy pacjentów przychodni w gabinecie zabiegowym przy {{ clinic.address.street }} ({{ clinic.address.floor }}). Szczepienia obowiązkowe dzieci są bezpłatne. Wiele szczepień dla dorosłych i seniorów jest bezpłatnych albo tańszych dzięki refundacji. Termin umówisz w gabinecie zabiegowym, tel. <a href=\"tel:{{ clinic.phones.zabiegowy.e164 }}\">{{ clinic.phones.zabiegowy.display }}</a>."
+  answer: "Szczepimy pacjentów przychodni w gabinecie zabiegowym przy {{ clinic.address.street }} ({{ clinic.address.floor }}). Wiele szczepień dla dorosłych i seniorów jest bezpłatnych albo tańszych dzięki refundacji. Termin umówisz w gabinecie zabiegowym, tel. <a href=\"tel:{{ clinic.phones.zabiegowy.e164 }}\">{{ clinic.phones.zabiegowy.display }}</a>."
 crumbs:
   - { name: "Start", url: "/" }
   - { name: "Usługi", url: "/uslugi/" }
@@ -25,28 +25,17 @@ ctaText: Chcesz umówić szczepienie? Zadzwoń do gabinetu zabiegowego
     </div>
     <ol class="steps">
       <li><h3>Zadzwoń</h3><p>Umów termin w gabinecie zabiegowym. Zadzwonić może też ktoś z rodziny.</p></li>
-      <li><h3>Kwalifikacja</h3><p>Przed szczepieniem lekarz zbada Ciebie lub dziecko i sprawdzi, czy można się zaszczepić. Ma to nazwę „kwalifikacja do szczepienia”.</p></li>
+      <li><h3>Kwalifikacja</h3><p>Przed szczepieniem lekarz Cię zbada i sprawdzi, czy można się zaszczepić. Ma to nazwę „kwalifikacja do szczepienia”.</p></li>
       <li><h3>Szczepienie</h3><p>Pielęgniarka poda szczepionkę. Potem zostajesz chwilę w przychodni – zwykle 15 minut.</p></li>
     </ol>
     {# DO WERYFIKACJI: czy przychodnia ma szczepionki na miejscu, czy pacjent kupuje refundowaną szczepionkę w aptece na receptę i przynosi ją do gabinetu #}
     <p>Na niektóre szczepionki lekarz wystawi receptę. Zapytaj w gabinecie zabiegowym, czy szczepionkę trzeba kupić w aptece i przynieść, czy mamy ją na miejscu.</p>
   </section>
 
-  <section aria-labelledby="dzieci">
-    <h2 id="dzieci">Szczepienia obowiązkowe dzieci</h2>
-    {# DO WERYFIKACJI: czy przychodnia przyjmuje dzieci. Jeśli nie – usunąć tę sekcję i wzmianki o dzieciach na tej stronie. #}
-    <p class="note">[DO UZUPEŁNIENIA: czy przyjmujemy dzieci i od jakiego wieku]</p>
-    <p>Szczepienia obowiązkowe dzieci i młodzieży są <strong>bezpłatne</strong>. Ich terminy podaje <strong>Program Szczepień Ochronnych</strong> (PSO), czyli kalendarz szczepień. Co roku ogłasza go Główny Inspektor Sanitarny (GIS).</p>
-    <p>Na szczepienie przychodzi dziecko z rodzicem lub opiekunem. O kolejnych terminach przypomni pielęgniarka.</p>
-    {# DO WERYFIKACJI: na początku 2027 r. zmienić link na PSO na rok 2027 #}
-    <p><a href="https://www.gov.pl/web/gis/program-szczepien-ochronnych-na-2026-r" rel="noopener">Program Szczepień Ochronnych na 2026 rok – strona GIS</a></p>
-    <p><a href="https://szczepienia.pzh.gov.pl/" rel="noopener">Szczepienia – serwis Narodowego Instytutu Zdrowia Publicznego PZH</a></p>
-    {# DO WERYFIKACJI: zasady bezpłatnego szczepienia przeciw HPV (wiek dzieci w PSO; komunikat GIS o osobach 19–26 lat) #}
-    <p>Bezpłatne jest także szczepienie przeciw wirusowi HPV, który może wywołać raka szyjki macicy i inne nowotwory. O to, kogo dotyczy, zapytaj w gabinecie zabiegowym.</p>
-  </section>
 
   <section aria-labelledby="dorosli">
     <h2 id="dorosli">Szczepienia zalecane dorosłym i seniorom</h2>
+    <p>{{ clinic.patientsNote }}</p>
     <p>Dorosłym, a zwłaszcza seniorom i osobom z chorobami przewlekłymi, zaleca się szczepienia przeciw:</p>
     <ul>
       <li><strong>grypie</strong> – co roku, najlepiej jesienią;</li>
@@ -67,7 +56,7 @@ ctaText: Chcesz umówić szczepienie? Zadzwoń do gabinetu zabiegowego
   <section aria-labelledby="co-zabrac">
     <h2 id="co-zabrac">Co zabrać na szczepienie</h2>
     <ul class="checklist">
-      <li>Dokument z numerem PESEL – Twój lub dziecka.</li>
+      <li>Dokument z numerem PESEL.</li>
       <li>Książeczkę szczepień lub kartę szczepień, jeśli ją masz.</li>
       <li>Szczepionkę kupioną w aptece – jeśli tak ustaliłeś z gabinetem zabiegowym. Przechowuj ją w lodówce i przywieź w torbie chłodzącej.</li>
       <li>Listę leków, które przyjmujesz.</li>

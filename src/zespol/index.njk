@@ -46,7 +46,7 @@ ctaText: Chcesz umówić się do lekarza? Zadzwoń do rejestracji
 
   <section aria-labelledby="lekarze">
     <h2 id="lekarze">Lekarze</h2>
-    <p>Lekarz rodzinny (lekarz <abbr title="podstawowej opieki zdrowotnej">POZ</abbr>, czyli podstawowej opieki zdrowotnej) leczy pacjentów zapisanych do przychodni, wystawia recepty i skierowania do specjalistów i na badania. [DO UZUPEŁNIENIA: czy przyjmujemy dzieci i od jakiego wieku]</p>
+    <p>Lekarz rodzinny (lekarz <abbr title="podstawowej opieki zdrowotnej">POZ</abbr>, czyli podstawowej opieki zdrowotnej) leczy pacjentów zapisanych do przychodni, wystawia recepty i skierowania do specjalistów i na badania. {{ clinic.patientsNote }}</p>
     {# DO WERYFIKACJI: tytuły specjalizacji lekarzy wg PWZ (team.json → specialty). #}
     <ul class="people">
       {%- for doc in team.doctors %}

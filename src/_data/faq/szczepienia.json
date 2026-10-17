@@ -1,17 +1,13 @@
 [
   {
-    "id": "czy-szczepienie-dziecka-jest-platne",
-    "topic": "szczepienia",
-    "q": "Czy szczepienia obowiązkowe dziecka są płatne?",
-    "a": "Nie. Szczepienia obowiązkowe z Programu Szczepień Ochronnych są bezpłatne. Termin umówisz w gabinecie zabiegowym.",
-    "link": { "url": "/uslugi/szczepienia/#dzieci", "text": "Szczepienia dzieci – szczegóły" }
-  },
-  {
     "id": "czy-senior-zaszczepi-sie-bezplatnie",
     "topic": "szczepienia",
     "q": "Czy jako senior zaszczepię się bezpłatnie przeciw grypie?",
     "a": "Wiele szczepionek dla osób po 65. roku życia jest bezpłatnych lub tańszych dzięki refundacji. Zasady się zmieniają, dlatego zapytaj lekarza podczas wizyty. Wystawi receptę, jeśli jest potrzebna.",
-    "link": { "url": "/uslugi/szczepienia/#dorosli", "text": "Szczepienia dla dorosłych i seniorów" }
+    "link": {
+      "url": "/uslugi/szczepienia/#dorosli",
+      "text": "Szczepienia dla dorosłych i seniorów"
+    }
   },
   {
     "id": "dlaczego-zostac-po-szczepieniu",

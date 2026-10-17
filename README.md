@@ -1,7 +1,7 @@
 # Strona internetowa NZOZ „Nasz-Lekarz”
 
 Statyczna strona informacyjna przychodni podstawowej opieki zdrowotnej (POZ, NFZ)
-w Jeleniej Górze, ul. Wojska Polskiego 57 (I piętro). Adres docelowy: https://nasz-lekarz.info
+w Jeleniej Górze, al. Wojska Polskiego 57 (I piętro). Adres docelowy: https://nasz-lekarz.info
 
 - generator: [Eleventy 3](https://www.11ty.dev/) i szablony Nunjucks (`.njk`);
 - wynik (gotowa strona) trafia do katalogu `_site/`;
@@ -89,7 +89,7 @@ Plik `src/static/_headers` to odpowiednik dla hostingu Netlify / Cloudflare Page
   godziny przychodni; główny numer = rejestracja; link do strony; prawdziwe zdjęcia; atrybuty dostępności.
   Opinie zbieramy tylko tam i odpowiadamy na nie rzeczowo – nie przenosimy ich na stronę (zakaz reklamy).
 - **NAP** (nazwa, adres, telefon) wszędzie zapisany identycznie jak na stronie:
-  NZOZ „Nasz-Lekarz”, ul. Wojska Polskiego 57, 58-500 Jelenia Góra, tel. rejestracji z `clinic.json`.
+  NZOZ „Nasz-Lekarz”, al. Wojska Polskiego 57, 58-500 Jelenia Góra, tel. rejestracji z `clinic.json`.
 - **Google Search Console**: dodać domenę, zgłosić mapę strony `https://nasz-lekarz.info/sitemap.xml`.
 - **Bing Webmaster Tools** i **Bing Places**, **Apple Business Connect** (Mapy Apple).
 - Katalogi i rejestry: wyszukiwarka placówek NFZ, RPWDL, Znany Lekarz, Panorama Firm, pkt.pl, Facebook –

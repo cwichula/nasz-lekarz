@@ -4,34 +4,45 @@
     "topic": "ogolne",
     "q": "Czy wizyta u lekarza rodzinnego jest bezpłatna?",
     "a": "Tak. Wizyta jest bezpłatna, jeśli jesteś ubezpieczony w NFZ (Narodowym Funduszu Zdrowia) i złożyłeś w naszej przychodni deklarację wyboru lekarza POZ (podstawowej opieki zdrowotnej). Ubezpieczenie sprawdzamy w systemie eWUŚ po numerze PESEL. Weź ze sobą dokument tożsamości.",
-    "link": { "url": "/jak-sie-zapisac/", "text": "Jak się zapisać do przychodni" }
+    "link": {
+      "url": "/jak-sie-zapisac/",
+      "text": "Jak się zapisać do przychodni"
+    }
   },
   {
     "id": "czy-trzeba-miec-skierowanie",
     "topic": "ogolne",
     "q": "Czy do lekarza rodzinnego trzeba mieć skierowanie?",
     "a": "Nie. Do lekarza rodzinnego nie potrzeba skierowania. To lekarz rodzinny wystawia skierowania, na przykład na badania lub do lekarza specjalisty.",
-    "link": { "url": "/uslugi/", "text": "Usługi przychodni" }
+    "link": {
+      "url": "/uslugi/",
+      "text": "Usługi przychodni"
+    }
   },
   {
     "id": "jak-szybko-przyjmujecie",
     "topic": "ogolne",
     "q": "Jak szybko można dostać się do lekarza?",
     "a": "Termin wizyty poda rejestracja. [DO UZUPEŁNIENIA: zwykły czas oczekiwania na wizytę – potwierdzić z przychodnią] Gdy sprawa jest pilna, powiedz o tym w rejestracji.",
-    "link": { "url": "/kontakt/", "text": "Telefony i godziny rejestracji" }
+    "link": {
+      "url": "/kontakt/",
+      "text": "Telefony i godziny rejestracji"
+    }
   },
   {
     "id": "czy-mozna-przyjsc-bez-zapisu",
     "topic": "ogolne",
     "q": "Czy można przyjść bez zapisu?",
     "a": "Na wizytę u lekarza trzeba się najpierw zapisać – telefonicznie lub osobiście w rejestracji, w godzinach jej pracy. Rejestracja poda godzinę wizyty. [DO UZUPEŁNIENIA: czy w nagłych sprawach lekarz przyjmuje pacjenta bez wcześniejszego zapisu]",
-    "link": { "url": "/kontakt/", "text": "Telefony i godziny rejestracji" }
+    "link": {
+      "url": "/kontakt/",
+      "text": "Telefony i godziny rejestracji"
+    }
   },
   {
     "id": "czy-przyjmujecie-dzieci",
     "topic": "ogolne",
     "q": "Czy przyjmujecie dzieci?",
-    "a": "[DO UZUPEŁNIENIA: czy lekarze przychodni przyjmują dzieci i od jakiego wieku; czy dzieci mogą mieć złożoną deklarację POZ w przychodni]",
-    "link": { "url": "/zespol/", "text": "Lekarze i godziny przyjęć" }
+    "a": "Opiekujemy się pacjentami dorosłymi. Nie mamy lekarza pediatry. W sprawie dziecka zapytaj w rejestracji – podpowiemy, gdzie szukać pomocy."
   }
 ]

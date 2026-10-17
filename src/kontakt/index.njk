@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Telefony, godziny i dojazd – NZOZ Nasz-Lekarz, Jelenia Góra
-description: "Telefony do rejestracji, gabinetu zabiegowego i biura NZOZ Nasz-Lekarz w Jeleniej Górze. Godziny pracy i rejestracji, adres ul. Wojska Polskiego 57 i dojazd."
+description: "Telefony do rejestracji, gabinetu zabiegowego i biura NZOZ Nasz-Lekarz w Jeleniej Górze. Godziny pracy i rejestracji, adres al. Wojska Polskiego 57 i dojazd."
 heading: Telefony, godziny i dojazd
 eleventyComputed:
   answer: "Przychodnia {{ clinic.fullName }} jest czynna <strong>{{ clinic.hours.przychodnia.days | daysLabel }} w godzinach {{ clinic.hours.przychodnia | timeRange }}</strong>. Mieści się w {{ clinic.address.cityLocative }}, {{ clinic.address.street }} ({{ clinic.address.floor }}). Na wizytę zapiszesz się w rejestracji: {{ clinic.hours.rejestracja.days | daysLabel }}, {{ clinic.hours.rejestracja | timeRange }}, tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>."

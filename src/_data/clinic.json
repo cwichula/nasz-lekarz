@@ -11,11 +11,12 @@
   "foundingYear": null,
   "foundingNote": "",
   "acceptingNewPatients": true,
+  "patientsNote": "Opiekujemy się pacjentami dorosłymi. Nie mamy lekarza pediatry – w sprawie dziecka zapytaj w rejestracji.",
   "onlineRegistrationUrl": "",
 
   "address": {
-    "street": "ul. Wojska Polskiego 57",
-    "streetSchema": "Wojska Polskiego 57",
+    "street": "al. Wojska Polskiego 57",
+    "streetSchema": "al. Wojska Polskiego 57",
     "floor": "I piętro",
     "postalCode": "58-500",
     "city": "Jelenia Góra",
@@ -24,7 +25,7 @@
     "country": "PL"
   },
   "geo": {
-    "_info": "Środek budynku nr 57 wg OpenStreetMap (budynek way/204178603, sprawdzone 17.10.2026). OSM zapisuje ulicę jako „Aleja Wojska Polskiego” – sprawdzić, czy w adresie nie powinno być „al.” zamiast „ul.”.",
+    "_info": "Środek budynku nr 57 wg OpenStreetMap (budynek way/204178603, sprawdzone 17.10.2026). Adres: aleja Wojska Polskiego (potwierdzone przez przychodnię).",
     "lat": 50.8988457,
     "lng": 15.7386901,
     "verified": true,

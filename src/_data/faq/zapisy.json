@@ -4,34 +4,39 @@
     "topic": "zapisy",
     "q": "Czy zapis do przychodni jest płatny?",
     "a": "Nie. Złożenie deklaracji wyboru lekarza, pielęgniarki i położnej POZ jest bezpłatne. Opłata 80 zł dotyczy dopiero trzeciej i kolejnej zmiany w tym samym roku kalendarzowym. Nie płacisz, gdy zmieniasz miejsce zamieszkania, gdy lekarz lub przychodnia przestali przyjmować pacjentów albo z innych przyczyn niezależnych od Ciebie.",
-    "link": { "url": "/jak-sie-zapisac/#zmiana", "text": "Zmiana lekarza – zasady" }
+    "link": {
+      "url": "/jak-sie-zapisac/#zmiana",
+      "text": "Zmiana lekarza – zasady"
+    }
   },
   {
     "id": "czy-trzeba-sie-wypisac",
     "topic": "zapisy",
     "q": "Czy muszę wypisać się z poprzedniej przychodni?",
     "a": "Nie. Wystarczy, że złożysz u nas nową deklarację. Poprzednia przestaje wtedy obowiązywać.",
-    "link": { "url": "/jak-sie-zapisac/", "text": "Jak się zapisać" }
+    "link": {
+      "url": "/jak-sie-zapisac/",
+      "text": "Jak się zapisać"
+    }
   },
   {
     "id": "jak-zmienic-lekarza",
     "topic": "zapisy",
     "q": "Jak zmienić lekarza rodzinnego?",
     "a": "Złóż nową deklarację wyboru lekarza – w rejestracji albo przez Internetowe Konto Pacjenta (IKP). Bezpłatnie możesz to zrobić 2 razy w roku kalendarzowym.",
-    "link": { "url": "/jak-sie-zapisac/#sposoby", "text": "Dwa sposoby złożenia deklaracji" }
-  },
-  {
-    "id": "deklaracja-za-dziecko",
-    "topic": "zapisy",
-    "q": "Kto składa deklarację za dziecko?",
-    "a": "Rodzic lub opiekun prawny. Może to zrobić w rejestracji albo przez swoje IKP. W deklaracji wpisuje się numer PESEL dziecka.",
-    "link": { "url": "/jak-sie-zapisac/#dziecko", "text": "Deklaracja za dziecko" }
+    "link": {
+      "url": "/jak-sie-zapisac/#sposoby",
+      "text": "Dwa sposoby złożenia deklaracji"
+    }
   },
   {
     "id": "co-zabrac-do-zapisu",
     "topic": "zapisy",
     "q": "Co zabrać, gdy przychodzę się zapisać?",
     "a": "Dowód osobisty lub inny dokument z numerem PESEL. Ubezpieczenie sprawdzimy w systemie eWUŚ – nie trzeba przynosić zaświadczeń z pracy ani z ZUS.",
-    "link": { "url": "/jak-sie-zapisac/#ewus", "text": "Dokument i ubezpieczenie" }
+    "link": {
+      "url": "/jak-sie-zapisac/#ewus",
+      "text": "Dokument i ubezpieczenie"
+    }
   }
 ]
