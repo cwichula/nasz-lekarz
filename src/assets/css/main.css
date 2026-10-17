@@ -565,6 +565,11 @@ a[href^="tel:"]:not(.phone-card):not(.btn) { white-space: nowrap; }
   .print-sheet td.num { font-size: 1.5rem; }
 }
 
+/* === Gdzie jesteśmy === */
+.where { display: grid; gap: var(--s2); padding: var(--s4); margin-bottom: var(--s3); background: var(--bg); border: 2px solid var(--primary); border-left-width: 8px; border-radius: var(--radius); }
+.where__line { display: flex; align-items: flex-start; gap: var(--s3); margin: 0; font-size: 1.2rem; }
+.where__line .icon { color: var(--primary); margin-top: 0.1em; }
+
 /* === Dane spółki === */
 .registry { display: grid; gap: var(--s1) var(--s4); margin-bottom: var(--s3); }
 @media (min-width: 37.5em) { .registry { grid-template-columns: max-content 1fr; } }

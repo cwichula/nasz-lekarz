@@ -18,7 +18,7 @@ noCta: true
     <p>Przychodnię {{ clinic.fullName }} prowadzi spółka:</p>
     <dl class="registry">
       <dt>Firma</dt><dd>{{ clinic.legalName }}</dd>
-      <dt>Siedziba i adres</dt><dd>{{ r.seat or todo }}</dd>
+      <dt>Siedziba i adres</dt><dd>{{ r.seat or todo }}<br><span class="note">To adres siedziby spółki. Przychodnia przyjmuje pacjentów przy {{ clinic.address.street }}, {{ clinic.address.floor }}.</span></dd>
       <dt>Sąd rejestrowy</dt><dd>{{ r.court or todo }}</dd>
       <dt>Numer KRS</dt><dd>{{ r.krs or todo }}</dd>
       <dt>NIP</dt><dd>{{ r.nip or todo }}</dd>

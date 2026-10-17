@@ -16,7 +16,7 @@ noCta: true
 
   <div class="print-sheet">
     <h2 id="przychodnia">{{ clinic.fullName }}</h2>
-    <p class="address">{{ clinic.address.street }}, {{ clinic.address.floor }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}</p>
+    <p class="address"><strong>{{ clinic.address.street }}, {{ clinic.address.floor }}</strong>, {{ clinic.address.postalCode }} {{ clinic.address.city }}{% if clinic.access.lift %}<br>{{ clinic.access.liftLabel }}{% endif %}</p>
 
     <table>
       <caption class="visually-hidden">Telefony przychodni</caption>

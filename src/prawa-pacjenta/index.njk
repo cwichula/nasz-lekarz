@@ -33,7 +33,7 @@ ctaText: Pytanie o dokumentację lub skargę? Zadzwoń do biura
     <ul class="checklist">
       <li>Możesz zgłosić sprawę osobiście w przychodni, {{ clinic.address.street }}, {{ clinic.address.floor }}.</li>
       <li>Możesz zadzwonić do biura: <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a> ({{ clinic.phones.biuro.hoursText }}).</li>
-      <li>Możesz napisać list na adres przychodni: {{ clinic.address.street }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}.</li>
+      <li>Możesz napisać list na adres przychodni: {{ clinic.address.street }} ({{ clinic.address.floor }}), {{ clinic.address.postalCode }} {{ clinic.address.city }}.</li>
       {%- if clinic.email %}
       <li>Możesz wysłać e-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a>.</li>
       {%- endif %}

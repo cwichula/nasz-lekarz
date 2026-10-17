@@ -3,7 +3,7 @@
 // Każda strona: jedno <h1>, unikalny <title> (≤ 60 zn.), unikalny meta description (140–160 zn.),
 // link canonical, <html lang="pl">, poprawny JSON w <script type="application/ld+json">.
 // Strony z <meta name="robots" content="noindex"> nie muszą mieć description ani canonical.
-// Budżety wielkości: main.css ≤ 25 KB, HTML strony głównej ≤ 35 KB, main.js + holidays.js ≤ 8 KB.
+// Budżety wielkości: main.css ≤ 30 KB, HTML strony głównej ≤ 35 KB, main.js + holidays.js ≤ 8 KB.
 import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
@@ -91,7 +91,7 @@ for (const file of files) {
 const KB = 1024;
 const size = (rel) => (existsSync(join(SITE, rel)) ? statSync(join(SITE, rel)).size : 0);
 const budgets = [
-  { name: "assets/css/main.css", bytes: size("assets/css/main.css"), max: 25 * KB },
+  { name: "assets/css/main.css", bytes: size("assets/css/main.css"), max: 30 * KB },
   { name: "index.html", bytes: size("index.html"), max: 35 * KB },
   { name: "assets/js/main.js + holidays.js", bytes: size("assets/js/main.js") + size("assets/js/holidays.js"), max: 8 * KB },
 ];

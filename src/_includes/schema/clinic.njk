@@ -31,6 +31,9 @@
   "medicalSpecialty": "PrimaryCare",
   "isAcceptingNewPatients": {{ c.acceptingNewPatients | json | safe }},
   "isAccessibleForFree": true,
+  {%- if c.access.lift %}
+  "amenityFeature": [{ "@type": "LocationFeatureSpecification", "name": {{ c.access.liftLabel | json | safe }}, "value": true }],
+  {%- endif %}
   {%- if c.foundingYear %}
   "foundingDate": "{{ c.foundingYear }}",
   {%- endif %}

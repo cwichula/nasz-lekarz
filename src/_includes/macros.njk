@@ -170,3 +170,14 @@
   {%- endfor %}
 </div>
 {% endmacro %}
+
+{#- Wyraźna informacja: adres, piętro, podnośnik -#}
+{% macro whereBox(clinic) %}
+<div class="where">
+  <p class="where__line"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg><span><strong>{{ clinic.address.street }}</strong>, <span class="nowrap">{{ clinic.address.postalCode }} {{ clinic.address.city }}</span></span></p>
+  <p class="where__line"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg><span>Przychodnia jest na <strong>{{ clinic.address.floorLocative }}</strong></span></p>
+  {%- if clinic.access.lift %}
+  <p class="where__line"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg><span><strong>{{ clinic.access.liftLabel }}</strong> – dla osób na wózku i tych, którym trudno wejść po schodach</span></p>
+  {%- endif %}
+</div>
+{% endmacro %}

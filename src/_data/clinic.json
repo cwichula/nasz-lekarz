@@ -18,6 +18,7 @@
     "street": "al. Wojska Polskiego 57",
     "streetSchema": "al. Wojska Polskiego 57",
     "floor": "I piętro",
+    "floorLocative": "I piętrze",
     "postalCode": "58-500",
     "city": "Jelenia Góra",
     "cityLocative": "Jeleniej Górze",
@@ -35,7 +36,9 @@
     "_info": "Opis dojazdu i dostępności budynku – do uzupełnienia przez przychodnię.",
     "parking": "",
     "transport": "",
-    "building": "Przychodnia mieści się na I piętrze. [DO UZUPEŁNIENIA: czy jest winda lub podjazd]"
+    "building": "Przychodnia mieści się na I piętrze budynku przy al. Wojska Polskiego 57. Osoby z niepełnosprawnością i osoby, którym trudno wejść po schodach, mogą skorzystać z podnośnika dla osób niepełnosprawnych.",
+    "lift": true,
+    "liftLabel": "Podnośnik dla osób z niepełnosprawnością"
   },
   "areaServed": ["Jelenia Góra"],
 
