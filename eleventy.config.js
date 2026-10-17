@@ -3,6 +3,11 @@
 
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { HtmlBasePlugin } from "@11ty/eleventy";
+
+// Wersja testowa (np. GitHub Pages): PATH_PREFIX=/nasz-lekarz/ TEST_SITE=1 npm run build
+const PATH_PREFIX = process.env.PATH_PREFIX || "/";
+const IS_TEST = process.env.TEST_SITE === "1";
 
 /** Prosta minifikacja CSS: usuwa komentarze i zbędne białe znaki (bez zmiany selektorów typu ".a :focus"). */
 export function minifyCss(css) {
@@ -94,6 +99,9 @@ export default function (eleventyConfig) {
   );
 
   eleventyConfig.addGlobalData("buildDate", new Date().toISOString());
+  eleventyConfig.addGlobalData("isTest", IS_TEST);
+  // Przepisuje adresy zaczynające się od "/" na PATH_PREFIX (wersja testowa w podkatalogu)
+  eleventyConfig.addPlugin(HtmlBasePlugin);
 
   eleventyConfig.addTransform("no-break-numbers", function (content) {
     return (this.page.outputPath || "").endsWith(".html") ? noBreakNumbers(content) : content;
@@ -114,5 +122,6 @@ export default function (eleventyConfig) {
     templateFormats: ["njk", "md", "html"],
     htmlTemplateEngine: "njk",
     markdownTemplateEngine: "njk",
+    pathPrefix: PATH_PREFIX,
   };
 }

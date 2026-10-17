@@ -5,10 +5,7 @@ w Jeleniej Górze, al. Wojska Polskiego 57 (I piętro). Adres docelowy: https://
 
 - generator: [Eleventy 3](https://www.11ty.dev/) i szablony Nunjucks (`.njk`);
 - wynik (gotowa strona) trafia do katalogu `_site/`;
-- strona nie używa cookies, zewnętrznych czcionek, map ani skryptów śledzących;
-- pełna specyfikacja (mapa strony, zasady prawne, zakaz reklamy): `docs/specyfikacja.md`.
-
-Lista rzeczy do zrobienia: [TODO.md](TODO.md).
+- strona nie używa cookies, zewnętrznych czcionek, map ani skryptów śledzących.
 
 ## Wymagania
 
@@ -54,19 +51,17 @@ grep -rn "DO UZUPEŁNIENIA\|DO POTWIERDZENIA\|\"verified\": false" src
 
 a fakty prawne do sprawdzenia: `grep -rn "DO WERYFIKACJI" src`.
 
-Najważniejsze (stan w chwili przygotowania projektu):
-- **dane rejestrowe** w `clinic.json` → `registry` (forma prawna, NIP, REGON, nr księgi RPWDL, KRS) i pełna nazwa podmiotu (`legalName`);
-- **inspektor ochrony danych** (`dpo`) i adres e-mail przychodni (`email`);
-- **numery PWZ lekarzy** i docelowy grafik w `team.json` (obecny grafik jest tymczasowy); imiona i nazwiska pielęgniarek;
-- godziny pracy biura (`[DO POTWIERDZENIA]`), godziny pobrań krwi (wstępne), godziny szczepień i EKG;
-- zasady wizyt domowych (`homeVisits.verified: false`) i lista obsługiwanych miejscowości;
-- punkt nocnej i świątecznej opieki zdrowotnej dla Jeleniej Góry (`nightCare`, `verified: false`) – sprawdzić w wyszukiwarce NFZ;
-- współrzędne geograficzne (`geo`), dojazd, parking, dostępność budynku (winda, podjazd);
-- czy przychodnia przyjmuje dzieci (FAQ „Ogólne”, strona „Jak się zapisać”);
-- **dwie dodatkowe domeny** – przekierowania w `src/static/.htaccess` (zakomentowane);
-- **logo** – obecne jest tymczasowe (dawne logo miało formę krzyża); **zdjęcia przychodni**;
-- rejestracja internetowa – osobny, późniejszy etap (`onlineRegistrationUrl`);
-- dokumenty PDF do pobrania (`src/pliki/`): deklaracje, upoważnienie, standardy ochrony małoletnich.
+Lista zadań przychodni jest prowadzona lokalnie (plik `TODO.md`, poza repozytorium).
+
+## Wersja testowa (GitHub Pages)
+
+Każdy push na gałąź `main` buduje wersję testową przez GitHub Actions (`.github/workflows/pages.yml`)
+i publikuje ją na GitHub Pages. Wersja testowa:
+- działa w podkatalogu (`PATH_PREFIX=/nasz-lekarz/`),
+- ma baner „Wersja testowa”, `noindex` na każdej stronie i `Disallow: /` w `robots.txt`, więc nie trafi do Google.
+
+Lokalnie: `PATH_PREFIX=/nasz-lekarz/ TEST_SITE=1 npm run build` (w Git Bash na Windows dodaj `MSYS_NO_PATHCONV=1`).
+Produkcja (OVHcloud) to zwykłe `npm run build` – bez tych zmiennych.
 
 ## Publikacja na OVHcloud (FTP/SFTP)
 

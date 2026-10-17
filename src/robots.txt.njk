@@ -4,6 +4,11 @@ eleventyExcludeFromCollections: true
 ---
 # Strona informacyjna {{ clinic.fullName }}. Wszystkie roboty (także narzędzia AI) są dozwolone.
 User-agent: *
+{%- if isTest %}
+# Wersja testowa – nie indeksować
+Disallow: /
+{%- else %}
 Allow: /
+{%- endif %}
 
 Sitemap: {{ "/sitemap.xml" | absUrl(clinic.url) }}

@@ -3,3 +3,9 @@ _site/
 out/
 .env
 *.log
+
+# Notatki wewnętrzne – nie publikować
+TODO.md
+docs/
+*krs*.pdf
+krs/

@@ -10,7 +10,9 @@
   {%- if not (robots and ("noindex" in robots)) %}
   <link rel="canonical" href="{{ canonical }}">
   {%- endif %}
-  {%- if robots %}
+  {%- if isTest %}
+  <meta name="robots" content="noindex, nofollow">
+  {%- elif robots %}
   <meta name="robots" content="{{ robots }}">
   {%- endif %}
   <meta name="format-detection" content="telephone=no">
@@ -37,6 +39,9 @@
 <body>
   {% include "partials/icons.njk" %}
   <a class="skip-link" href="#tresc">Przejdź do treści</a>
+  {%- if isTest %}
+  <p class="test-banner">Wersja testowa strony – dane mogą być niekompletne.</p>
+  {%- endif %}
   {% include "partials/header.njk" %}
 
   <main id="tresc" tabindex="-1">
