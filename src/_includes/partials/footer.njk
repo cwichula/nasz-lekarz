@@ -35,28 +35,10 @@
           <li><a href="/deklaracja-dostepnosci/">Deklaracja dostępności</a></li>
         </ul>
       </section>
-      <section aria-labelledby="f-dane">
-        <h2 id="f-dane">Dane rejestrowe</h2>
-        {%- set r = clinic.registry %}
-        {%- set todo = "[DO UZUPEŁNIENIA]" %}
-        <p>{{ clinic.legalName }}</p>
-        <ul>
-          {#- Pola obowiązkowe dla sp. z o.o. (art. 206 KSH) #}
-          <li>Siedziba: {{ r.seat or (clinic.address.street + ", " + clinic.address.postalCode + " " + clinic.address.city) }}</li>
-          <li>Sąd rejestrowy: {{ r.court or todo }}</li>
-          <li>KRS: {{ r.krs or todo }}</li>
-          <li>NIP: {{ r.nip or todo }}</li>
-          <li>Kapitał zakładowy: {{ r.shareCapital or todo }}</li>
-          {#- Pola opcjonalne – puste się nie wyświetlają #}
-          {%- if r.regon %}<li>REGON: {{ r.regon }}</li>{% endif %}
-          {%- if r.rpwdl %}<li>Nr księgi rejestrowej RPWDL: {{ r.rpwdl }}</li>{% endif %}
-        </ul>
-        <p>Świadczenia udzielane w ramach umowy z Narodowym Funduszem Zdrowia – bezpłatnie dla osób ubezpieczonych.</p>
-      </section>
     </div>
     <div class="footer__bottom">
-      <p>© {{ clinic.fullName }}</p>
-      <p>Strona nie używa plików cookies.</p>
+      <p>Świadczenia udzielane w ramach umowy z Narodowym Funduszem Zdrowia – bezpłatnie dla osób ubezpieczonych.</p>
+      <p>© {{ clinic.fullName }} · <a href="/dane-spolki/">Dane spółki</a> · Strona nie używa plików cookies.</p>
     </div>
   </div>
 </footer>

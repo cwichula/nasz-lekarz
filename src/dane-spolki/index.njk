@@ -1,0 +1,31 @@
+---
+layout: layouts/base.njk
+title: Dane spółki – NZOZ Nasz-Lekarz
+description: "Dane rejestrowe spółki prowadzącej przychodnię NZOZ Nasz-Lekarz w Jeleniej Górze: firma, siedziba, sąd rejestrowy, numer KRS, NIP, REGON i kapitał zakładowy."
+heading: Dane spółki
+robots: "noindex, follow"
+sitemap: false
+crumbs:
+  - { name: "Start", url: "/" }
+noCta: true
+---
+{#- Dane wymagane art. 206 § 1 KSH. Strona celowo nieindeksowana i dostępna tylko z linku w stopce. -#}
+{%- set r = clinic.registry %}
+{%- set todo = "[DO UZUPEŁNIENIA]" %}
+<div class="container prose">
+  <section aria-labelledby="rejestr">
+    <h2 id="rejestr">Dane rejestrowe</h2>
+    <p>Przychodnię {{ clinic.fullName }} prowadzi spółka:</p>
+    <dl class="registry">
+      <dt>Firma</dt><dd>{{ clinic.legalName }}</dd>
+      <dt>Siedziba i adres</dt><dd>{{ r.seat or todo }}</dd>
+      <dt>Sąd rejestrowy</dt><dd>{{ r.court or todo }}</dd>
+      <dt>Numer KRS</dt><dd>{{ r.krs or todo }}</dd>
+      <dt>NIP</dt><dd>{{ r.nip or todo }}</dd>
+      {%- if r.regon %}<dt>REGON</dt><dd>{{ r.regon }}</dd>{% endif %}
+      <dt>Kapitał zakładowy</dt><dd>{{ r.shareCapital or todo }}</dd>
+      {%- if r.rpwdl %}<dt>Nr księgi rejestrowej RPWDL</dt><dd>{{ r.rpwdl }}</dd>{% endif %}
+    </dl>
+    <p class="note">Informacje podane zgodnie z art. 206 § 1 Kodeksu spółek handlowych.</p>
+  </section>
+</div>

@@ -438,7 +438,7 @@ main { display: block; }
 .footer h2 { color: #ffffff; font-size: 1.2rem; margin-bottom: var(--s3); }
 .footer__grid { display: grid; gap: var(--s5); }
 @media (min-width: 48em) { .footer__grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 64em) { .footer__grid { grid-template-columns: 1.3fr 1fr 1fr 1fr; } }
+@media (min-width: 64em) { .footer__grid { grid-template-columns: 1.3fr 1fr 1fr; } }
 .footer ul { list-style: none; padding: 0; }
 .footer li { margin: 0; }
 .footer li a { display: inline-flex; align-items: center; min-height: 2.75rem; }
@@ -564,3 +564,9 @@ a[href^="tel:"]:not(.phone-card):not(.btn) { white-space: nowrap; }
   .print-sheet th, .print-sheet td { border: 0; padding: var(--s1) 0; }
   .print-sheet td.num { font-size: 1.5rem; }
 }
+
+/* === Dane spółki === */
+.registry { display: grid; gap: var(--s1) var(--s4); margin-bottom: var(--s3); }
+@media (min-width: 37.5em) { .registry { grid-template-columns: max-content 1fr; } }
+.registry dt { font-weight: 700; }
+.registry dd { margin: 0 0 var(--s2); }

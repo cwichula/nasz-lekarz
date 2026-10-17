@@ -17,9 +17,9 @@ ctaText: Pytanie o Twoje dane? Zadzwoń do biura
     <p><strong>Administrator danych</strong> to podmiot, który decyduje, po co i jak są przetwarzane Twoje dane. Jest nim:</p>
     <div class="box box--info">
       <p><strong>{{ clinic.legalName }}</strong><br>
-      {{ clinic.fullName }}<br>
-      {{ clinic.address.street }}, {{ clinic.address.floor }}<br>
-      {{ clinic.address.postalCode }} {{ clinic.address.city }}</p>
+      z siedzibą: {{ clinic.registry.seat }}<br>
+      prowadząca przychodnię {{ clinic.fullName }}, {{ clinic.address.street }}, {{ clinic.address.floor }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}<br>
+      <a href="/dane-spolki/">Dane rejestrowe spółki</a></p>
       <p>Telefon (biuro): <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>{% if clinic.email %}<br>E-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a>{% endif %}</p>
     </div>
   </section>
