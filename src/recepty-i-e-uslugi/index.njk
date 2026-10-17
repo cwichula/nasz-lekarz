@@ -1,0 +1,88 @@
+---
+layout: layouts/base.njk
+title: Recepty, e-recepta i IKP – przychodnia Nasz-Lekarz
+description: "Jak poprosić o receptę na stałe leki w przychodni Nasz-Lekarz w Jeleniej Górze, jak dostać kod e-recepty SMS-em, e-skierowanie, e-zwolnienie i konto IKP."
+heading: Recepty i sprawy przez internet
+eleventyComputed:
+  answer: "Receptę na leki, które bierzesz na stałe, zamówisz w rejestracji: {{ clinic.hours.rejestracja.days | daysLabel }}, {{ clinic.hours.rejestracja | timeRange }}, tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>. Lekarz wystawia e-receptę. Kod do apteki dostaniesz SMS-em lub e-mailem, jeśli masz Internetowe Konto Pacjenta (IKP). Nie masz IKP? Wydrukujemy kod w rejestracji."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: rejestracja
+ctaText: Potrzebujesz recepty? Zadzwoń do rejestracji
+---
+{%- from "macros.njk" import faqList -%}
+<div class="container prose">
+  <section aria-labelledby="leki-stale">
+    <h2 id="leki-stale">Recepta na leki stałe</h2>
+    <p>Jeśli bierzesz leki na stałe (na przykład na ciśnienie, cukrzycę, tarczycę), możesz poprosić o kolejną receptę.</p>
+    <ol class="steps">
+      <li><h3>Zadzwoń lub przyjdź</h3><p>Do rejestracji: tel. <a href="tel:{{ clinic.phones.rejestracja.e164 }}">{{ clinic.phones.rejestracja.display }}</a>, {{ clinic.hours.rejestracja | timeRange }}. Może to zrobić też ktoś z rodziny.</p></li>
+      <li><h3>Podaj dane i leki</h3><p>Podaj imię, nazwisko, PESEL oraz nazwy leków i dawki. Najlepiej miej przy sobie opakowania.</p></li>
+      <li><h3>Odbierz kod</h3><p>Gdy lekarz wystawi receptę, kod przyjdzie SMS-em lub e-mailem (jeśli masz IKP). Możesz też odebrać wydruk w rejestracji.</p></li>
+    </ol>
+    <p>Lekarz może wystawić receptę bez wizyty, jeśli to dalsze leczenie i wynika z Twojej dokumentacji. Czasem jednak poprosi o wizytę lub teleporadę – na przykład gdy dawno nie było badań.</p>
+    {# DO WERYFIKACJI: podstawa – art. 42 ust. 1 ustawy o zawodach lekarza i lekarza dentysty (recepta bez badania, gdy jest to niezbędne do kontynuacji leczenia i uzasadnione dokumentacją). #}
+    <p>Czas realizacji: [DO UZUPEŁNIENIA: w ile dni roboczych lekarz wystawia receptę na leki stałe].</p>
+  </section>
+
+  <section aria-labelledby="e-recepta">
+    <h2 id="e-recepta">E-recepta – jak ją zrealizować</h2>
+    <p>Wszystkie recepty są elektroniczne (e-recepta). W aptece podajesz <strong>4-cyfrowy kod</strong> i swój <strong>numer PESEL</strong>.</p>
+    <p>Kod możesz dostać na trzy sposoby:</p>
+    <ul class="checklist">
+      <li><strong>SMS-em</strong> – gdy w IKP wpiszesz swój numer telefonu i włączysz powiadomienia.</li>
+      <li><strong>E-mailem</strong> – gdy w IKP wpiszesz swój adres e-mail.</li>
+      <li><strong>Na kartce</strong> – wydruk informacyjny dostaniesz w rejestracji. Ten sposób działa zawsze, także bez IKP.</li>
+    </ul>
+    <p>Wszystkie swoje recepty zobaczysz też w IKP i w aplikacji mojeIKP. W aptece możesz pokazać kod kreskowy z aplikacji.</p>
+  </section>
+
+  <section aria-labelledby="e-skierowanie">
+    <h2 id="e-skierowanie">E-skierowanie</h2>
+    <p>Skierowanie do specjalisty, do szpitala lub na badanie lekarz wystawia elektronicznie (e-skierowanie). Działa tak samo jak e-recepta: dostajesz <strong>4-cyfrowy kod</strong> SMS-em, e-mailem albo na wydruku.</p>
+    <p>Rejestrując się do specjalisty, podaj ten kod i swój numer PESEL. E-skierowanie widać też w IKP.</p>
+    <p>Na badania krwi w naszej przychodni nie potrzebujesz osobnego kodu – zlecenie jest w systemie przychodni. <a href="/uslugi/pobieranie-krwi/">Pobieranie krwi</a>.</p>
+  </section>
+
+  <section aria-labelledby="e-zwolnienie">
+    <h2 id="e-zwolnienie">E-zwolnienie (zwolnienie lekarskie)</h2>
+    <p>Zwolnienie lekarskie (e-ZLA) lekarz wystawia przez internet. Trafia ono od razu do ZUS i do Twojego pracodawcy. <strong>Nie musisz nic zanosić do pracy.</strong></p>
+    <p>Na wizycie powiedz lekarzowi, gdzie pracujesz. Jeśli masz kilku pracodawców lub pracujesz za granicą – miej przy sobie ich nazwy i numery NIP.</p>
+    <p>Swoje zwolnienia zobaczysz na stronie ZUS (eZUS) i w IKP.</p>
+    {# DO WERYFIKACJI: czy e-ZLA są widoczne w IKP (pacjent.gov.pl) – potwierdzone na pewno w eZUS (PUE ZUS). #}
+  </section>
+
+  <section aria-labelledby="ikp">
+    <h2 id="ikp">Internetowe Konto Pacjenta (IKP) – jak założyć</h2>
+    <p>IKP to bezpłatne konto na stronie Ministerstwa Zdrowia <a href="https://pacjent.gov.pl/" rel="noopener">pacjent.gov.pl</a>. Masz w nim swoje recepty, skierowania, zwolnienia i szczepienia. Na telefonie możesz używać aplikacji <strong>mojeIKP</strong>.</p>
+    <p>Konta nie trzeba zakładać osobno. Wystarczy się zalogować jednym ze sposobów:</p>
+    <ul>
+      <li>profilem zaufanym (można go założyć przez bank),</li>
+      <li>przez bankowość internetową,</li>
+      <li>aplikacją mObywatel,</li>
+      <li>e-dowodem (dowód osobisty z warstwą elektroniczną).</li>
+    </ul>
+    <p>Po zalogowaniu wpisz w ustawieniach swój numer telefonu i adres e-mail. Wtedy kody recept i skierowań będą przychodzić same.</p>
+    <p>Rodzic ma dostęp do IKP swojego dziecka do 18 lat. Możesz też dać dostęp do swojego konta osobie bliskiej – na przykład dziecku, które pomaga Ci w sprawach zdrowia.</p>
+    <p><a href="https://pacjent.gov.pl/internetowe-konto-pacjenta" rel="noopener">Instrukcja IKP na pacjent.gov.pl</a></p>
+    {# DO WERYFIKACJI: aktualny adres podstrony z instrukcją IKP na pacjent.gov.pl oraz lista metod logowania. #}
+  </section>
+
+  <section aria-labelledby="bezplatne-leki">
+    <h2 id="bezplatne-leki">Bezpłatne leki</h2>
+    <p>Część leków z listy Ministerstwa Zdrowia dostaniesz w aptece <strong>bezpłatnie</strong>, jeśli:</p>
+    <ul class="checklist">
+      <li>masz <strong>65 lat lub więcej</strong>,</li>
+      <li>masz <strong>mniej niż 18 lat</strong>,</li>
+      <li>jesteś <strong>w ciąży</strong> – na leki z osobnej listy dla kobiet w ciąży.</li>
+    </ul>
+    <p>Lekarz zaznacza to uprawnienie na recepcie. Lista bezpłatnych leków zmienia się kilka razy w roku. Zapytaj lekarza, czy Twój lek jest na liście.</p>
+    <p><a href="https://www.gov.pl/web/zdrowie/bezplatne-leki" rel="noopener">Aktualna lista bezpłatnych leków – gov.pl</a></p>
+    {# DO WERYFIKACJI: stan na 10.2026 – 65+ (kod S) i do 18 lat (kod DZ) potwierdzone w źródłach z 2026 r.; kobiety w ciąży (kod C, Dz.U. 2020 poz. 945) – brak aktualnego potwierdzenia na gov.pl. Media (gazetaprawna.pl) wspominały o planowanym rozszerzeniu na osoby z niepełnosprawnością – sprawdzić przed publikacją. #}
+  </section>
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.recepty) }}
+  </section>
+</div>

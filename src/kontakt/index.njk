@@ -1,0 +1,78 @@
+---
+layout: layouts/base.njk
+title: Telefony, godziny i dojazd – NZOZ Nasz-Lekarz, Jelenia Góra
+description: "Telefony do rejestracji, gabinetu zabiegowego i biura NZOZ Nasz-Lekarz w Jeleniej Górze. Godziny pracy i rejestracji, adres ul. Wojska Polskiego 57 i dojazd."
+heading: Telefony, godziny i dojazd
+eleventyComputed:
+  answer: "Przychodnia {{ clinic.fullName }} jest czynna <strong>{{ clinic.hours.przychodnia.days | daysLabel }} w godzinach {{ clinic.hours.przychodnia | timeRange }}</strong>. Mieści się w {{ clinic.address.cityLocative }}, {{ clinic.address.street }} ({{ clinic.address.floor }}). Na wizytę zapiszesz się w rejestracji: {{ clinic.hours.rejestracja.days | daysLabel }}, {{ clinic.hours.rejestracja | timeRange }}, tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: rejestracja
+ctaText: Chcesz umówić wizytę? Zadzwoń do rejestracji
+---
+{%- from "macros.njk" import phoneCards, hoursTable, closedBox -%}
+{%- set fullAddress = clinic.address.streetSchema + ", " + clinic.address.postalCode + " " + clinic.address.city -%}
+<div class="container prose">
+  <section aria-labelledby="telefony">
+    <h2 id="telefony">Telefony – w jakiej sprawie dzwonić</h2>
+    <p>Mamy trzy numery. Wybierz ten, który pasuje do Twojej sprawy. Jeśli nie wiesz, gdzie zadzwonić – zadzwoń do rejestracji.</p>
+    {{ phoneCards(clinic.phones) }}
+    {%- if clinic.email %}
+    <p><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg> E-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a>. {{ clinic.emailNote }}</p>
+    {%- else %}
+    {# DO UZUPEŁNIENIA: adres e-mail przychodni (clinic.json → email). Gdy zostanie wpisany, pojawi się tutaj automatycznie. #}
+    {%- endif %}
+    <p class="note">[DO UZUPEŁNIENIA: czy któryś numer przyjmuje SMS-y – ważne dla osób głuchych i słabosłyszących.]</p>
+  </section>
+
+  <section aria-labelledby="godziny">
+    <h2 id="godziny">Godziny pracy</h2>
+    <p>Przychodnia jest czynna dłużej niż rejestracja. Lekarze i gabinet zabiegowy przyjmują także poza godzinami rejestracji.</p>
+    {{ hoursTable(clinic, team, "Godziny pracy przychodni w tygodniu") }}
+    <ul class="hours-list">
+      <li><span>{{ clinic.phones.zabiegowy.label }}</span><strong>{{ clinic.phones.zabiegowy.hoursText }}</strong></li>
+      <li><span>{{ clinic.phones.biuro.label }}</span><strong>{{ clinic.phones.biuro.hoursText }}</strong></li>
+    </ul>
+    <p>{{ clinic.hoursNote }} Pełny grafik lekarzy jest na stronie <a href="/zespol/">Zespół</a>.</p>
+  </section>
+
+  <section aria-labelledby="jak-umowic">
+    <h2 id="jak-umowic">Jak umówić wizytę</h2>
+    <p>Wizytę u lekarza umówisz w rejestracji, {{ clinic.hours.rejestracja.days | daysLabel }} w godzinach {{ clinic.hours.rejestracja | timeRange }}. Możesz to zrobić na trzy sposoby:</p>
+    <ul class="checklist">
+      <li><strong>Telefonicznie</strong> – zadzwoń do rejestracji: <a href="tel:{{ clinic.phones.rejestracja.e164 }}">{{ clinic.phones.rejestracja.display }}</a>.</li>
+      <li><strong>Osobiście</strong> – przyjdź do rejestracji: {{ clinic.address.street }}, {{ clinic.address.floor }}.</li>
+      <li><strong>Przez osobę bliską</strong> – za Ciebie może zadzwonić lub przyjść ktoś z rodziny albo sąsiad.</li>
+    </ul>
+    <p>Termin wizyty poda rejestracja. [DO UZUPEŁNIENIA: zwykły czas oczekiwania na wizytę – potwierdzić z przychodnią] Przy zapisie podaj imię, nazwisko i numer PESEL.</p>
+    <p>Wizyta jest bezpłatna dla osób, które złożyły u nas deklarację wyboru lekarza (zapis do przychodni). <a href="/jak-sie-zapisac/">Jak się zapisać</a>.</p>
+    <p>Rejestracja internetowa: [DO UZUPEŁNIENIA – planowana w kolejnym etapie].</p>
+  </section>
+
+  <section aria-labelledby="adres">
+    <h2 id="adres">Adres i dojazd</h2>
+    <div class="map-card">
+      <address class="address">
+        <strong>{{ clinic.fullName }}</strong><br>
+        {{ clinic.address.street }}, {{ clinic.address.floor }}<br>
+        {{ clinic.address.postalCode }} {{ clinic.address.city }}
+      </address>
+      <div class="btn-row">
+        <a class="btn btn--outline" href="https://www.google.com/maps/search/?api=1&amp;query={{ fullAddress | urlencode }}" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Pokaż w Mapach Google<span class="visually-hidden"> (otwiera się w nowym oknie)</span></a>
+        <a class="btn btn--outline" href="https://www.openstreetmap.org/search?query={{ fullAddress | urlencode }}" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Pokaż w OpenStreetMap<span class="visually-hidden"> (otwiera się w nowym oknie)</span></a>
+      </div>
+    </div>
+    <h3>Komunikacja miejska</h3>
+    <p>{{ clinic.access.transport or "[DO UZUPEŁNIENIA: najbliższy przystanek i numery linii autobusowych]" }}</p>
+    <h3>Parking</h3>
+    <p>{{ clinic.access.parking or "[DO UZUPEŁNIENIA: gdzie można zaparkować, czy są miejsca dla osób z niepełnosprawnością]" }}</p>
+  </section>
+
+  <section aria-labelledby="dostepnosc">
+    <h2 id="dostepnosc">Dostępność budynku</h2>
+    <p>{{ clinic.access.building }}</p>
+    <p>Jeśli masz trudności z poruszaniem się, zadzwoń przed wizytą do rejestracji. Powiedz, jakiej pomocy potrzebujesz. Gdy nie możesz przyjść, lekarz może przyjechać do Ciebie – <a href="/uslugi/wizyty-domowe/">wizyty domowe</a>.</p>
+  </section>
+
+  {{ closedBox(clinic) }}
+</div>

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "czy-trzeba-deklaracje-pielegniarki",
+    "topic": "pielegniarka",
+    "q": "Czy do pielęgniarki potrzebna jest osobna deklaracja?",
+    "a": "Tak. Deklaracja wyboru pielęgniarki POZ to osobny dokument, inny niż deklaracja wyboru lekarza. Obie złożysz w rejestracji naszej przychodni albo przez Internetowe Konto Pacjenta (IKP).",
+    "link": { "url": "/jak-sie-zapisac/", "text": "Jak zapisać się do przychodni" }
+  },
+  {
+    "id": "czy-pielegniarka-przyjdzie-do-domu",
+    "topic": "pielegniarka",
+    "q": "Czy pielęgniarka przyjdzie do domu na zastrzyk lub opatrunek?",
+    "a": "Tak, jeśli stan zdrowia nie pozwala przyjść do przychodni. Do zastrzyków potrzebne jest zlecenie lekarza. Wizytę zgłoś w gabinecie zabiegowym.",
+    "link": { "url": "/uslugi/pielegniarka-srodowiskowa/#zgloszenie", "text": "Jak zgłosić wizytę pielęgniarki" }
+  },
+  {
+    "id": "czy-pielegniarka-pobierze-krew-w-domu",
+    "topic": "pielegniarka",
+    "q": "Czy pielęgniarka może pobrać krew w domu?",
+    "a": "Tak, u osób, które nie mogą przyjść do przychodni, gdy badanie zlecił lekarz. Termin ustal w gabinecie zabiegowym.",
+    "link": { "url": "/uslugi/pobieranie-krwi/", "text": "Pobieranie krwi – szczegóły" }
+  }
+]

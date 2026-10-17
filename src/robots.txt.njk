@@ -1,0 +1,9 @@
+---
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+# Strona informacyjna {{ clinic.fullName }}. Wszystkie roboty (także narzędzia AI) są dozwolone.
+User-agent: *
+Allow: /
+
+Sitemap: {{ "/sitemap.xml" | absUrl(clinic.url) }}

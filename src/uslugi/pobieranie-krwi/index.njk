@@ -1,0 +1,59 @@
+---
+layout: layouts/base.njk
+title: Pobieranie krwi Jelenia Góra – NFZ | NZOZ Nasz-Lekarz
+heading: Pobieranie krwi i badania laboratoryjne
+eleventyComputed:
+  description: "Pobieranie krwi na NFZ w Jeleniej Górze, {{ clinic.address.street }}. {{ clinic.hours.pobrania.days | daysLabel(true) | capitalize }} {{ clinic.hours.pobrania | timeRange }}, na skierowanie lekarza rodzinnego. Jak się przygotować do badania."
+  answer: "Krew do badań pobieramy w gabinecie zabiegowym, <strong>{{ clinic.hours.pobrania.days | daysLabel }} w godzinach {{ clinic.hours.pobrania | timeRange }}</strong>. Na NFZ badania są bezpłatne, jeśli zleci je nasz lekarz rodzinny. Pytania: gabinet zabiegowy, tel. <a href=\"tel:{{ clinic.phones.zabiegowy.e164 }}\">{{ clinic.phones.zabiegowy.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+  - { name: "Usługi", url: "/uslugi/" }
+ctaPhone: zabiegowy
+ctaText: Pytanie o pobranie krwi? Zadzwoń do gabinetu zabiegowego
+---
+{%- from "macros.njk" import faqList -%}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "MedicalClinic", "@id": {{ (clinic.url + "/#przychodnia") | json | safe }}, "name": {{ clinic.schemaName | json | safe }}, "availableService": { "@type": "MedicalTest", "name": "Pobieranie krwi do badań laboratoryjnych", "url": {{ (page.url | absUrl(clinic.url)) | json | safe }}, "usedToDiagnose": "Badania laboratoryjne zlecone przez lekarza POZ" } }
+</script>
+<div class="container prose">
+  <section aria-labelledby="kiedy">
+    <h2 id="kiedy">Kiedy i gdzie</h2>
+    <div class="box box--info">
+      <p><strong>Godziny pobrań:</strong> {{ clinic.hours.pobrania.days | daysLabel }}, {{ clinic.hours.pobrania | timeRange }}{% if clinic.hours.pobrania.note %} ({{ clinic.hours.pobrania.note }}){% endif %}.</p>
+      <p><strong>Miejsce:</strong> gabinet zabiegowy, {{ clinic.address.street }}, {{ clinic.address.floor }}.</p>
+      <p><strong>Telefon:</strong> <a href="tel:{{ clinic.phones.zabiegowy.e164 }}">{{ clinic.phones.zabiegowy.display }}</a></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="skierowanie">
+    <h2 id="skierowanie">Kto może przyjść</h2>
+    <p>Bezpłatnie pobieramy krew pacjentom naszej przychodni, którzy mają <strong>skierowanie od lekarza rodzinnego</strong> z naszej przychodni. Skierowanie wystawia lekarz podczas wizyty lub teleporady.</p>
+  </section>
+
+  <section aria-labelledby="przygotowanie">
+    <h2 id="przygotowanie">Jak się przygotować</h2>
+    <ul class="checklist">
+      <li>Przyjdź <strong>na czczo</strong> – ostatni posiłek najlepiej 8–12 godzin wcześniej. Możesz wypić szklankę wody.</li>
+      <li>Leki przyjmowane na stałe – zapytaj lekarza, czy wziąć je przed badaniem, czy po nim.</li>
+      <li>Dzień wcześniej unikaj alkoholu i dużego wysiłku.</li>
+      <li>Weź dokument z numerem PESEL.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="dzieci">
+    <h2 id="dzieci">Dzieci</h2>
+    {# DO WERYFIKACJI: czy przychodnia przyjmuje dzieci. Jeśli nie – usunąć tę sekcję. #}
+    <p class="note">[DO UZUPEŁNIENIA: czy pobieramy krew u dzieci i od jakiego wieku]</p>
+    <p>Dziecko przychodzi na pobranie z rodzicem lub opiekunem. Dziecku warto dać do picia wodę i coś zabrać do zjedzenia po badaniu.</p>
+  </section>
+
+  <section aria-labelledby="wyniki">
+    <h2 id="wyniki">Wyniki</h2>
+    <p>O terminie i sposobie odbioru wyników poinformuje Cię pielęgniarka podczas pobrania. Wyniki omawia lekarz rodzinny – umów wizytę w rejestracji, tel. <a href="tel:{{ clinic.phones.rejestracja.e164 }}">{{ clinic.phones.rejestracja.display }}</a>.</p>
+  </section>
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.krew) }}
+  </section>
+</div>

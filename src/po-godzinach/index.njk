@@ -1,0 +1,93 @@
+---
+layout: layouts/base.njk
+title: Nocna i świąteczna pomoc lekarska Jelenia Góra – gdzie iść
+heading: Gdy przychodnia jest zamknięta
+eleventyComputed:
+  description: "Nocna i świąteczna pomoc dla pacjentów z Jeleniej Góry: {{ clinic.nightCare.addressShort or clinic.nightCare.address }}, tel. {{ clinic.nightCare.phone.display }}. Pn–pt 18–8, weekendy i święta całą dobę. Zagrożenie życia: 112."
+  answer: "Gdy przychodnia jest zamknięta, idź do <strong>nocnej i świątecznej opieki zdrowotnej</strong>: {{ clinic.nightCare.address }}, tel. <a href=\"tel:{{ clinic.nightCare.phone.e164 }}\">{{ clinic.nightCare.phone.display }}</a>. Punkt działa {{ clinic.nightCare.hours }}. Nie trzeba skierowania. W zagrożeniu życia dzwoń pod <a href=\"tel:112\">112</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaText: Przychodnia znów otwarta? Zadzwoń do rejestracji
+---
+{%- from "macros.njk" import emergencyBox, faqList -%}
+{%- set nc = clinic.nightCare -%}
+{%- set sor = clinic.sor -%}
+{%- set mapsBase = "https://www.google.com/maps/dir/?api=1&destination=" -%}
+<div class="container prose">
+  {{ emergencyBox("Nagły ból w klatce piersiowej, duszność, utrata przytomności, objawy udaru, ciężki uraz, silne krwawienie? Nie jedź sam – dzwoń po pomoc.") }}
+
+  <section aria-labelledby="nisoz">
+    <h2 id="nisoz">Nocna i świąteczna opieka zdrowotna w Jeleniej Górze</h2>
+    <p>Nocna i świąteczna opieka zdrowotna (w skrócie <abbr title="nocna i świąteczna opieka zdrowotna">NiŚOZ</abbr>) to pomoc lekarza i pielęgniarki w ramach NFZ, gdy przychodnie są zamknięte. Jest bezpłatna. Nie potrzebujesz skierowania i nie musisz się wcześniej umawiać.</p>
+    {#- Dane: clinic.nightCare (źródło: strona Dolnośląskiego OW NFZ, pole source). Sprawdzać co roku. #}
+    <div class="box box--info">
+      <p><strong>{{ nc.name }}</strong></p>
+      <p><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg> {{ nc.address }}</p>
+      <p><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg> {{ nc.hours }}</p>
+      <p><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg> Telefon: <a href="tel:{{ nc.phone.e164 }}"><strong>{{ nc.phone.display }}</strong></a>
+        {%- if nc.phonesExtra and nc.phonesExtra.length %}, także {% for p in nc.phonesExtra %}<a href="tel:{{ p.e164 }}">{{ p.display }}</a>{% if not loop.last %} lub {% endif %}{% endfor %}{% endif %}</p>
+      {%- if nc.areaServed %}<p>Punkt obsługuje: {{ nc.areaServed }}. Możesz też pójść do każdego innego punktu w Polsce.</p>{% endif %}
+    </div>
+    <div class="btn-row">
+      <a class="btn" href="tel:{{ nc.phone.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>Zadzwoń: {{ nc.phone.display }}</a>
+      <a class="btn btn--outline" href="{{ mapsBase }}{{ (nc.addressMaps or nc.address) | urlencode }}" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Wyznacz trasę<span class="visually-hidden"> (otwiera się w nowym oknie)</span></a>
+    </div>
+    <p>W nocy lekarz może też przyjechać do domu, jeśli chory nie może przyjść z powodu stanu zdrowia. Najpierw zadzwoń do punktu.</p>
+    <p>Na wyjeździe lub w innym mieście: <a href="{{ clinic.nfzSearchUrl }}" rel="noopener">wyszukiwarka punktów nocnej i świątecznej opieki na stronie NFZ</a>.</p>
+    {%- if not nc.verified %}
+    <p class="note">[DO UZUPEŁNIENIA: potwierdzić dane punktu w Dolnośląskim Oddziale NFZ]</p>
+    {%- endif %}
+  </section>
+
+  <section aria-labelledby="telefon">
+    <h2 id="telefon">Porada przez telefon</h2>
+    <p>Nie wiesz, czy musisz jechać? Zadzwoń. Rozmowa jest bezpłatna.</p>
+    <ul>
+      {%- for h in clinic.helplines %}
+      <li><strong>{{ h.label }}</strong>: <a href="tel:{{ h.e164 }}"><strong>{{ h.display }}</strong></a> – {{ h.hours }}.</li>
+      {%- endfor %}
+    </ul>
+    <p>Teleplatforma Pierwszego Kontaktu to teleporada z lekarzem, pielęgniarką lub położną w ramach NFZ. Lekarz może wystawić e-receptę, e-skierowanie lub e-zwolnienie. Telefoniczna Informacja Pacjenta (TIP) odpowiada na pytania o NFZ i prawa pacjenta – nie udziela porad lekarskich.</p>
+    {# Sprawdzone 10.2026 (przegląd treści): Teleplatforma 800 137 200 – e-recepta, e-skierowanie, e-zwolnienie; TIP 800 190 590 całą dobę. Źródło: https://www.nfz.gov.pl/kontakt/telefoniczna-informacja-pacjenta/ #}
+  </section>
+
+  <section aria-labelledby="sor">
+    <h2 id="sor">Szpitalny Oddział Ratunkowy (SOR)</h2>
+    <p>SOR pomaga w stanach nagłego zagrożenia zdrowia i życia, całą dobę. Osoby w cięższym stanie są przyjmowane jako pierwsze, dlatego przy lżejszych dolegliwościach czeka się długo.</p>
+    <div class="box box--info">
+      <p><strong>{{ sor.name }}</strong></p>
+      <p><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg> {{ sor.address }}</p>
+      <p><svg class="icon icon--sm" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg> Telefon: <a href="tel:{{ sor.phone.e164 }}">{{ sor.phone.display }}</a></p>
+    </div>
+    <div class="btn-row">
+      <a class="btn btn--outline" href="{{ mapsBase }}{{ (sor.addressMaps or sor.address) | urlencode }}" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Trasa do SOR<span class="visually-hidden"> (otwiera się w nowym oknie)</span></a>
+    </div>
+    <p>Gdy stan jest ciężki, nie jedź sam samochodem. Zadzwoń pod <a href="tel:112">112</a> lub <a href="tel:999">999</a>.</p>
+  </section>
+
+  <section aria-labelledby="ktore">
+    <h2 id="ktore">Nocna pomoc czy SOR? Trzy przykłady</h2>
+    <ul class="checklist">
+      <li><strong>Gorączka, kaszel, ból gardła lub ucha w sobotę</strong> – nocna i świąteczna opieka albo teleporada przez Teleplatformę.</li>
+      <li><strong>Skończył się lek na stałe w czasie świąt</strong> – nocna i świąteczna opieka albo Teleplatforma. Po świętach zgłoś się po receptę do naszej przychodni.</li>
+      <li><strong>Silny ból w klatce piersiowej, duszność, nagły niedowład ręki lub nogi, ciężki uraz</strong> – dzwoń <a href="tel:112">112</a> lub jedź na SOR.</li>
+    </ul>
+    {# DO WERYFIKACJI: przykład z receptą – NiŚOZ może wystawić receptę w razie nagłej potrzeby; potwierdzić aktualne zasady NFZ. #}
+  </section>
+
+  <section aria-labelledby="apteki">
+    <h2 id="apteki">Apteki w nocy i w święta</h2>
+    <p>Harmonogram dyżurów aptek w Jeleniej Górze ustala samorząd. Lista aptek dyżurnych wisi zwykle na drzwiach każdej apteki.</p>
+    <p>[DO UZUPEŁNIENIA: link do aktualnego harmonogramu dyżurów aptek (BIP Urzędu Miasta Jelenia Góra lub Starostwa Powiatowego)]</p>
+  </section>
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.pogodzinach) }}
+  </section>
+
+  <p class="no-print">
+    <button class="btn btn--outline" type="button" data-print hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-printer"></use></svg>Wydrukuj</button>
+    <a href="/kartka-z-telefonami/">Kartka z wszystkimi telefonami do druku</a>
+  </p>
+</div>

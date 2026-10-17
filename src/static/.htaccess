@@ -1,0 +1,101 @@
+# .htaccess – NZOZ „Nasz-Lekarz”, hosting OVHcloud (Apache).
+# Plik trafia do katalogu www/ razem z resztą zawartości _site/. To plik ukryty (zaczyna się kropką) –
+# w FileZilla włącz: Serwer → Wymuś pokazywanie ukrytych plików.
+
+Options -Indexes
+DirectoryIndex index.html
+AddDefaultCharset utf-8
+ErrorDocument 404 /404.html
+
+# ---------------------------------------------------------------------------
+# Przekierowania 301: http → https oraz www → bez www (jedna wersja adresu).
+# OVHcloud zaleca wykrywanie http po porcie 80 (zmienna HTTPS bywa niewiarygodna za ich proxy/CDN).
+# DO WERYFIKACJI po publikacji: http://nasz-lekarz.info, http://www.nasz-lekarz.info
+# i https://www.nasz-lekarz.info muszą jednym przekierowaniem prowadzić na https://nasz-lekarz.info/
+# ---------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # www.nasz-lekarz.info → https://nasz-lekarz.info
+  RewriteCond %{HTTP_HOST} ^www\.nasz-lekarz\.info$ [NC]
+  RewriteRule ^(.*)$ https://nasz-lekarz.info/$1 [R=301,L]
+
+  # Adres katalogu bez końcowego ukośnika (np. /kontakt) → od razu https z ukośnikiem (jedno przekierowanie zamiast dwóch przez mod_dir).
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ https://nasz-lekarz.info/$1/ [R=301,L]
+
+  # http → https
+  RewriteCond %{SERVER_PORT} ^80$
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # Dodatkowe domeny → główna domena (301). [DO UZUPEŁNIENIA: 2 dodatkowe domeny]
+  # Odkomentuj i wpisz nazwy (kropki poprzedzone \), gdy domeny będą podpięte w panelu OVHcloud do tego hostingu.
+  # RewriteCond %{HTTP_HOST} ^(www\.)?DOMENA-2\.pl$ [NC]
+  # RewriteRule ^(.*)$ https://nasz-lekarz.info/$1 [R=301,L]
+  # RewriteCond %{HTTP_HOST} ^(www\.)?DOMENA-3\.pl$ [NC]
+  # RewriteRule ^(.*)$ https://nasz-lekarz.info/$1 [R=301,L]
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Nagłówki bezpieczeństwa. Strona nie ładuje nic z zewnętrznych serwerów.
+# ---------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  # HSTS jest wysyłany tylko przy połączeniu https (warunek expr). Po publikacji sprawdź, że certyfikat Let's Encrypt
+  # w panelu OVHcloud działa (curl -I dla http/https, z www i bez www). Jeśli https nie działa – zakomentuj tę linię.
+  Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on' || %{HTTP:X-Forwarded-Proto} == 'https'"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Header always set X-Frame-Options "DENY"
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Typy MIME
+# ---------------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/svg+xml .svg
+  AddType application/manifest+json .webmanifest
+  AddType text/plain .txt
+  AddType application/xml .xml
+  AddCharset utf-8 .html .css .js .txt .xml .svg .json
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Kompresja
+# ---------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------------------
+# Cache: pliki w /assets/ – 30 dni; HTML – zawsze sprawdzaj aktualność (no-cache).
+# Nazwy plików w /assets/ nie mają skrótu (hash), dlatego bez "immutable".
+# ---------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 day"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 30 days"
+  ExpiresByType application/javascript "access plus 30 days"
+  ExpiresByType text/javascript "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <If "%{REQUEST_URI} =~ m#^/assets/#">
+    Header set Cache-Control "public, max-age=2592000"
+  </If>
+  <FilesMatch "\.(xml|txt)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

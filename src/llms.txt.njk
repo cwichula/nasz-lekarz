@@ -1,0 +1,25 @@
+---
+permalink: /llms.txt
+eleventyExcludeFromCollections: true
+---
+# {{ clinic.fullName }}
+
+> Przychodnia podstawowej opieki zdrowotnej (POZ) w ramach NFZ w {{ clinic.address.cityLocative }}: lekarz rodzinny, pielęgniarki, gabinet zabiegowy. Wizyty dla pacjentów z deklaracją POZ są bezpłatne.
+
+- Adres: {{ clinic.address.street }} ({{ clinic.address.floor }}), {{ clinic.address.postalCode }} {{ clinic.address.city }}
+- Przychodnia czynna: {{ clinic.hours.przychodnia.days | daysLabel }}, {{ clinic.hours.przychodnia | timeRange }}. {{ clinic.hoursNote }}
+- Rejestracja: {{ clinic.hours.rejestracja.days | daysLabel }}, {{ clinic.hours.rejestracja | timeRange }}
+- Pobieranie krwi: {{ clinic.hours.pobrania.days | daysLabel }}, {{ clinic.hours.pobrania | timeRange }}
+{%- for key, p in clinic.phones %}
+- Telefon – {{ p.label }}: {{ p.display }} ({{ p.purpose }})
+{%- endfor %}
+- Zagrożenie życia: 112 lub 999. Gdy przychodnia jest zamknięta: nocna i świąteczna opieka zdrowotna (strona {{ "/po-godzinach/" | absUrl(clinic.url) }}).
+- Strona: {{ clinic.url }}
+
+## Strony
+{% for item in collections.all | sort(false, false, "url") %}
+{%- set isHtml = item.url and item.url.endsWith("/") %}
+{%- if isHtml and not (item.data.robots and ("noindex" in item.data.robots)) %}
+- [{{ item.data.heading or item.data.title }}]({{ item.url | absUrl(clinic.url) }}): {{ item.data.description }}
+{%- endif %}
+{%- endfor %}

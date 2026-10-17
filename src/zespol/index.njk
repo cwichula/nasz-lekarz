@@ -1,0 +1,98 @@
+---
+layout: layouts/base.njk
+heading: Nasi lekarze i pielęgniarki
+eleventyComputed:
+  title: "Lekarze: {% for d in team.doctors %}{{ d.name }}{% if not loop.last %}, {% endif %}{% endfor %} – Nasz-Lekarz"
+  description: "Lekarze przychodni NZOZ Nasz-Lekarz w Jeleniej Górze: {% for d in team.doctors %}{{ d.title }} {{ d.name }}{% if not loop.last %} i {% endif %}{% endfor %}. Dni i godziny przyjęć oraz telefon do rejestracji."
+  answer: "W przychodni przy {{ clinic.address.street }} przyjmują lekarze POZ i pielęgniarki w ramach NFZ. Na wizytę do wybranego lekarza zapiszesz się w rejestracji: tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>, {{ clinic.phones.rejestracja.hoursText }}."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaText: Chcesz umówić się do lekarza? Zadzwoń do rejestracji
+---
+{%- from "macros.njk" import personCard, hoursTable, phoneCard -%}
+{%- set clinicId = clinic.url + "/#przychodnia" -%}
+{#- schema.org: „Physician” jest typem organizacji (MedicalOrganization), więc nie ma właściwości worksFor.
+    Dla osoby schema.org ma typ IndividualPhysician (podtyp Physician) z właściwością practicesAt.
+    DO WERYFIKACJI: sprawdzić w validator.schema.org i Rich Results Test po publikacji. -#}
+<script type="application/ld+json">
+[
+{%- for doc in team.doctors %}
+  {
+    "@context": "https://schema.org",
+    "@type": "IndividualPhysician",
+    "@id": {{ ((page.url | absUrl(clinic.url)) + "#" + doc.slug) | json | safe }},
+    "name": {{ (doc.title + " " + doc.name) | json | safe }},
+    "url": {{ ((page.url | absUrl(clinic.url)) + "#" + doc.slug) | json | safe }},
+    {%- if doc.specialty %}
+    "medicalSpecialty": "https://schema.org/PrimaryCare",
+    "description": {{ (doc.role + ", " + doc.specialty) | json | safe }},
+    {%- else %}
+    "description": {{ doc.role | json | safe }},
+    {%- endif %}
+    {%- if doc.pwz %}
+    "identifier": { "@type": "PropertyValue", "propertyID": "Numer prawa wykonywania zawodu (PWZ)", "value": {{ doc.pwz | json | safe }} },
+    {%- endif %}
+    "practicesAt": { "@id": {{ clinicId | json | safe }} }
+  }{% if not loop.last %},{% endif %}
+{%- endfor %}
+]
+</script>
+<div class="container prose">
+  <section aria-labelledby="powitanie">
+    <h2 id="powitanie">O zespole</h2>
+    <p>[DO UZUPEŁNIENIA: krótkie, rzeczowe powitanie kierownika przychodni – 2–3 zdania, bez ocen i obietnic]</p>
+    <p><strong>Kierownik podmiotu leczniczego:</strong> [DO UZUPEŁNIENIA: imię i nazwisko]</p>
+  </section>
+
+  <section aria-labelledby="lekarze">
+    <h2 id="lekarze">Lekarze</h2>
+    <p>Lekarz rodzinny (lekarz <abbr title="podstawowej opieki zdrowotnej">POZ</abbr>, czyli podstawowej opieki zdrowotnej) leczy pacjentów zapisanych do przychodni, wystawia recepty i skierowania do specjalistów i na badania. [DO UZUPEŁNIENIA: czy przyjmujemy dzieci i od jakiego wieku]</p>
+    {# DO WERYFIKACJI: tytuły specjalizacji lekarzy wg PWZ (team.json → specialty). #}
+    <ul class="people">
+      {%- for doc in team.doctors %}
+      <li>{{ personCard(doc) }}</li>
+      {%- endfor %}
+    </ul>
+    {%- if (team.doctors | selectattr("pwz") | length) < (team.doctors | length) %}
+    <p class="note">[DO UZUPEŁNIENIA: numery prawa wykonywania zawodu (PWZ) lekarzy]</p>
+    {%- endif %}
+    <p class="note">Grafik lekarzy jest tymczasowy. [DO UZUPEŁNIENIA: pełny grafik przyjęć]</p>
+  </section>
+
+  <section aria-labelledby="grafik">
+    <h2 id="grafik">Grafik przyjęć w tygodniu</h2>
+    {{ hoursTable(clinic, team, "Godziny przychodni i przyjęć lekarzy") }}
+  </section>
+
+  <section aria-labelledby="pielegniarki">
+    <h2 id="pielegniarki">Pielęgniarki</h2>
+    <p>Pielęgniarka POZ (podstawowej opieki zdrowotnej) to inaczej pielęgniarka środowiskowa lub rodzinna. Pracuje w gabinecie zabiegowym i odwiedza pacjentów w domu. Wystarczy <strong>jedna deklaracja wyboru pielęgniarki POZ</strong> – to osobny dokument, inny niż deklaracja wyboru lekarza.</p>
+    <h3>W gabinecie zabiegowym</h3>
+    <p>W gabinecie zabiegowym pielęgniarki pobierają krew, wykonują szczepienia, zastrzyki, opatrunki i EKG zlecone przez lekarza. Mierzą ciśnienie i pomagają przygotować się do wizyty.</p>
+    {%- if team.nurses.poz and team.nurses.poz.length %}
+    <ul>
+      {%- for n in team.nurses.poz %}<li>{{ (n.title + " " if n.title) }}{{ n.name or n }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+    <p>Gabinet zabiegowy: tel. <a href="tel:{{ clinic.phones.zabiegowy.e164 }}">{{ clinic.phones.zabiegowy.display }}</a>, {{ clinic.phones.zabiegowy.hoursText }}.</p>
+
+    <h3>Wizyty w domu</h3>
+    <p>Pielęgniarka odwiedza w domu pacjentów, którzy nie mogą przyjść do przychodni – szczególnie osoby starsze, przewlekle chore i po pobycie w szpitalu. Zmienia opatrunki, podaje leki w zastrzykach, uczy rodzinę, jak pielęgnować chorego. Wizytę pielęgniarki zgłoś w gabinecie zabiegowym.</p>
+    {# DO WERYFIKACJI: zakres opieki pielęgniarki środowiskowej i deklaracja – zgodnie z treścią strony /uslugi/pielegniarka-srodowiskowa/. #}
+    {%- if team.nurses.community and team.nurses.community.length %}
+    <ul>
+      {%- for n in team.nurses.community %}<li>{{ (n.title + " " if n.title) }}{{ n.name or n }}</li>{% endfor %}
+    </ul>
+    {%- endif %}
+    <p><a href="/uslugi/pielegniarka-srodowiskowa/">Więcej o pielęgniarce środowiskowej</a></p>
+  </section>
+
+  <section aria-labelledby="rejestracja">
+    <h2 id="rejestracja">Rejestracja i biuro</h2>
+    <p>Rejestracja zapisuje na wizyty i przyjmuje zgłoszenia wizyt domowych lekarza. Biuro zajmuje się deklaracjami i dokumentacją medyczną.</p>
+    <div class="phones">
+      {{ phoneCard(clinic.phones.rejestracja, true) }}
+      {{ phoneCard(clinic.phones.biuro) }}
+    </div>
+  </section>
+</div>

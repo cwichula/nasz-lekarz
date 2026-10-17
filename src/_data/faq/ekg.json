@@ -1,0 +1,21 @@
+[
+  {
+    "id": "czy-na-ekg-potrzebne-skierowanie",
+    "topic": "ekg",
+    "q": "Czy na EKG potrzebne jest skierowanie?",
+    "a": "Tak. Bezpłatne EKG wykonujemy na zlecenie lekarza rodzinnego z naszej przychodni. Lekarz zleca je podczas wizyty lub teleporady.",
+    "link": { "url": "/uslugi/ekg/", "text": "Badanie EKG – szczegóły" }
+  },
+  {
+    "id": "ile-trwa-ekg",
+    "topic": "ekg",
+    "q": "Ile trwa badanie EKG?",
+    "a": "Samo badanie trwa kilka minut. Nie boli. Nie trzeba być na czczo."
+  },
+  {
+    "id": "kto-omawia-wynik-ekg",
+    "topic": "ekg",
+    "q": "Kto omówi wynik EKG?",
+    "a": "Wynik ocenia i omawia lekarz. Pielęgniarka po badaniu powie Ci, kiedy i jak go omówimy."
+  }
+]

@@ -1,0 +1,14 @@
+# Nagłówki dla Netlify / Cloudflare Pages (hosting alternatywny). Na OVHcloud działa .htaccess.
+# HTML zostaje z domyślnym cache tych usług (sprawdzanie aktualności przy każdym wejściu).
+# Przekierowania http→https i www→bez www ustawia się w panelu tych usług.
+
+/*
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  X-Frame-Options: DENY
+
+/assets/*
+  Cache-Control: public, max-age=2592000

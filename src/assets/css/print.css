@@ -1,0 +1,28 @@
+/* Styl wydruku: czarny tekst, bez nawigacji, numery czytelne. */
+@media print {
+  @page { size: A4; margin: 15mm; }
+  html, html[data-text-size] { font-size: 12pt; }
+  body { padding: 0 !important; color: #000 !important; background: #fff !important; }
+  *, *::before, *::after { color: #000 !important; background: transparent !important; box-shadow: none !important; }
+  .skip-link, .topbar, .nav, .menu-toggle, .header__actions, .callbar, .cta, .breadcrumbs, .footer, .no-print, [data-print], .hero__art, .tiles { display: none !important; }
+  .header { border-bottom: 2pt solid #000; }
+  a { text-decoration: none; }
+  .prose a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 10pt; }
+  .section, .page-head, .prose { padding-block: 6pt !important; }
+  .box, .phone-card, .hours, .steps > li { border: 1pt solid #000 !important; break-inside: avoid; }
+  h1 { font-size: 20pt; } h2 { font-size: 16pt; }
+  .print-sheet td.num { font-size: 16pt; }
+}
+
+/* Kartka z telefonami – jedna strona A4 */
+@media print {
+  html:has(.print-sheet), html[data-text-size]:has(.print-sheet) { font-size: 10.5pt; }
+  body:has(.print-sheet) .page-head, body:has(.print-sheet) .header { display: none !important; }
+  .print-sheet { max-width: none; line-height: 1.3; }
+  .print-sheet .note { font-size: 9pt; }
+  .print-sheet td.num { font-size: 14pt; }
+  .print-sheet th, .print-sheet td { padding: 2pt 5pt; }
+  .print-sheet table { break-inside: avoid; margin-bottom: 4pt; }
+  .print-sheet h2 { margin-top: 8pt; margin-bottom: 4pt; }
+  .print-sheet p { margin-bottom: 4pt; }
+}

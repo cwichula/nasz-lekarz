@@ -1,0 +1,62 @@
+---
+layout: layouts/base.njk
+title: Badanie EKG Jelenia Góra – NFZ | NZOZ Nasz-Lekarz
+description: "Badanie EKG na NFZ w przychodni Nasz-Lekarz w Jeleniej Górze, na zlecenie lekarza rodzinnego. Ile trwa, jak się przygotować i kto omawia wynik badania."
+heading: Badanie EKG
+eleventyComputed:
+  answer: "EKG (elektrokardiogram) to badanie pracy serca. Wykonujemy je w gabinecie zabiegowym przy {{ clinic.address.street }} ({{ clinic.address.floor }}), <strong>bezpłatnie na zlecenie lekarza rodzinnego</strong> z naszej przychodni. Badanie trwa kilka minut i nie boli. Pytania: gabinet zabiegowy, tel. <a href=\"tel:{{ clinic.phones.zabiegowy.e164 }}\">{{ clinic.phones.zabiegowy.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+  - { name: "Usługi", url: "/uslugi/" }
+ctaPhone: zabiegowy
+ctaText: Pytanie o badanie EKG? Zadzwoń do gabinetu zabiegowego
+---
+{%- from "macros.njk" import faqList, emergencyBox -%}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "MedicalClinic", "@id": {{ (clinic.url + "/#przychodnia") | json | safe }}, "name": {{ clinic.schemaName | json | safe }}, "availableService": { "@type": "MedicalTest", "name": "Badanie EKG (elektrokardiogram spoczynkowy)", "alternateName": "Elektrokardiogram", "url": {{ (page.url | absUrl(clinic.url)) | json | safe }}, "usedToDiagnose": "Zaburzenia rytmu i pracy serca", "usesDevice": { "@type": "MedicalDevice", "name": "Elektrokardiograf" } } }
+</script>
+<div class="container prose">
+  {{ emergencyBox("Nagły, silny ból w klatce piersiowej, duszność, kołatanie serca z omdleniem? Nie czekaj na EKG w przychodni. Dzwoń po pomoc od razu.") }}
+
+  <section aria-labelledby="zasady">
+    <h2 id="zasady">Kto może mieć badanie</h2>
+    <p>EKG wykonujemy pacjentom naszej przychodni <strong>na zlecenie lekarza rodzinnego</strong>. Lekarz zleca je podczas wizyty lub teleporady, na przykład przy kołataniu serca, nadciśnieniu, przed zabiegiem albo przy kontroli leczenia.</p>
+    <p>Na NFZ badanie jest bezpłatne.</p>
+    <div class="box box--info">
+      <p><strong>Miejsce:</strong> gabinet zabiegowy, {{ clinic.address.street }}, {{ clinic.address.floor }}.</p>
+      <p><strong>Telefon:</strong> <a href="tel:{{ clinic.phones.zabiegowy.e164 }}">{{ clinic.phones.zabiegowy.display }}</a>, {{ clinic.phones.zabiegowy.hoursText }}.</p>
+      <p><strong>Godziny EKG:</strong> [DO UZUPEŁNIENIA: czy EKG robimy od razu po wizycie, czy w umówionym terminie i w jakich godzinach]</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="przygotowanie">
+    <h2 id="przygotowanie">Jak się przygotować</h2>
+    <ul class="checklist">
+      <li>Nie musisz być na czczo. Leki bierz jak zwykle.</li>
+      <li>Załóż ubranie, które łatwo rozpiąć lub zdjąć do pasa.</li>
+      <li>W dniu badania nie smaruj klatki piersiowej balsamem ani oliwką.</li>
+      <li>Powiedz pielęgniarce, jeśli masz rozrusznik serca.</li>
+      <li>Weź dokument z numerem PESEL i listę leków.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="przebieg">
+    <h2 id="przebieg">Jak wygląda badanie</h2>
+    <ol class="steps">
+      <li><h3>Kładziesz się</h3><p>Odsłaniasz klatkę piersiową, nadgarstki i kostki. Leżysz na plecach.</p></li>
+      <li><h3>Elektrody</h3><p>Pielęgniarka przykleja lub przykłada elektrody. Aparat zapisuje pracę serca.</p></li>
+      <li><h3>Kilka minut</h3><p>Leżysz spokojnie i normalnie oddychasz. Badanie nie boli. Aparat tylko zapisuje pracę serca, nie wysyła prądu.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="wynik">
+    <h2 id="wynik">Wynik badania</h2>
+    <p>Zapis EKG ocenia i <strong>omawia lekarz</strong>. Pielęgniarka nie ocenia wyniku. Jak i kiedy omówimy wynik, powie Ci pielęgniarka po badaniu. Wizytę u lekarza umówisz w rejestracji, tel. <a href="tel:{{ clinic.phones.rejestracja.e164 }}">{{ clinic.phones.rejestracja.display }}</a>.</p>
+    <p>Jeśli masz starsze zapisy EKG, przynieś je na wizytę. Lekarz porówna je z nowym.</p>
+  </section>
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.ekg) }}
+  </section>
+</div>

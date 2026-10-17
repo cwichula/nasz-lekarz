@@ -1,0 +1,12 @@
+<div class="callbar" role="region" aria-label="Szybki kontakt">
+  <a class="btn callbar__main" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>Zadzwoń: Rejestracja</a>
+  <details class="callbar__more">
+    <summary>Telefony</summary>
+    <ul class="callbar__menu">
+      {%- for key, p in clinic.phones %}
+      <li><a href="tel:{{ p.e164 }}"><span class="num">{{ p.display }}</span><span class="lbl">{{ p.label }}</span></a></li>
+      {%- endfor %}
+      <li><a href="tel:112"><span class="num">112</span><span class="lbl">Numer alarmowy</span></a></li>
+    </ul>
+  </details>
+</div>

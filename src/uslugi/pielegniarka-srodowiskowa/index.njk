@@ -1,0 +1,81 @@
+---
+layout: layouts/base.njk
+title: Pielęgniarka środowiskowa Jelenia Góra – NFZ | Nasz-Lekarz
+description: "Pielęgniarka środowiskowa w Jeleniej Górze: zastrzyki, opatrunki, pobranie krwi i opieka nad leżącym w domu. Bezpłatnie z deklaracją POZ. Jak zgłosić wizytę."
+heading: Pielęgniarka środowiskowa – opieka w domu
+eleventyComputed:
+  answer: "Pielęgniarka środowiskowa (pielęgniarka POZ) pomaga pacjentom w przychodni i w domu: robi zastrzyki, zmienia opatrunki i opiekuje się osobami leżącymi. Na NFZ jest to bezpłatne dla osób, które wybrały pielęgniarkę w naszej przychodni. Wizytę zgłoś w gabinecie zabiegowym, tel. <a href=\"tel:{{ clinic.phones.zabiegowy.e164 }}\">{{ clinic.phones.zabiegowy.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+  - { name: "Usługi", url: "/uslugi/" }
+ctaPhone: zabiegowy
+ctaText: Potrzebna pielęgniarka w domu? Zadzwoń do gabinetu zabiegowego
+---
+{%- from "macros.njk" import faqList, emergencyBox -%}
+{# DO WERYFIKACJI: zakres świadczeń pielęgniarki POZ wg aktualnego zarządzenia Prezesa NFZ w sprawie POZ; godziny pracy pielęgniarki środowiskowej w przychodni; sposób zgłaszania wizyt (czy na pewno gabinet zabiegowy). #}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "MedicalClinic", "@id": {{ (clinic.url + "/#przychodnia") | json | safe }}, "name": {{ clinic.schemaName | json | safe }}, "availableService": { "@type": "MedicalProcedure", "name": "Opieka pielęgniarki środowiskowej (pielęgniarki POZ) w domu pacjenta", "url": {{ (page.url | absUrl(clinic.url)) | json | safe }}, "howPerformed": "Pielęgniarka podstawowej opieki zdrowotnej wykonuje zabiegi i opiekę pielęgniarską w przychodni oraz w domu pacjenta." } }
+</script>
+<div class="container prose">
+  <section aria-labelledby="zakres">
+    <h2 id="zakres">W czym pomaga pielęgniarka</h2>
+    <p>Pielęgniarka środowiskowa to inaczej pielęgniarka POZ (podstawowej opieki zdrowotnej). Pracuje w przychodni i odwiedza pacjentów w domu. Wykonuje zlecenia lekarza oraz zadania, do których ma własne uprawnienia.</p>
+    <ul class="checklist">
+      <li><strong>Zastrzyki</strong> i podawanie leków zleconych przez lekarza.</li>
+      <li><strong>Opatrunki</strong> – zmiana opatrunku, pielęgnacja ran, także ran trudno gojących się i odleżyn.</li>
+      <li><strong>Pobranie krwi w domu</strong> – u osób, które nie mogą przyjść do przychodni, na zlecenie lekarza.</li>
+      <li><strong>Opieka nad osobą leżącą</strong> – ocena stanu zdrowia, pielęgnacja, zapobieganie odleżynom.</li>
+      <li><strong>Pomiary</strong> – ciśnienie, poziom cukru we krwi.</li>
+      <li><strong>Edukacja</strong> – nauka opieki nad chorym dla rodziny, nauka samodzielnego podawania leków, np. insuliny.</li>
+      <li><strong>Wizyty u niemowląt</strong> – gdy położna zakończy wizyty patronażowe, opiekę nad dzieckiem przejmuje pielęgniarka POZ.</li>
+    </ul>
+    {# DO WERYFIKACJI: wizyty patronażowe pielęgniarki POZ u niemowląt (po zakończeniu opieki położnej, ok. 7. tydzień życia) – potwierdzić, czy przychodnia je realizuje. #}
+  </section>
+
+  <section aria-labelledby="komu">
+    <h2 id="komu">Komu przysługuje opieka w domu</h2>
+    <p>Pielęgniarka przychodzi do domu, gdy stan zdrowia nie pozwala pacjentowi przyjść do przychodni. Dotyczy to najczęściej osób leżących, starszych, po pobycie w szpitalu lub po operacji. Na NFZ opieka jest bezpłatna.</p>
+  </section>
+
+  <section aria-labelledby="deklaracja">
+    <h2 id="deklaracja">Osobna deklaracja wyboru pielęgniarki</h2>
+    <p>Aby korzystać z opieki pielęgniarki, trzeba złożyć <strong>deklarację wyboru pielęgniarki POZ</strong>. To osobny dokument – inny niż deklaracja wyboru lekarza. Można złożyć obie deklaracje w naszej przychodni tego samego dnia.</p>
+    <p>Deklarację złożysz w rejestracji albo przez Internetowe Konto Pacjenta (IKP) na stronie pacjent.gov.pl. Wybór jest bezpłatny. Bez opłaty można go zmienić 2 razy w roku.</p>
+    <p><a href="/jak-sie-zapisac/">Jak zapisać się do przychodni</a></p>
+  </section>
+
+  <section aria-labelledby="zgloszenie">
+    <h2 id="zgloszenie">Jak zgłosić wizytę pielęgniarki</h2>
+    <ol class="steps">
+      <li><h3>Zadzwoń do gabinetu zabiegowego</h3><p>Tel. <a href="tel:{{ clinic.phones.zabiegowy.e164 }}">{{ clinic.phones.zabiegowy.display }}</a>, {{ clinic.phones.zabiegowy.hoursText }}. Zadzwonić może pacjent lub ktoś z rodziny.</p></li>
+      <li><h3>Podaj dane i powód wizyty</h3><p>Imię, nazwisko, PESEL, dokładny adres i numer telefonu. Powiedz, czego potrzebujesz, np. zmiany opatrunku.</p></li>
+      <li><h3>Przygotuj zlecenie lekarza</h3><p>Do zastrzyków i pobrania krwi potrzebne jest zlecenie lub skierowanie lekarza. Miej je pod ręką, razem z lekami do podania.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="godziny">
+    <h2 id="godziny">Godziny pracy</h2>
+    <p>Pielęgniarka pracuje w godzinach pracy przychodni: {{ clinic.hours.przychodnia.days | daysLabel }}, {{ clinic.hours.przychodnia | timeRange }}. {{ clinic.hoursNote }}</p>
+    <p class="note">[DO UZUPEŁNIENIA: godziny wizyt domowych pielęgniarki środowiskowej]</p>
+  </section>
+
+  <section aria-labelledby="kto">
+    <h2 id="kto">Nasze pielęgniarki środowiskowe</h2>
+    {%- if team.nurses.community and team.nurses.community.length %}
+    <ul>
+      {%- for n in team.nurses.community %}
+      <li>{{ n.title + " " if n.title }}{{ n.name or n }}</li>
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p>Opiekę środowiskową prowadzą pielęgniarki naszej przychodni. <a href="/zespol/">Zobacz cały zespół</a>.</p>
+    {%- endif %}
+  </section>
+
+  {{ emergencyBox() }}
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.pielegniarka) }}
+  </section>
+</div>

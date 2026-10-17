@@ -1,0 +1,134 @@
+{
+  "_info": "JEDYNE źródło danych przychodni. Pola z wartością zawierającą [DO UZUPEŁNIENIA] lub \"verified\": false trzeba sprawdzić przed publikacją. Po zmianie: npm run build.",
+  "name": "Nasz-Lekarz",
+  "fullName": "NZOZ „Nasz-Lekarz”",
+  "schemaName": "NZOZ Nasz-Lekarz",
+  "legalName": "[DO UZUPEŁNIENIA – pełna nazwa podmiotu z RPWDL]",
+  "url": "https://nasz-lekarz.info",
+  "domain": "nasz-lekarz.info",
+  "email": "",
+  "emailNote": "Adres e-mail nie służy do spraw zdrowotnych ani do rejestracji.",
+  "foundingYear": null,
+  "foundingNote": "",
+  "acceptingNewPatients": true,
+  "onlineRegistrationUrl": "",
+
+  "address": {
+    "street": "ul. Wojska Polskiego 57",
+    "streetSchema": "Wojska Polskiego 57",
+    "floor": "I piętro",
+    "postalCode": "58-500",
+    "city": "Jelenia Góra",
+    "cityLocative": "Jeleniej Górze",
+    "region": "dolnośląskie",
+    "country": "PL"
+  },
+  "geo": {
+    "_info": "Środek budynku nr 57 wg OpenStreetMap (budynek way/204178603, sprawdzone 17.10.2026). OSM zapisuje ulicę jako „Aleja Wojska Polskiego” – sprawdzić, czy w adresie nie powinno być „al.” zamiast „ul.”.",
+    "lat": 50.8988457,
+    "lng": 15.7386901,
+    "verified": true,
+    "source": "https://www.openstreetmap.org/way/204178603"
+  },
+  "access": {
+    "_info": "Opis dojazdu i dostępności budynku – do uzupełnienia przez przychodnię.",
+    "parking": "",
+    "transport": "",
+    "building": "Przychodnia mieści się na I piętrze. [DO UZUPEŁNIENIA: czy jest winda lub podjazd]"
+  },
+  "areaServed": ["Jelenia Góra"],
+
+  "phones": {
+    "rejestracja": {
+      "key": "rejestracja",
+      "label": "Rejestracja",
+      "callLabel": "Zadzwoń do rejestracji",
+      "e164": "+48756422550",
+      "display": "75 642 25 50",
+      "purpose": "Wizyta u lekarza, wizyta domowa, recepta na stałe leki",
+      "hoursText": "poniedziałek–piątek 9:00–15:00"
+    },
+    "zabiegowy": {
+      "key": "zabiegowy",
+      "label": "Gabinet zabiegowy",
+      "callLabel": "Zadzwoń do gabinetu zabiegowego",
+      "e164": "+48756422551",
+      "display": "75 642 25 51",
+      "purpose": "Pobieranie krwi, szczepienia, EKG, zastrzyki, opatrunki",
+      "hoursText": "poniedziałek–piątek 8:00–18:00 [DO POTWIERDZENIA]"
+    },
+    "biuro": {
+      "key": "biuro",
+      "label": "Biuro",
+      "callLabel": "Zadzwoń do biura",
+      "e164": "+48756422553",
+      "display": "75 642 25 53",
+      "purpose": "Deklaracje, dokumentacja medyczna, sprawy organizacyjne",
+      "hoursText": "poniedziałek–piątek 8:00–15:00 [DO POTWIERDZENIA]"
+    }
+  },
+
+  "hours": {
+    "przychodnia": { "label": "Przychodnia", "days": [1, 2, 3, 4, 5], "from": "08:00", "to": "18:00" },
+    "rejestracja": { "label": "Rejestracja (telefon i osobiście)", "days": [1, 2, 3, 4, 5], "from": "09:00", "to": "15:00" },
+    "pobrania": { "label": "Pobieranie krwi", "days": [1, 2, 3, 4, 5], "from": "08:00", "to": "12:00", "note": "godziny wstępne – do potwierdzenia" }
+  },
+  "hoursNote": "W soboty, niedziele i święta przychodnia jest nieczynna.",
+
+  "homeVisits": {
+    "_info": "Zasady wizyt domowych – do potwierdzenia przez lekarzy. Dopóki verified = false, strona NIE pokazuje callBefore ani rule, tylko ogólne zdanie i [DO UZUPEŁNIENIA].",
+    "callBefore": "12:00",
+    "rule": "Wizytę domową zgłoś telefonicznie w rejestracji, najlepiej do godziny 12:00. Lekarz oddzwoni lub przyjedzie tego samego dnia po południu.",
+    "verified": false
+  },
+
+  "nightCare": {
+    "_info": "Nocna i świąteczna opieka zdrowotna (NiŚOZ) dla Jeleniej Góry – sprawdzić w wyszukiwarce NFZ: https://www.nfz.gov.pl/gdzie-sie-leczyc/nocna-i-swiateczna-opieka-zdrowotna/",
+    "name": "Wojewódzkie Centrum Szpitalne Kotliny Jeleniogórskiej – nocna i świąteczna opieka zdrowotna",
+    "address": "ul. Ogińskiego 6, 58-506 Jelenia Góra",
+    "addressShort": "ul. Ogińskiego 6",
+    "addressMaps": "Ogińskiego 6, 58-506 Jelenia Góra",
+    "phone": { "e164": "+48757537335", "display": "75 753 73 35" },
+    "phonesExtra": [
+      { "e164": "+48785662502", "display": "785 662 502" },
+      { "e164": "+48785567502", "display": "785 567 502" }
+    ],
+    "hours": "poniedziałek–piątek 18:00–8:00, soboty, niedziele i święta całą dobę (8:00–8:00)",
+    "areaServed": "powiat karkonoski i miasto Jelenia Góra",
+    "verified": true,
+    "source": "https://www.nfz-wroclaw.pl/default2.aspx?obj=45223%3B51457&des=1%3B2",
+    "checked": "2026-10-17"
+  },
+  "sor": {
+    "name": "Szpitalny Oddział Ratunkowy (SOR) – Wojewódzkie Centrum Szpitalne Kotliny Jeleniogórskiej",
+    "address": "ul. Ogińskiego 6, 58-506 Jelenia Góra",
+    "addressMaps": "Ogińskiego 6, 58-506 Jelenia Góra",
+    "phone": { "e164": "+48757537118", "display": "75 753 71 18" },
+    "verified": true,
+    "source": "https://spzoz.jgora.pl/kontakt/",
+    "checked": "2026-10-17"
+  },
+  "nfzSearchUrl": "https://www.nfz.gov.pl/gdzie-sie-leczyc/nocna-i-swiateczna-opieka-zdrowotna/",
+  "emergency": [
+    { "number": "112", "label": "Numer alarmowy" },
+    { "number": "999", "label": "Pogotowie ratunkowe" }
+  ],
+  "helplines": [
+    { "label": "Teleplatforma Pierwszego Kontaktu (teleporada NFZ, gdy przychodnia jest zamknięta)", "e164": "+48800137200", "display": "800 137 200", "hours": "poniedziałek–piątek 18:00–8:00, soboty, niedziele i święta całą dobę" },
+    { "label": "Telefoniczna Informacja Pacjenta NFZ i Rzecznika Praw Pacjenta", "e164": "+48800190590", "display": "800 190 590", "hours": "całą dobę, bezpłatnie" }
+  ],
+  "nfzBranch": {
+    "name": "Dolnośląski Oddział Wojewódzki NFZ",
+    "url": "https://www.nfz-wroclaw.pl/"
+  },
+
+  "registry": {
+    "_info": "Dane rejestrowe – OBOWIĄZKOWO uzupełnić przed publikacją.",
+    "legalForm": "",
+    "nip": "",
+    "regon": "",
+    "rpwdl": "",
+    "krs": ""
+  },
+  "dpo": { "name": "", "email": "" }
+}

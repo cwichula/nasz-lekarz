@@ -1,0 +1,76 @@
+---
+layout: layouts/base.njk
+title: Wizyta domowa lekarza Jelenia Góra – NFZ | Nasz-Lekarz
+heading: Wizyty domowe lekarza
+eleventyComputed:
+  description: "Wizyta domowa lekarza rodzinnego NFZ w Jeleniej Górze. Komu przysługuje i jak ją zgłosić: {% if clinic.homeVisits.verified %}zadzwoń do rejestracji, najlepiej do {{ clinic.homeVisits.callBefore }}{% else %}rejestracja, tel. {{ clinic.phones.rejestracja.display }}{% endif %}. Co przygotować do wizyty."
+  answer: "Lekarz rodzinny przyjeżdża do domu, gdy stan zdrowia nie pozwala pacjentowi przyjść do przychodni. Wizytę zgłoś w rejestracji, <strong>{{ clinic.hours.rejestracja.days | daysLabel }}{% if clinic.homeVisits.verified %}, najlepiej do godziny {{ clinic.homeVisits.callBefore }}{% else %}, {{ clinic.hours.rejestracja | timeRange }}{% endif %}</strong>, tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>. Wizyta jest bezpłatna w ramach NFZ."
+crumbs:
+  - { name: "Start", url: "/" }
+  - { name: "Usługi", url: "/uslugi/" }
+ctaPhone: rejestracja
+ctaText: Potrzebna wizyta domowa? Zadzwoń do rejestracji
+---
+{%- from "macros.njk" import faqList, emergencyBox -%}
+{# DO WERYFIKACJI: zasady wizyt domowych (clinic.homeVisits.verified = false) – potwierdzić z lekarzami godzinę zgłoszeń i porę wizyt. #}
+{# DO WERYFIKACJI: opis NFZ – wizyta w domu, gdy stan zdrowia uniemożliwia przyjście; o wizycie decyduje lekarz (źródło: nfz.gov.pl, Podstawowa opieka zdrowotna). #}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "MedicalClinic", "@id": {{ (clinic.url + "/#przychodnia") | json | safe }}, "name": {{ clinic.schemaName | json | safe }}, "availableService": { "@type": "MedicalProcedure", "name": "Wizyta domowa lekarza rodzinnego (POZ, NFZ)", "url": {{ (page.url | absUrl(clinic.url)) | json | safe }}, "procedureType": "https://schema.org/NoninvasiveProcedure", "howPerformed": "Lekarz podstawowej opieki zdrowotnej bada pacjenta w jego domu, gdy stan zdrowia nie pozwala na przyjście do przychodni." } }
+</script>
+<div class="container prose">
+  <section aria-labelledby="zasada">
+    <h2 id="zasada">Jak zgłosić wizytę domową</h2>
+    <div class="box box--info">
+      {%- if clinic.homeVisits.verified %}
+      <p><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg> <strong>{{ clinic.homeVisits.rule }}</strong></p>
+      {%- else %}
+      <p><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-home"></use></svg> <strong>Wizytę domową zgłoś telefonicznie w rejestracji.</strong></p>
+      <p>[DO UZUPEŁNIENIA: do której godziny przyjmujemy zgłoszenia i kiedy lekarz przyjeżdża]</p>
+      {%- endif %}
+      <p><strong>Telefon rejestracji:</strong> <a href="tel:{{ clinic.phones.rejestracja.e164 }}">{{ clinic.phones.rejestracja.display }}</a> ({{ clinic.phones.rejestracja.hoursText }})</p>
+    </div>
+    <p>Wizytę może zgłosić sam pacjent albo ktoś z rodziny, opiekun lub sąsiad. Rejestratorka zapyta o objawy i przekaże zgłoszenie lekarzowi.</p>
+  </section>
+
+  <section aria-labelledby="komu">
+    <h2 id="komu">Komu przysługuje wizyta domowa</h2>
+    <p>Wizyta domowa jest dla pacjentów zapisanych do naszej przychodni, czyli tych, którzy złożyli deklarację wyboru lekarza POZ. POZ to podstawowa opieka zdrowotna – lekarz rodzinny, pielęgniarka i położna.</p>
+    <p>Zgodnie z zasadami NFZ lekarz przyjeżdża do domu, gdy <strong>stan zdrowia nie pozwala pacjentowi przyjść do przychodni</strong>. Może to być na przykład:</p>
+    <ul>
+      <li>osoba leżąca lub z dużymi trudnościami w chodzeniu,</li>
+      <li>osoba po nagłym, ciężkim zachorowaniu,</li>
+      <li>osoba z zaostrzeniem choroby przewlekłej, która nie może wyjść z domu.</li>
+    </ul>
+    <p><strong>O wizycie decyduje lekarz.</strong> Czasem lekarz najpierw oddzwoni i porozmawia z pacjentem przez telefon. Jeśli pacjent może przyjść, lekarz zaproponuje wizytę w przychodni lub teleporadę.</p>
+  </section>
+
+  <section aria-labelledby="przygotuj">
+    <h2 id="przygotuj">Co przygotować przed telefonem</h2>
+    <ul class="checklist">
+      <li>Imię, nazwisko i numer PESEL pacjenta.</li>
+      <li>Dokładny adres: ulica, numer domu i mieszkania, piętro, kod do domofonu.</li>
+      <li>Krótki opis objawów: co się dzieje i od kiedy, czy jest gorączka.</li>
+      <li>Listę leków, które pacjent przyjmuje na stałe.</li>
+      <li>Numer telefonu, pod którym lekarz może oddzwonić.</li>
+    </ul>
+    <p>Na wizytę przygotuj też ostatnie wyniki badań i wypisy ze szpitala, jeśli są.</p>
+  </section>
+
+  <section aria-labelledby="obszar">
+    <h2 id="obszar">Gdzie jeździ lekarz</h2>
+    <p>Wizyty domowe obejmują: <strong>{{ clinic.areaServed | join(", ") }}</strong>.</p>
+    <p class="note">[DO UZUPEŁNIENIA: pełna lista miejscowości i osiedli obsługiwanych przez wizyty domowe]</p>
+  </section>
+
+  <section aria-labelledby="zamkniete">
+    <h2 id="zamkniete">Gdy przychodnia jest zamknięta</h2>
+    <p>{% if clinic.homeVisits.verified %}Lekarz rodzinny jeździ na wizyty w godzinach pracy przychodni: {{ clinic.hours.przychodnia.days | daysLabel }}, {{ clinic.hours.przychodnia | timeRange }}.{% else %}[DO UZUPEŁNIENIA: w jakich godzinach lekarz jeździ na wizyty domowe]{% endif %} W nocy, w weekendy i święta wizytę domową w nagłej sprawie może zlecić nocna i świąteczna opieka zdrowotna. <a href="/po-godzinach/">Gdzie szukać pomocy po godzinach</a>.</p>
+  </section>
+
+  {{ emergencyBox("Nagły ból w klatce piersiowej, duszność, utrata przytomności, objawy udaru? Nie czekaj na wizytę domową – dzwoń 112 lub 999.") }}
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.domowe) }}
+  </section>
+</div>

@@ -1,0 +1,55 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <section aria-labelledby="f-kontakt">
+        <h2 id="f-kontakt">{{ clinic.fullName }}</h2>
+        <address class="address">
+          {{ clinic.address.street }} ({{ clinic.address.floor }})<br>
+          {{ clinic.address.postalCode }} {{ clinic.address.city }}
+        </address>
+        <ul>
+          {%- for key, p in clinic.phones %}
+          <li>{{ p.label }}: <a class="footer__tel" href="tel:{{ p.e164 }}">{{ p.display }}</a></li>
+          {%- endfor %}
+          {%- if clinic.email %}
+          <li>E-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a></li>
+          {%- endif %}
+        </ul>
+      </section>
+      <section aria-labelledby="f-pacjent">
+        <h2 id="f-pacjent">Dla pacjenta</h2>
+        <ul>
+          <li><a href="/kontakt/">Telefony, godziny, dojazd</a></li>
+          <li><a href="/jak-sie-zapisac/">Jak się zapisać</a></li>
+          <li><a href="/recepty-i-e-uslugi/">Recepty i e-usługi</a></li>
+          <li><a href="/po-godzinach/">Gdy przychodnia jest zamknięta</a></li>
+          <li><a href="/kartka-z-telefonami/">Kartka z telefonami do druku</a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="f-prawne">
+        <h2 id="f-prawne">Informacje prawne</h2>
+        <ul>
+          <li><a href="/prawa-pacjenta/">Prawa pacjenta i skargi</a></li>
+          <li><a href="/standardy-ochrony-maloletnich/">Standardy ochrony małoletnich</a></li>
+          <li><a href="/polityka-prywatnosci/">Polityka prywatności (RODO)</a></li>
+          <li><a href="/deklaracja-dostepnosci/">Deklaracja dostępności</a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="f-dane">
+        <h2 id="f-dane">Dane rejestrowe</h2>
+        <p>{{ clinic.legalName }}</p>
+        <ul>
+          <li>NIP: {{ clinic.registry.nip or "[DO UZUPEŁNIENIA]" }}</li>
+          <li>REGON: {{ clinic.registry.regon or "[DO UZUPEŁNIENIA]" }}</li>
+          <li>Nr księgi rejestrowej RPWDL: {{ clinic.registry.rpwdl or "[DO UZUPEŁNIENIA]" }}</li>
+          <li>KRS: {{ clinic.registry.krs or "[DO UZUPEŁNIENIA, jeśli dotyczy]" }}</li>
+        </ul>
+        <p>Świadczenia udzielane w ramach umowy z Narodowym Funduszem Zdrowia – bezpłatnie dla osób ubezpieczonych.</p>
+      </section>
+    </div>
+    <div class="footer__bottom">
+      <p>© {{ clinic.fullName }}</p>
+      <p>Strona nie używa plików cookies.</p>
+    </div>
+  </div>
+</footer>

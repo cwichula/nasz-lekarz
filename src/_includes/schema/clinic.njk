@@ -1,0 +1,80 @@
+{%- set c = clinic -%}
+{%- set clinicId = c.url + "/#przychodnia" -%}
+{%- set full = page.url == "/" or page.url == "/kontakt/" -%}
+<script type="application/ld+json">
+{%- if full %}
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "@id": {{ clinicId | json | safe }},
+  "name": {{ c.schemaName | json | safe }},
+  "url": {{ (c.url + "/") | json | safe }},
+  "logo": {{ (c.url + "/favicon.svg") | json | safe }},
+  "image": {{ (c.url + "/assets/img/og-image.png") | json | safe }},
+  "description": "Przychodnia podstawowej opieki zdrowotnej (POZ) w Jeleniej Górze, w ramach umowy z NFZ: lekarz rodzinny, pielęgniarki, pobieranie krwi, szczepienia, EKG, wizyty domowe.",
+  "telephone": {{ c.phones.rejestracja.e164 | json | safe }},
+  {%- if c.email %}
+  "email": {{ c.email | json | safe }},
+  {%- endif %}
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ (c.address.streetSchema + ", " + c.address.floor) | json | safe }},
+    "postalCode": {{ c.address.postalCode | json | safe }},
+    "addressLocality": {{ c.address.city | json | safe }},
+    "addressRegion": {{ c.address.region | json | safe }},
+    "addressCountry": "PL"
+  },
+  {%- if c.geo.lat %}
+  "geo": { "@type": "GeoCoordinates", "latitude": {{ c.geo.lat }}, "longitude": {{ c.geo.lng }} },
+  {%- endif %}
+  "areaServed": [{% for a in c.areaServed %}{ "@type": "City", "name": {{ a | json | safe }} }{% if not loop.last %}, {% endif %}{% endfor %}],
+  "medicalSpecialty": "PrimaryCare",
+  "isAcceptingNewPatients": {{ c.acceptingNewPatients | json | safe }},
+  "isAccessibleForFree": true,
+  {%- if c.foundingYear %}
+  "foundingDate": "{{ c.foundingYear }}",
+  {%- endif %}
+  "availableService": [
+    { "@type": "MedicalProcedure", "name": "Wizyta u lekarza rodzinnego (POZ)" },
+    { "@type": "MedicalTest", "name": "Pobieranie krwi do badań laboratoryjnych" },
+    { "@type": "MedicalTest", "name": "Badanie EKG" },
+    { "@type": "MedicalProcedure", "name": "Szczepienia ochronne" },
+    { "@type": "MedicalProcedure", "name": "Wizyty domowe lekarza i pielęgniarki" }
+  ],
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": {{ c.hours.przychodnia.from | json | safe }},
+    "closes": {{ c.hours.przychodnia.to | json | safe }}
+  }],
+  "contactPoint": [
+    {%- for key, p in c.phones %}
+    {
+      "@type": "ContactPoint",
+      "contactType": {{ p.label | json | safe }},
+      "telephone": {{ p.e164 | json | safe }},
+      "availableLanguage": "pl"
+      {%- if key == "rejestracja" %},
+      "hoursAvailable": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": {{ c.hours.rejestracja.from | json | safe }}, "closes": {{ c.hours.rejestracja.to | json | safe }} }
+      {%- endif %}
+    }{% if not loop.last %},{% endif %}
+    {%- endfor %}
+  ]
+}
+{%- else %}
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": {{ (heading or title) | json | safe }},
+  "url": {{ (page.url | absUrl(c.url)) | json | safe }},
+  "inLanguage": "pl",
+  "about": { "@id": {{ clinicId | json | safe }} },
+  "publisher": { "@type": "MedicalClinic", "@id": {{ clinicId | json | safe }}, "name": {{ c.schemaName | json | safe }}, "url": {{ (c.url + "/") | json | safe }} }
+}
+{%- endif %}
+</script>
+{%- if page.url == "/" %}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "WebSite", "name": {{ c.fullName | json | safe }}, "url": {{ (c.url + "/") | json | safe }}, "inLanguage": "pl", "publisher": { "@id": {{ clinicId | json | safe }} } }
+</script>
+{%- endif %}

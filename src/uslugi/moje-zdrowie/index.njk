@@ -1,0 +1,72 @@
+---
+layout: layouts/base.njk
+title: Bilans „Moje Zdrowie” NFZ – Jelenia Góra | Nasz-Lekarz
+description: "Bezpłatny bilans zdrowia NFZ „Moje Zdrowie” dla dorosłych od 20 lat w Jeleniej Górze: ankieta w IKP lub w przychodni, badania krwi i moczu, wizyta końcowa."
+heading: Bilans zdrowia „Moje Zdrowie” dla dorosłych
+eleventyComputed:
+  answer: "„Moje Zdrowie” to bezpłatny program NFZ dla dorosłych od 20. roku życia. Wypełniasz ankietę, robisz badania krwi i moczu, a potem omawiasz wyniki w przychodni. Pytania: rejestracja, tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+  - { name: "Usługi", url: "/uslugi/" }
+ctaPhone: rejestracja
+ctaText: Pytanie o bilans „Moje Zdrowie”? Zadzwoń do rejestracji
+---
+{# DO WERYFIKACJI: czy przychodnia realizuje program #}
+{# Źródło zasad: NFZ, „Nie czekaj na objawy – sprawdź swoje zdrowie w programie Moje Zdrowie”, https://www.nfz.gov.pl/aktualnosci/aktualnosci-centrali/nie-czekaj-na-objawy-sprawdz-swoje-zdrowie-w-programie-moje-zdrowie,8775.html (publ. 8.05.2025, aktualizacja 26.08.2026; sprawdzono 17.10.2026). #}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "MedicalClinic", "@id": {{ (clinic.url + "/#przychodnia") | json | safe }}, "name": {{ clinic.schemaName | json | safe }}, "availableService": { "@type": "MedicalProcedure", "name": "Bilans zdrowia osoby dorosłej – program NFZ „Moje Zdrowie”", "url": {{ (page.url | absUrl(clinic.url)) | json | safe }}, "procedureType": "https://schema.org/NoninvasiveProcedure" } }
+</script>
+<div class="container prose">
+  <p class="box box--notice">[DO UZUPEŁNIENIA: potwierdzić, że przychodnia realizuje program „Moje Zdrowie”. Do czasu potwierdzenia zapytaj o program w rejestracji.]</p>
+  <section aria-labelledby="kto">
+    <h2 id="kto">Kto może skorzystać</h2>
+    <ul class="checklist">
+      <li>Osoby, które mają <strong>20 lat lub więcej</strong>. Nie ma górnej granicy wieku.</li>
+      <li>Osoby ubezpieczone w NFZ. Ubezpieczenie sprawdzamy w systemie eWUŚ (elektroniczna weryfikacja uprawnień świadczeniobiorców).</li>
+      <li>Osoby w wieku <strong>20–49 lat – raz na 5 lat</strong>, a osoby <strong>powyżej 49 lat – raz na 3 lata</strong>.</li>
+    </ul>
+    <p>Liczy się rok urodzenia, a nie dokładna data urodzin.</p>
+  </section>
+
+  <section aria-labelledby="kroki">
+    <h2 id="kroki">Jak to wygląda – 3 kroki</h2>
+    <ol class="steps">
+      <li><h3>Wypełnij ankietę</h3><p>W Internetowym Koncie Pacjenta (IKP) na stronie pacjent.gov.pl lub w aplikacji mojeIKP, w zakładce „Profilaktyka”. Możesz też wypełnić ankietę w przychodni POZ, do której jesteś zapisany.</p></li>
+      <li><h3>Zrób badania</h3><p>Przychodnia wystawia skierowanie na badania – według NFZ w ciągu 30 dni. Z nim idziesz na pobranie krwi i oddajesz mocz do badania.</p></li>
+      <li><h3>Przyjdź na wizytę podsumowującą</h3><p>Gdy wyniki są gotowe, omawiasz je w przychodni. Otrzymujesz Indywidualny Plan Zdrowotny (IPZ) z zaleceniami.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="badania">
+    <h2 id="badania">Jakie badania obejmuje</h2>
+    <h3>Badania dla wszystkich</h3>
+    <ul>
+      <li>morfologia krwi,</li>
+      <li>glukoza (cukier) we krwi,</li>
+      <li>lipidogram – cholesterol całkowity, LDL, HDL i trójglicerydy,</li>
+      <li>kreatynina z eGFR – ocena pracy nerek,</li>
+      <li>TSH – ocena pracy tarczycy,</li>
+      <li>badanie ogólne moczu.</li>
+    </ul>
+    <h3>Badania dodatkowe – zależnie od wieku i odpowiedzi w ankiecie</h3>
+    <ul>
+      <li>próby wątrobowe (ALAT, AspAT, GGTP),</li>
+      <li>PSA – u mężczyzn po 50. roku życia,</li>
+      <li>anty-HCV – w kierunku wirusowego zapalenia wątroby typu C,</li>
+      <li>lipoproteina(a) – jeden raz, w wieku 20–40 lat,</li>
+      <li>test na krew utajoną w kale (FIT) – po 50. roku życia.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="wizyta">
+    <h2 id="wizyta">Wizyta podsumowująca</h2>
+    <p>Podczas wizyty mierzymy ciśnienie, tętno, wagę, wzrost oraz obwód talii i bioder. Omawiamy wyniki badań. Jeśli trzeba, lekarz kieruje na dalsze badania lub do specjalisty.</p>
+    <p>Indywidualny Plan Zdrowotny zawiera zalecenia dotyczące jedzenia, ruchu, badań profilaktycznych i szczepień.</p>
+  </section>
+
+  <section aria-labelledby="zrodlo">
+    <h2 id="zrodlo">Więcej informacji</h2>
+    <p>Zasady programu ustala NFZ i mogą się one zmienić. Aktualne informacje znajdziesz na stronie NFZ: <a href="https://www.nfz.gov.pl/aktualnosci/aktualnosci-centrali/nie-czekaj-na-objawy-sprawdz-swoje-zdrowie-w-programie-moje-zdrowie,8775.html">program „Moje Zdrowie” – nfz.gov.pl</a> oraz w <a href="https://pacjent.gov.pl/">Internetowym Koncie Pacjenta – pacjent.gov.pl</a>.</p>
+    <p class="note">Źródło: Narodowy Fundusz Zdrowia, informacja zaktualizowana 26 sierpnia 2026 r.</p>
+  </section>
+</div>

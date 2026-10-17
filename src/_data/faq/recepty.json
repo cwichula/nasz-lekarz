@@ -1,0 +1,37 @@
+[
+  {
+    "id": "recepta-bez-wizyty",
+    "topic": "recepty",
+    "q": "Czy dostanę receptę bez wizyty?",
+    "a": "Na leki, które bierzesz na stałe – zwykle tak, jeśli lekarz uzna to za bezpieczne na podstawie Twojej dokumentacji. Zamów receptę w rejestracji. Czasem lekarz poprosi o wizytę lub teleporadę.",
+    "link": { "url": "/recepty-i-e-uslugi/#leki-stale", "text": "Recepta na leki stałe" }
+  },
+  {
+    "id": "nie-mam-ikp-kod-recepty",
+    "topic": "recepty",
+    "q": "Nie mam IKP ani smartfona. Jak odbiorę e-receptę?",
+    "a": "Kod e-recepty wydrukujemy Ci w rejestracji. W aptece podajesz ten kod i numer PESEL albo pokazujesz wydruk.",
+    "link": { "url": "/recepty-i-e-uslugi/#e-recepta", "text": "E-recepta – jak ją zrealizować" }
+  },
+  {
+    "id": "czy-ktos-moze-zamowic-recepte",
+    "topic": "recepty",
+    "q": "Czy ktoś z rodziny może zamówić dla mnie receptę?",
+    "a": "Tak. Osoba bliska może zadzwonić do rejestracji lub przyjść osobiście. Musi podać Twoje imię, nazwisko, PESEL i nazwy leków.",
+    "link": { "url": "/recepty-i-e-uslugi/#leki-stale", "text": "Jak zamówić receptę" }
+  },
+  {
+    "id": "zwolnienie-do-pracodawcy",
+    "topic": "recepty",
+    "q": "Czy muszę zanieść zwolnienie lekarskie do pracy?",
+    "a": "Nie. Lekarz wystawia e-zwolnienie, które trafia od razu do ZUS i do pracodawcy.",
+    "link": { "url": "/recepty-i-e-uslugi/#e-zwolnienie", "text": "E-zwolnienie" }
+  },
+  {
+    "id": "bezplatne-leki-kto",
+    "topic": "recepty",
+    "q": "Komu przysługują bezpłatne leki?",
+    "a": "Osobom od 65 lat oraz dzieciom i młodzieży do 18 lat – na leki z listy Ministerstwa Zdrowia. Kobietom w ciąży – na leki z osobnej listy dla kobiet w ciąży. Zapytaj lekarza, czy Twój lek jest na liście.",
+    "link": { "url": "/recepty-i-e-uslugi/#bezplatne-leki", "text": "Bezpłatne leki" }
+  }
+]

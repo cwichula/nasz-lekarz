@@ -1,0 +1,38 @@
+{%- from "macros.njk" import status -%}
+<div class="topbar">
+  <div class="container topbar__inner">
+    {{ status(clinic.hours.rejestracja) }}
+    <div class="topbar__links">
+      <span class="topbar__address">{{ clinic.address.street }} ({{ clinic.address.floor }}), {{ clinic.address.city }}</span>
+      <a href="/po-godzinach/">Po godzinach</a>
+      <div class="textsize" role="group" aria-label="Wielkość tekstu">
+        <span class="textsize__label" aria-hidden="true">Tekst:</span>
+        <button type="button" data-text-size="0" aria-pressed="true" aria-label="Tekst normalny">A</button>
+        <button type="button" data-text-size="1" aria-pressed="false" aria-label="Tekst większy">A+</button>
+        <button type="button" data-text-size="2" aria-pressed="false" aria-label="Tekst największy">A++</button>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>
+      {% include "partials/logo.njk" %}
+      <span class="brand__text"><span class="brand__name">{{ clinic.name }}</span><span class="brand__sub">Przychodnia NFZ · {{ clinic.address.city }}</span></span>
+    </a>
+    <div class="header__actions">
+      <a class="btn header__call" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><span class="header__call-label">Rejestracja </span>{{ clinic.phones.rejestracja.display }}</a>
+    </div>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg><span data-menu-label>Menu</span></button>
+  </div>
+  <nav class="nav" id="menu" aria-label="Menu główne">
+    <div class="container">
+      <ul>
+        {%- for item in nav %}
+        {%- set active = (page.url == item.url) or (item.url != "/" and page.url.startsWith(item.url)) %}
+        <li><a href="{{ item.url }}"{% if active %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </nav>
+</header>

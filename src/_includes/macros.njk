@@ -1,0 +1,172 @@
+{#- Wspólne komponenty. Import: {% from "macros.njk" import phoneCard, hoursTable %} -#}
+
+{#- Karta telefonu – cała karta jest linkiem tel: -#}
+{% macro phoneCard(p, main=false, headingLevel=3) %}
+<a class="phone-card{% if main %} phone-card--main{% endif %}" href="tel:{{ p.e164 }}">
+  <span class="phone-card__label">{{ p.label }}</span>
+  <span class="phone-card__purpose">{{ p.purpose }}</span>
+  <span class="phone-card__hours">{{ p.hoursText }}</span>
+  <span class="phone-card__number"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>{{ p.display }}</span>
+  <span class="phone-card__cta">{{ p.callLabel }}</span>
+</a>
+{% endmacro %}
+
+{#- Trzy telefony: rejestracja jako główny -#}
+{% macro phoneCards(phones) %}
+<div class="phones">
+  {{ phoneCard(phones.rejestracja, true) }}
+  {{ phoneCard(phones.zabiegowy) }}
+  {{ phoneCard(phones.biuro) }}
+</div>
+{% endmacro %}
+
+{#- Status rejestracji (wypełniany przez JS; bez JS ukryty) -#}
+{% macro status(hours, what="Rejestracja") %}
+<p class="status" data-status data-what="{{ what }}" data-from="{{ hours.from }}" data-to="{{ hours.to }}" hidden><span data-status-text>{{ what }}</span></p>
+{% endmacro %}
+
+{#- Tabela godzin tygodniowych: działy w kolumnach, dni w wierszach -#}
+{% macro hoursTable(clinic, team, caption="Godziny pracy przychodni", withDoctors=true) %}
+<div class="table-wrap">
+<table class="hours">
+  <caption>{{ caption }}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Dzień</th>
+      <th scope="col">Przychodnia</th>
+      <th scope="col">Rejestracja</th>
+      <th scope="col">Pobieranie krwi</th>
+      {%- if withDoctors %}<th scope="col">Lekarze</th>{% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {%- for d in [1, 2, 3, 4, 5] %}
+    <tr data-day="{{ d }}">
+      <th scope="row">{{ d | dayName | capitalize }}<span class="today-label" data-today-label hidden>dziś</span></th>
+      <td data-label="Przychodnia">{{ clinic.hours.przychodnia | timeRange }}</td>
+      <td data-label="Rejestracja">{{ clinic.hours.rejestracja | timeRange }}</td>
+      <td data-label="Pobieranie krwi">{{ clinic.hours.pobrania | timeRange }}</td>
+      {%- if withDoctors %}
+      <td data-label="Lekarze">
+        <span>{%- set docs = team.doctors | doctorsOn(d) %}
+        {%- for x in docs %}<span class="nowrap">{{ x.name }}: {{ x.hours }}</span>{% if not loop.last %}<br>{% endif %}{% else %}<span class="muted">brak przyjęć lekarza</span>{% endfor %}</span>
+      </td>
+      {%- endif %}
+    </tr>
+    {%- endfor %}
+    <tr data-day="6"><th scope="row">Sobota<span class="today-label" data-today-label hidden>dziś</span></th><td colspan="{{ 4 if withDoctors else 3 }}">nieczynne</td></tr>
+    <tr data-day="0"><th scope="row">Niedziela i święta<span class="today-label" data-today-label hidden>dziś</span></th><td colspan="{{ 4 if withDoctors else 3 }}">nieczynne – <a href="/po-godzinach/">gdzie szukać pomocy</a></td></tr>
+  </tbody>
+</table>
+</div>
+{%- if clinic.hours.pobrania.note %}<p class="note">Pobieranie krwi: {{ clinic.hours.pobrania.note }}.</p>{% endif %}
+{% endmacro %}
+
+{#- Skrócona lista godzin -#}
+{% macro hoursList(clinic) %}
+<ul class="hours-list">
+  {%- for key in ["przychodnia", "rejestracja", "pobrania"] %}
+  {%- set h = clinic.hours[key] %}
+  <li><span>{{ h.label }}</span><strong>{{ h.days | daysLabel(true) }} {{ h | timeRange }}</strong></li>
+  {%- endfor %}
+</ul>
+{% endmacro %}
+
+{#- Ramka „Gdy jesteśmy zamknięci” -#}
+{% macro closedBox(clinic, headingLevel=2) %}
+<div class="box box--closed">
+  <h{{ headingLevel }} class="box__title"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"></use></svg>Gdy przychodnia jest zamknięta</h{{ headingLevel }}>
+  <p>W dni robocze od {{ clinic.hours.przychodnia.to | hm }} do {{ clinic.hours.przychodnia.from | hm }} rano, w weekendy i święta skorzystaj z <strong>nocnej i świątecznej opieki zdrowotnej</strong> – bez skierowania i bez rejestracji. <a href="/po-godzinach/">Adres i godziny punktu w Jeleniej Górze</a>.</p>
+  <ul>
+    {%- for h in clinic.helplines %}
+    <li>{{ h.label }}: <a href="tel:{{ h.e164 }}"><strong>{{ h.display }}</strong></a> ({{ h.hours }})</li>
+    {%- endfor %}
+  </ul>
+  <p><strong>Zagrożenie życia?</strong> Dzwoń pod <a href="tel:112"><strong>112</strong></a> lub <a href="tel:999"><strong>999</strong></a>.</p>
+</div>
+{% endmacro %}
+
+{#- Ramka alarmowa -#}
+{% macro emergencyBox(text="Nagły ból w klatce piersiowej, duszność, utrata przytomności, objawy udaru? Nie czekaj na wizytę.") %}
+<div class="box box--emergency" role="note">
+  <h2><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-alert"></use></svg>Zagrożenie życia – dzwoń 112</h2>
+  <p>{{ text }}</p>
+  <div class="btn-row">
+    <a class="btn btn--danger" href="tel:112">Zadzwoń 112</a>
+    <a class="btn btn--danger" href="tel:999">Zadzwoń 999</a>
+  </div>
+</div>
+{% endmacro %}
+
+{#- Okruszki -#}
+{% macro breadcrumbs(items, current) %}
+<nav class="breadcrumbs" aria-label="Jesteś tutaj">
+  <ol>
+    {%- for c in items %}
+    <li><a href="{{ c.url }}">{{ c.name }}</a></li>
+    {%- endfor %}
+    <li><span aria-current="page">{{ current }}</span></li>
+  </ol>
+</nav>
+{% endmacro %}
+
+{#- Kafelek zadania -#}
+{% macro tile(url, icon, title, desc) %}
+<li><a class="tile" href="{{ url }}">
+  <span class="tile__icon"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-{{ icon }}"></use></svg></span>
+  <span class="tile__body"><span class="tile__title">{{ title }}</span><span class="tile__desc">{{ desc }}</span></span>
+  <svg class="icon icon--sm tile__arrow" aria-hidden="true" focusable="false"><use href="#i-chevron-right"></use></svg>
+</a></li>
+{% endmacro %}
+
+{#- Karta osoby -#}
+{% macro personCard(doc, headingLevel=3) %}
+<article class="person" id="{{ doc.slug }}">
+  <div class="person__avatar">
+    {%- if doc.photo %}<img src="{{ doc.photo }}" alt="{{ doc.title }} {{ doc.name }}" width="72" height="72" loading="lazy">
+    {%- else %}<svg class="icon icon--lg" aria-hidden="true" focusable="false"><use href="#i-user"></use></svg>{% endif %}
+  </div>
+  <div>
+    <h{{ headingLevel }} class="person__name">{{ doc.title }} {{ doc.name }}</h{{ headingLevel }}>
+    <p class="person__role">{{ doc.role }}{% if doc.specialty %}, {{ doc.specialty }}{% endif %}{% if doc.pwz %} · nr PWZ {{ doc.pwz }}{% endif %}</p>
+    {%- if doc.schedule %}
+    <dl class="person__hours">
+      <dt>Godziny przyjęć</dt>
+      {%- for s in doc.schedule %}
+      <dd>{{ s.days | daysLabel }}: {{ s | timeRange }}</dd>
+      {%- endfor %}
+    </dl>
+    {%- endif %}
+  </div>
+</article>
+{% endmacro %}
+
+{#- Blok „Masz pytanie? Zadzwoń” na końcu podstrony -#}
+{% macro cta(p, text) %}
+<section class="cta" aria-labelledby="cta-title">
+  <div class="container cta__inner">
+    <div>
+      <h2 id="cta-title">{{ text or "Masz pytanie? Zadzwoń do nas" }}</h2>
+      <p>{{ p.label }}: {{ p.hoursText }}</p>
+    </div>
+    <a class="btn" href="tel:{{ p.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>{{ p.label }}: {{ p.display }}</a>
+  </div>
+</section>
+{% endmacro %}
+
+{#- Link do pliku -#}
+{% macro download(url, name, meta) %}
+<li><a class="download" href="{{ url }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"></use></svg><span>{{ name }}<span class="download__meta">{{ meta }}</span></span></a></li>
+{% endmacro %}
+
+{#- FAQ z faq.json – items: lista pytań -#}
+{% macro faqList(items) %}
+<div class="faq">
+  {%- for q in items %}
+  <details id="{{ q.id }}">
+    <summary>{{ q.q }}</summary>
+    <div class="faq__answer"><p>{{ q.a | safe }}</p>{% if q.link %}<p><a href="{{ q.link.url }}">{{ q.link.text }}</a></p>{% endif %}</div>
+  </details>
+  {%- endfor %}
+</div>
+{% endmacro %}

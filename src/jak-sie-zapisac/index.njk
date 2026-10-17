@@ -1,0 +1,104 @@
+---
+layout: layouts/base.njk
+title: Jak zapisać się do przychodni – deklaracja POZ | Nasz-Lekarz
+description: "Zapisz się do lekarza rodzinnego NFZ w Jeleniej Górze: deklaracja POZ w rejestracji lub przez IKP. Bezpłatnie, bez wypisywania się z poprzedniej przychodni."
+heading: Jak zapisać się do naszej przychodni
+eleventyComputed:
+  answer: "Aby leczyć się u nas bezpłatnie w ramach NFZ, złóż <strong>deklarację wyboru</strong> lekarza, pielęgniarki i położnej podstawowej opieki zdrowotnej (POZ). Zrobisz to w rejestracji przy {{ clinic.address.street }}, {{ clinic.hours.rejestracja.days | daysLabel }} w godzinach {{ clinic.hours.rejestracja | timeRange }}, albo przez internet w IKP. Pytania o deklaracje: biuro, tel. <a href=\"tel:{{ clinic.phones.biuro.e164 }}\">{{ clinic.phones.biuro.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: biuro
+ctaText: Pytanie o deklarację? Zadzwoń do biura
+---
+{%- from "macros.njk" import faqList -%}
+<div class="container prose">
+  <section aria-labelledby="czym-jest">
+    <h2 id="czym-jest">Czym jest deklaracja</h2>
+    <p>Deklaracja wyboru to krótki formularz. Piszesz w nim, do którego lekarza, pielęgniarki i położnej chcesz chodzić. Dzięki niej możesz korzystać z przychodni bezpłatnie, w ramach Narodowego Funduszu Zdrowia (NFZ).</p>
+    <ul class="checklist">
+      <li>Złożenie deklaracji jest <strong>bezpłatne</strong>.</li>
+      <li><strong>Nie musisz wypisywać się</strong> z poprzedniej przychodni. Nowa deklaracja zastępuje starą.</li>
+      <li>Są trzy osobne deklaracje: do <strong>lekarza</strong>, do <strong>pielęgniarki</strong> i do <strong>położnej</strong>. Warto złożyć wszystkie.</li>
+    </ul>
+    <p>Skrót POZ oznacza podstawową opiekę zdrowotną – to lekarz rodzinny, pielęgniarka i położna, do których idziesz w pierwszej kolejności.</p>
+  </section>
+
+  <section aria-labelledby="kroki">
+    <h2 id="kroki">Jak się zapisać – 3 kroki</h2>
+    <ol class="steps">
+      <li><h3>Weź deklarację</h3><p>Druk dostaniesz w rejestracji. Możesz też <a href="#druki">pobrać wzór</a> i wydrukować go w domu.</p></li>
+      <li><h3>Wypełnij</h3><p>Wpisz swoje dane i numer PESEL. Wybierz lekarza z listy naszego <a href="/zespol/">zespołu</a>. Podpisz deklarację.</p></li>
+      <li><h3>Oddaj w rejestracji albo złóż przez IKP</h3><p>Przynieś deklarację do rejestracji, {{ clinic.hours.rejestracja.days | daysLabel }}, {{ clinic.hours.rejestracja | timeRange }}. Albo złóż ją przez internet w IKP.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="sposoby">
+    <h2 id="sposoby">Dwa sposoby złożenia deklaracji</h2>
+    <h3>Sposób 1: w rejestracji</h3>
+    <p>Przyjdź osobiście do rejestracji: {{ clinic.address.street }}, {{ clinic.address.floor }}. Weź dowód osobisty lub inny dokument z numerem PESEL. Pomożemy Ci wypełnić druk na miejscu.</p>
+    <h3>Sposób 2: przez Internetowe Konto Pacjenta (IKP)</h3>
+    <p>IKP to bezpłatna strona Ministerstwa Zdrowia: <a href="https://pacjent.gov.pl/" rel="noopener">pacjent.gov.pl</a>. Możesz też użyć aplikacji mojeIKP na telefonie.</p>
+    <ol>
+      <li>Zaloguj się do IKP (na przykład profilem zaufanym, przez bank lub aplikacją mObywatel).</li>
+      <li>Wybierz sekcję dotyczącą podstawowej opieki zdrowotnej (POZ).</li>
+      <li>Wyszukaj naszą przychodnię i wybranego lekarza, pielęgniarkę lub położną.</li>
+      <li>Potwierdź wybór.</li>
+    </ol>
+    {# DO WERYFIKACJI: dokładna nazwa zakładki w IKP – wg pacjent.gov.pl „Moje konto” → „Twoja Podstawowa Opieka Zdrowotna (POZ)”; menu IKP bywa zmieniane. #}
+    <p>Jak założyć IKP – opisujemy na stronie <a href="/recepty-i-e-uslugi/#ikp">Recepty i sprawy przez internet</a>.</p>
+  </section>
+
+  <section aria-labelledby="druki">
+    <h2 id="druki">Druki deklaracji do pobrania</h2>
+    <p>Aktualne wzory deklaracji (lekarz, pielęgniarka, położna) publikuje Narodowy Fundusz Zdrowia. Wzory są na końcu rozporządzenia, które znajdziesz na stronie NFZ.</p>
+    <ul class="downloads">
+      <li><a class="download" href="https://www.nfz.gov.pl/dla-swiadczeniodawcy/pliki-do-pobrania/druki/" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span>Wzory deklaracji wyboru lekarza, pielęgniarki i położnej POZ<span class="download__meta">strona NFZ: nfz.gov.pl</span></span></a></li>
+      <li><a class="download" href="https://pacjent.gov.pl/jak-wybrac-lub-zmienic-swiadczeniodawce-poz" rel="noopener"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-external"></use></svg><span>Jak wybrać lub zmienić lekarza, pielęgniarkę i położną POZ<span class="download__meta">poradnik: pacjent.gov.pl</span></span></a></li>
+    </ul>
+    <p>Jeśli nie masz drukarki – druki są do wzięcia w rejestracji.</p>
+    {# DO WERYFIKACJI: czy przychodnia chce udostępnić własne PDF-y deklaracji z wpisanymi danymi przychodni (src/pliki/). Na razie linkujemy do oficjalnego źródła NFZ. #}
+  </section>
+
+  <section aria-labelledby="zmiana">
+    <h2 id="zmiana">Zmiana lekarza – ile razy w roku</h2>
+    <p>Lekarza, pielęgniarkę lub położną POZ możesz zmienić <strong>bezpłatnie 2 razy w roku kalendarzowym</strong>. Nie musisz podawać powodu.</p>
+    <p>Każda kolejna zmiana w tym samym roku kosztuje <strong>80 zł</strong>. Opłaty nie ma, gdy:</p>
+    <ul>
+      <li>zmieniasz miejsce zamieszkania,</li>
+      <li>wybrany lekarz, pielęgniarka, położna lub przychodnia przestali udzielać świadczeń,</li>
+      <li>zmiana wynika z innych przyczyn niezależnych od Ciebie.</li>
+    </ul>
+    {# Źródło: art. 9 ust. 2 ustawy z 27.08.2004 o świadczeniach opieki zdrowotnej finansowanych ze środków publicznych. #}
+  </section>
+
+  <section aria-labelledby="dziecko">
+    <h2 id="dziecko">Deklaracja za dziecko</h2>
+    <p>Za dziecko do 18 lat deklarację wypełnia i podpisuje <strong>rodzic lub opiekun prawny</strong>. Wpisz w niej dane i numer PESEL dziecka oraz swoje dane. Dziecko może mieć tego samego lekarza rodzinnego co rodzic.</p>
+    <p>Rodzic może też złożyć deklarację dziecka przez swoje IKP.</p>
+    {# DO WERYFIKACJI: czy przychodnia przyjmuje dzieci (lekarz rodzinny vs. pediatra) – zależy od uprawnień lekarzy i umowy z NFZ. #}
+  </section>
+
+  <section aria-labelledby="ewus">
+    <h2 id="ewus">Dokument i ubezpieczenie (eWUŚ)</h2>
+    <p>Przy zapisie i przy każdej wizycie pokaż <strong>dokument z numerem PESEL</strong> – dowód osobisty, paszport albo mObywatel. Dziecko może pokazać legitymację szkolną.</p>
+    <p>Rejestracja sprawdza Twoje ubezpieczenie w systemie <strong>eWUŚ</strong> (Elektroniczna Weryfikacja Uprawnień Świadczeniobiorców). Nie musisz przynosić druków z pracy ani z ZUS.</p>
+    <p>Jeśli system pokaże brak ubezpieczenia, a jesteś ubezpieczony – możesz podpisać oświadczenie o prawie do leczenia albo pokazać dokument, który to potwierdza.</p>
+  </section>
+
+  <section aria-labelledby="upowaznienia">
+    <h2 id="upowaznienia">Upoważnienia dla bliskich</h2>
+    <p>Możesz wskazać osobę, która:</p>
+    <ul>
+      <li>może dostawać informacje o Twoim zdrowiu,</li>
+      <li>może odebrać Twoją dokumentację medyczną, na przykład wyniki badań.</li>
+    </ul>
+    <p>Upoważnienie wypełnisz w rejestracji. Możesz je też dodać w IKP. Upoważnienie możesz w każdej chwili zmienić lub odwołać.</p>
+    <p>[DO UZUPEŁNIENIA: wzór upoważnienia przychodni do pobrania (PDF) i odpowiednik w HTML.]</p>
+    <p>Więcej o dokumentacji medycznej: <a href="/prawa-pacjenta/">Prawa pacjenta</a>.</p>
+  </section>
+
+  <section aria-labelledby="pytania">
+    <h2 id="pytania">Częste pytania</h2>
+    {{ faqList(faq.zapisy) }}
+  </section>
+</div>

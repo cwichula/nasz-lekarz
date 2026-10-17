@@ -1,0 +1,126 @@
+---
+layout: layouts/base.njk
+title: Deklaracja dostępności | NZOZ Nasz-Lekarz
+description: "Deklaracja dostępności strony NZOZ Nasz-Lekarz w Jeleniej Górze: zgodność z WCAG 2.2, ułatwienia, dostępność budynku i kontakt w sprawie barier na stronie."
+heading: Deklaracja dostępności
+eleventyComputed:
+  answer: "{{ clinic.fullName }} chce, aby strona {{ clinic.domain }} była dostępna dla wszystkich, także dla osób z niepełnosprawnościami i seniorów. Jeśli coś na stronie jest dla Ciebie trudne, zadzwoń do biura, tel. <a href=\"tel:{{ clinic.phones.biuro.e164 }}\">{{ clinic.phones.biuro.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: biuro
+ctaText: Problem z dostępnością strony? Zadzwoń do biura
+---
+{#-
+  Deklaracja sporządzona dobrowolnie według układu wzoru z ustawy z 4.04.2019 o dostępności cyfrowej
+  stron internetowych i aplikacji mobilnych podmiotów publicznych (art. 10) – prywatny NZOZ najpewniej nie jest
+  podmiotem zobowiązanym. DO WERYFIKACJI: obowiązek (decyzja prawnika); po audycie zmienić status zgodności.
+-#}
+<div class="container prose">
+  <section aria-labelledby="wstep">
+    <h2 id="wstep">O deklaracji</h2>
+    <p>{{ clinic.fullName }} zobowiązuje się zapewnić dostępność swojej strony internetowej zgodnie z wytycznymi WCAG. Deklarację przygotowaliśmy dobrowolnie, według wzoru z ustawy o dostępności cyfrowej stron internetowych i aplikacji mobilnych podmiotów publicznych.</p>
+    <p>Deklaracja dotyczy strony <a href="{{ clinic.url }}">{{ clinic.domain }}</a>.</p>
+    <ul>
+      <li>Data publikacji strony: <strong>[DO UZUPEŁNIENIA]</strong></li>
+      <li>Data ostatniej istotnej aktualizacji: <strong>[DO UZUPEŁNIENIA]</strong></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="status">
+    <h2 id="status">Status pod względem zgodności</h2>
+    <p>Strona jest <strong>częściowo zgodna</strong> z wytycznymi WCAG 2.2 na poziomie AA. <strong>WCAG</strong> to międzynarodowe zasady tworzenia stron dostępnych dla osób z niepełnosprawnościami.</p>
+    <p>Stronę projektowaliśmy z myślą o tych zasadach, ale nie przeszła jeszcze niezależnego audytu. Do czasu audytu podajemy status „częściowo zgodna”.</p>
+    <h3>Treści niedostępne</h3>
+    <ul>
+      <li>Niektóre dokumenty do pobrania w formacie PDF mogą nie być w pełni dostępne dla czytników ekranu. Najważniejsze informacje z dokumentów są też podane na stronach. Jeśli potrzebujesz dokumentu w innej formie, zadzwoń do biura.</li>
+      <li>[DO UZUPEŁNIENIA: inne bariery wykryte podczas audytu].</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="przygotowanie">
+    <h2 id="przygotowanie">Przygotowanie deklaracji</h2>
+    <ul>
+      <li>Data sporządzenia deklaracji: <strong>[DO UZUPEŁNIENIA]</strong></li>
+      <li>Metoda oceny: samoocena przeprowadzona przez wykonawcę strony (testy automatyczne, test obsługi klawiaturą, test w powiększeniu 400%).</li>
+      <li>Data ostatniego przeglądu deklaracji: <strong>[DO UZUPEŁNIENIA]</strong></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="ulatwienia">
+    <h2 id="ulatwienia">Ułatwienia na stronie</h2>
+    <ul class="checklist">
+      <li><strong>Powiększanie tekstu</strong> – przyciski A, A+ i A++ na górze strony. Strona działa też po powiększeniu w przeglądarce (klawisze Ctrl i +).</li>
+      <li><strong>Tryb ciemny</strong> – włącza się automatycznie, gdy masz go ustawionego w telefonie lub komputerze.</li>
+      <li><strong>Wysoki kontrast</strong> – tekst jest bardzo czytelny na tle. Strona uwzględnia też ustawienie zwiększonego kontrastu i tryb kontrastu w systemie Windows.</li>
+      <li><strong>Obsługa klawiaturą</strong> – całą stroną można poruszać się klawiszem Tab. Zaznaczony element ma wyraźną ramkę.</li>
+      <li><strong>Link „Przejdź do treści”</strong> – pojawia się po pierwszym naciśnięciu Tab. Pozwala pominąć menu.</li>
+      <li><strong>Duże przyciski telefonów</strong> – na telefonie numer wybierzesz jednym dotknięciem.</li>
+      <li><strong>Prosty język</strong> – krótkie zdania i wyjaśnione skróty.</li>
+      <li><strong>Bez ruchomych elementów</strong> – na stronie nie ma karuzel, filmów odtwarzanych samoczynnie ani wyskakujących okienek.</li>
+      <li><strong>Wersja do druku</strong> – strony dobrze się drukują.</li>
+    </ul>
+    <h3>Skróty klawiszowe</h3>
+    <p>Strona nie ma własnych skrótów klawiszowych. Działają standardowe skróty przeglądarki, na przykład:</p>
+    <ul>
+      <li><kbd>Tab</kbd> – następny element, <kbd>Shift</kbd> + <kbd>Tab</kbd> – poprzedni element,</li>
+      <li><kbd>Enter</kbd> – otwarcie linku lub naciśnięcie przycisku,</li>
+      <li><kbd>Esc</kbd> – zamknięcie menu na telefonie,</li>
+      <li><kbd>Ctrl</kbd> + <kbd>+</kbd> i <kbd>Ctrl</kbd> + <kbd>-</kbd> – powiększenie i pomniejszenie strony.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="kontakt">
+    <h2 id="kontakt">Informacje zwrotne i kontakt</h2>
+    <p>Jeśli zauważysz problem z dostępnością strony albo potrzebujesz informacji w innej formie, skontaktuj się z nami:</p>
+    <div class="box box--info">
+      <p>Osoba kontaktowa: <strong>[DO UZUPEŁNIENIA: imię i nazwisko osoby odpowiedzialnej za dostępność]</strong></p>
+      <p>Telefon (biuro): <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>, {{ clinic.phones.biuro.hoursText }}</p>
+      {%- if clinic.email %}
+      <p>E-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a></p>
+      {%- endif %}
+      <p>Adres: {{ clinic.address.street }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}</p>
+    </div>
+    <p>Tą samą drogą możesz złożyć wniosek o udostępnienie informacji niedostępnej albo żądanie zapewnienia dostępności.</p>
+  </section>
+
+  <section aria-labelledby="procedura">
+    <h2 id="procedura">Żądanie zapewnienia dostępności i skarga</h2>
+    {# DO WERYFIKACJI: terminy wzorowane na art. 18 ustawy o dostępności cyfrowej (7 dni, maks. 2 miesiące); dla podmiotu niepublicznego stosowane dobrowolnie. #}
+    <p>Każdy ma prawo zażądać, aby strona lub jej element stały się dostępne. Możesz też poprosić o informację w innej formie, na przykład przez odczytanie dokumentu albo wydruk w dużej czcionce.</p>
+    <ul>
+      <li>W żądaniu podaj: swoje dane kontaktowe, adres strony lub nazwę dokumentu oraz opis problemu. Napisz też, w jakiej formie chcesz otrzymać informację.</li>
+      <li>Odpowiemy <strong>bez zbędnej zwłoki, najpóźniej w ciągu 7 dni</strong>.</li>
+      <li>Jeśli nie zdążymy w tym terminie, poinformujemy Cię, kiedy to zrobimy – nie później niż w ciągu 2 miesięcy.</li>
+      <li>Jeśli nie możemy zapewnić dostępności, zaproponujemy inny sposób dostępu do informacji.</li>
+    </ul>
+    <p>Jeśli nie zgadzasz się z odpowiedzią, możesz złożyć skargę do kierownika przychodni. Możesz też zwrócić się do <a href="https://bip.brpo.gov.pl" rel="noopener">Rzecznika Praw Obywatelskich<span class="visually-hidden"> (strona zewnętrzna)</span></a>.</p>
+  </section>
+
+  <section aria-labelledby="budynek">
+    <h2 id="budynek">Dostępność architektoniczna</h2>
+    <p>Przychodnia mieści się pod adresem {{ clinic.address.street }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}, na {{ clinic.address.floor }}.</p>
+    <dl>
+      <dt>Budynek i wejście</dt>
+      <dd>{{ clinic.access.building or "[DO UZUPEŁNIENIA: opis wejścia, schodów, windy lub podjazdu]" }}</dd>
+      <dt>Parking</dt>
+      <dd>{{ clinic.access.parking or "[DO UZUPEŁNIENIA: parking, w tym miejsca dla osób z niepełnosprawnościami]" }}</dd>
+      <dt>Dojazd komunikacją</dt>
+      <dd>{{ clinic.access.transport or "[DO UZUPEŁNIENIA: najbliższy przystanek i linie]" }}</dd>
+      <dt>Toaleta</dt>
+      <dd>[DO UZUPEŁNIENIA: czy jest toaleta dostosowana do potrzeb osób z niepełnosprawnościami]</dd>
+      <dt>Pies asystujący</dt>
+      <dd>Do przychodni można wejść z psem asystującym.{# DO WERYFIKACJI: art. 20a ustawy o rehabilitacji zawodowej i społecznej – potwierdzić z kierownikiem. #}</dd>
+      <dt>Tłumacz języka migowego</dt>
+      <dd>[DO UZUPEŁNIENIA: czy i jak można skorzystać z tłumacza polskiego języka migowego (PJM); kontakt SMS lub e-mail dla osób głuchych]</dd>
+    </dl>
+    <p>Jeśli masz trudność z dotarciem do przychodni, zadzwoń przed wizytą do rejestracji: <a href="tel:{{ clinic.phones.rejestracja.e164 }}">{{ clinic.phones.rejestracja.display }}</a>. Lekarz może też zdecydować o <a href="/uslugi/wizyty-domowe/">wizycie domowej</a>.</p>
+  </section>
+
+  <section aria-labelledby="zrodla">
+    <h2 id="zrodla">Przepisy i źródła</h2>
+    <ul>
+      <li><a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20190000848" rel="noopener">Ustawa z 4 kwietnia 2019 r. o dostępności cyfrowej stron internetowych i aplikacji mobilnych podmiotów publicznych<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://www.w3.org/TR/WCAG22/" rel="noopener">WCAG 2.2 – wytyczne W3C (po angielsku)<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+    </ul>
+  </section>
+</div>

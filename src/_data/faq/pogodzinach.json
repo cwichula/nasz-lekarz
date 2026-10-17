@@ -1,0 +1,28 @@
+[
+  {
+    "id": "czy-nisoz-trzeba-sie-zapisac",
+    "topic": "pogodzinach",
+    "q": "Czy do nocnej i świątecznej opieki trzeba mieć skierowanie albo się zapisać?",
+    "a": "Nie. Skierowanie nie jest potrzebne. Wizyty nie umawia się wcześniej – pacjentów przyjmuje się na miejscu. Nie trzeba też być zapisanym do przychodni w tym mieście.",
+    "link": { "url": "/po-godzinach/#nisoz", "text": "Adres punktu w Jeleniej Górze" }
+  },
+  {
+    "id": "czy-nisoz-w-innym-miescie",
+    "topic": "pogodzinach",
+    "q": "Czy mogę skorzystać z punktu w innym mieście, na przykład na wyjeździe?",
+    "a": "Tak. Z nocnej i świątecznej opieki zdrowotnej możesz skorzystać w dowolnym punkcie w Polsce, niezależnie od miejsca zamieszkania. Punkty znajdziesz w wyszukiwarce NFZ.",
+    "link": { "url": "https://www.nfz.gov.pl/gdzie-sie-leczyc/nocna-i-swiateczna-opieka-zdrowotna/", "text": "Wyszukiwarka punktów NFZ" }
+  },
+  {
+    "id": "co-zabrac-do-nisoz",
+    "topic": "pogodzinach",
+    "q": "Co zabrać do punktu nocnej pomocy?",
+    "a": "Dowód osobisty lub inny dokument z numerem PESEL. Warto wziąć listę leków, które przyjmujesz, i wypisy ze szpitala, jeśli je masz."
+  },
+  {
+    "id": "czy-lekarz-przyjedzie-w-nocy",
+    "topic": "pogodzinach",
+    "q": "Czy lekarz z nocnej pomocy może przyjechać do domu?",
+    "a": "Tak, ale tylko wtedy, gdy chory nie może przyjść do punktu z powodu stanu zdrowia. O wizycie domowej decyduje lekarz po rozmowie telefonicznej z punktem."
+  }
+]

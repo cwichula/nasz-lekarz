@@ -1,0 +1,31 @@
+{
+  "_info": "Zespół przychodni. Grafik lekarzy tymczasowy – do uzupełnienia. Zdjęcia tylko za pisemną zgodą (pole photo: ścieżka w /assets/img/).",
+  "doctors": [
+    {
+      "slug": "hanna-cwichula",
+      "title": "lek. med.",
+      "name": "Hanna Ćwichuła",
+      "role": "Lekarz rodzinny",
+      "_specialtyInfo": "DO WERYFIKACJI: użytkownik podał „internista rodzinny”. Formalne tytuły specjalizacji potwierdzić wg prawa wykonywania zawodu (rejestr NIL) i dopisać nr PWZ.",
+      "specialty": "internista",
+      "pwz": "",
+      "photo": "",
+      "schedule": [{ "days": [1, 2, 3, 4, 5], "from": "14:00", "to": "18:00" }]
+    },
+    {
+      "slug": "luiza-zielinska",
+      "title": "lek. med.",
+      "name": "Luiza Zielińska",
+      "role": "Lekarz POZ",
+      "specialty": "",
+      "pwz": "",
+      "photo": "",
+      "schedule": [{ "days": [2, 4], "from": "08:00", "to": "14:00" }]
+    }
+  ],
+  "nurses": {
+    "_info": "Imiona i nazwiska pielęgniarek – DO UZUPEŁNIENIA. Pusta lista = sekcja pokazuje opis bez nazwisk.",
+    "poz": [],
+    "community": []
+  }
+}

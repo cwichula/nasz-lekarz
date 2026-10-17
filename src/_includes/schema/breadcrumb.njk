@@ -1,0 +1,12 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {%- for c in crumbs %}
+    { "@type": "ListItem", "position": {{ loop.index }}, "name": {{ c.name | json | safe }}, "item": {{ (c.url | absUrl(clinic.url)) | json | safe }} },
+    {%- endfor %}
+    { "@type": "ListItem", "position": {{ crumbs.length + 1 }}, "name": {{ (heading or title) | json | safe }}, "item": {{ (page.url | absUrl(clinic.url)) | json | safe }} }
+  ]
+}
+</script>

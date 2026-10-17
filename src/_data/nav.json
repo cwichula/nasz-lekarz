@@ -1,0 +1,8 @@
+[
+  { "url": "/", "label": "Start" },
+  { "url": "/kontakt/", "label": "Telefony i godziny" },
+  { "url": "/jak-sie-zapisac/", "label": "Jak się zapisać" },
+  { "url": "/uslugi/", "label": "Usługi" },
+  { "url": "/zespol/", "label": "Zespół" },
+  { "url": "/pytania/", "label": "Pytania" }
+]

@@ -1,0 +1,133 @@
+---
+layout: layouts/base.njk
+title: Prawa pacjenta, skargi i dokumentacja | NZOZ Nasz-Lekarz
+description: "Prawa pacjenta w NZOZ Nasz-Lekarz w Jeleniej Górze: jak złożyć skargę, Rzecznik Praw Pacjenta, NFZ, kopia dokumentacji medycznej, upoważnienia i eWUŚ."
+heading: Prawa pacjenta, skargi i dokumentacja medyczna
+eleventyComputed:
+  answer: "Masz prawo do informacji, do szacunku, do tajemnicy i do swojej dokumentacji medycznej. Uwagi i skargi przyjmuje kierownik przychodni – zadzwoń do biura, tel. <a href=\"tel:{{ clinic.phones.biuro.e164 }}\">{{ clinic.phones.biuro.display }}</a>. Bezpłatną pomoc daje też Rzecznik Praw Pacjenta{% for h in clinic.helplines %}{% if h.e164 == '+48800190590' %}, tel. <a href=\"tel:{{ h.e164 }}\">{{ h.display }}</a>{% endif %}{% endfor %}."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: biuro
+ctaText: Pytanie o dokumentację lub skargę? Zadzwoń do biura
+---
+{#- Źródła sprawdzone 17.10.2026: ustawa z 6.11.2008 o prawach pacjenta i Rzeczniku Praw Pacjenta (t.j. Dz.U. 2024 poz. 581), art. 23–30 (dokumentacja), art. 28 (opłaty), art. 29 (przechowywanie). -#}
+<div class="container prose">
+  <section aria-labelledby="prawa">
+    <h2 id="prawa">Twoje prawa jako pacjenta</h2>
+    <p>Prawa pacjenta opisuje <strong>ustawa o prawach pacjenta i Rzeczniku Praw Pacjenta</strong>. Najważniejsze z nich to prawo do:</p>
+    <ul>
+      <li>świadczeń zdrowotnych zgodnych z aktualną wiedzą medyczną,</li>
+      <li>informacji o swoim stanie zdrowia, podanej zrozumiałym językiem,</li>
+      <li>wyrażenia zgody na badanie lub leczenie albo odmowy,</li>
+      <li>zachowania tajemnicy – lekarz i pielęgniarka nie mogą bez Twojej zgody mówić innym o Twoim zdrowiu,</li>
+      <li>poszanowania intymności i godności,</li>
+      <li>dostępu do swojej dokumentacji medycznej,</li>
+      <li>zgłoszenia sprzeciwu wobec opinii albo orzeczenia lekarza.</li>
+    </ul>
+    <p>Pełny opis praw znajdziesz na stronie Rzecznika Praw Pacjenta: <a href="https://www.gov.pl/web/rpp" rel="noopener">gov.pl/web/rpp<span class="visually-hidden"> (strona zewnętrzna)</span></a>.</p>
+  </section>
+
+  <section aria-labelledby="skarga">
+    <h2 id="skarga">Skarga lub wniosek w przychodni</h2>
+    <p>Jeśli coś Ci się nie podoba albo masz pomysł, co poprawić – powiedz nam. Skargi i wnioski przyjmuje <strong>kierownik przychodni</strong>.</p>
+    <ul class="checklist">
+      <li>Możesz zgłosić sprawę osobiście w przychodni, {{ clinic.address.street }}, {{ clinic.address.floor }}.</li>
+      <li>Możesz zadzwonić do biura: <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a> ({{ clinic.phones.biuro.hoursText }}).</li>
+      <li>Możesz napisać list na adres przychodni: {{ clinic.address.street }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}.</li>
+      {%- if clinic.email %}
+      <li>Możesz wysłać e-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a>.</li>
+      {%- endif %}
+    </ul>
+    <div class="box box--notice">
+      <p>[DO UZUPEŁNIENIA: procedura rozpatrywania skarg – kto rozpatruje skargę, w jakim terminie przychodnia odpowiada i w jakiej formie (pisemnie, telefonicznie)].</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="rpp">
+    <h2 id="rpp">Rzecznik Praw Pacjenta</h2>
+    <p>Rzecznik Praw Pacjenta to urząd państwowy, który pomaga pacjentom bezpłatnie. Możesz się do niego zwrócić, gdy uważasz, że Twoje prawa zostały naruszone – także wtedy, gdy nie chcesz najpierw składać skargi w przychodni.</p>
+    {%- for h in clinic.helplines %}{% if h.e164 == "+48800190590" %}
+    <div class="box box--info">
+      <p><strong>{{ h.label }}</strong></p>
+      <p><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><a href="tel:{{ h.e164 }}"><strong>{{ h.display }}</strong></a> – {{ h.hours }}.</p>
+      <p>Pod tym numerem zapytasz też o swoje ubezpieczenie, kolejki i prawa w NFZ.</p>
+    </div>
+    {%- endif %}{% endfor %}
+    <p>Adres biura, formularz wniosku i inne sposoby kontaktu: <a href="https://www.gov.pl/web/rpp" rel="noopener">strona Rzecznika Praw Pacjenta<span class="visually-hidden"> (strona zewnętrzna)</span></a>.</p>
+  </section>
+
+  <section aria-labelledby="nfz">
+    <h2 id="nfz">Skarga do NFZ</h2>
+    <p>Nasza przychodnia ma umowę z Narodowym Funduszem Zdrowia (NFZ). Skargę na to, jak działa przychodnia na NFZ – na przykład na godziny pracy albo na odmowę przyjęcia – możesz złożyć w <strong>{{ clinic.nfzBranch.name }}</strong>.</p>
+    <p>Dane kontaktowe działu skarg i wniosków: <a href="{{ clinic.nfzBranch.url }}" rel="noopener">{{ clinic.nfzBranch.name }}<span class="visually-hidden"> (strona zewnętrzna)</span></a>.</p>
+  </section>
+
+  <section aria-labelledby="ewus">
+    <h2 id="ewus">Ubezpieczenie – eWUŚ</h2>
+    <p><strong>eWUŚ</strong> to system NFZ, który sprawdza, czy masz ubezpieczenie zdrowotne. W rejestracji podajesz numer PESEL i pokazujesz dokument tożsamości. Nie musisz przynosić druku z ZUS ani legitymacji ubezpieczeniowej.</p>
+    <p>Jeśli system nie potwierdzi ubezpieczenia, a jesteś ubezpieczony, możesz podpisać <strong>oświadczenie o prawie do świadczeń</strong>. Wtedy zostaniesz przyjęty.</p>
+    <p>Swoje ubezpieczenie sprawdzisz też sam w <strong>Internetowym Koncie Pacjenta (IKP)</strong> – to bezpłatna strona Ministerstwa Zdrowia: <a href="https://pacjent.gov.pl" rel="noopener">pacjent.gov.pl<span class="visually-hidden"> (strona zewnętrzna)</span></a>.</p>
+  </section>
+
+  <section aria-labelledby="dokumentacja">
+    <h2 id="dokumentacja">Dokumentacja medyczna</h2>
+    <p>Dokumentacja medyczna to wszystkie zapisy o Twoim zdrowiu: wizyty, wyniki badań, skierowania. Masz prawo ją zobaczyć i dostać jej kopię. Takie samo prawo ma osoba, którą upoważnisz, a w przypadku dziecka – rodzic lub opiekun prawny.</p>
+
+    <h3>Jak możesz otrzymać dokumentację</h3>
+    <ul>
+      <li><strong>do wglądu na miejscu</strong> w przychodni – po uzgodnieniu terminu,</li>
+      <li>jako <strong>kopię, wydruk, odpis lub wyciąg</strong>,</li>
+      <li>na <strong>płycie lub innym nośniku</strong> elektronicznym,</li>
+      <li><strong>elektronicznie</strong>, na przykład e-mailem,</li>
+      <li>wiele dokumentów, takich jak e-recepty, e-skierowania i część wyników, zobaczysz też w swoim Internetowym Koncie Pacjenta (IKP).</li>
+    </ul>
+    <p>Wniosek złożysz w biurze przychodni, osobiście lub telefonicznie: <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>. [DO UZUPEŁNIENIA: czy przychodnia ma formularz wniosku o dokumentację i ile trwa przygotowanie kopii].</p>
+
+    <h3>Opłaty</h3>
+    {# DO WERYFIKACJI: art. 28 ust. 2a i ust. 4 u.p.p. – stan na 2026 r. Maks. stawki: 0,002 przeciętnego wynagrodzenia za stronę wyciągu/odpisu, 0,00007 za stronę kopii/wydruku, 0,0004 za nośnik danych. Kwota zmienia się co kwartał (komunikat GUS). Cennik przychodni ustala kierownik. #}
+    <ul>
+      <li><strong>Pierwsza kopia jest bezpłatna</strong>, gdy prosi o nią pacjent lub jego przedstawiciel ustawowy (np. rodzic dziecka) – w danym zakresie i formie.</li>
+      <li>Przeglądanie dokumentacji na miejscu jest bezpłatne.</li>
+      <li>Za kolejne kopie przychodnia może pobrać opłatę. Najwyższą dozwoloną kwotę określa ustawa. Zależy ona od przeciętnego wynagrodzenia i zmienia się co trzy miesiące.</li>
+    </ul>
+    <p>[DO UZUPEŁNIENIA: aktualny cennik przychodni za kopie dokumentacji].</p>
+
+    <h3>Jak długo przechowujemy dokumentację</h3>
+    <p>Zgodnie z ustawą przechowujemy dokumentację medyczną przez <strong>20 lat</strong>, licząc od końca roku, w którym był ostatni wpis. Są wyjątki, na przykład:</p>
+    <ul>
+      <li>dokumentacja dzieci do ukończenia 2. roku życia – 22 lata,</li>
+      <li>zdjęcia rentgenowskie przechowywane poza dokumentacją – 10 lat,</li>
+      <li>skierowania – 5 lat.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="upowaznienia">
+    <h2 id="upowaznienia">Upoważnienia dla bliskich</h2>
+    <p>Możesz wskazać osoby, którym lekarz może przekazywać informacje o Twoim zdrowiu i które mogą odbierać Twoją dokumentację. Są to dwa osobne upoważnienia:</p>
+    <ul>
+      <li><strong>upoważnienie do informacji o stanie zdrowia</strong> – lekarz może rozmawiać z tą osobą o Twoim leczeniu,</li>
+      <li><strong>upoważnienie do dokumentacji medycznej</strong> – ta osoba może odebrać kopię Twojej dokumentacji.</li>
+    </ul>
+    <p>Upoważnienie podpiszesz w przychodni, przy rejestracji. Możesz też dodać je samodzielnie w Internetowym Koncie Pacjenta (IKP). Upoważnienie możesz w każdej chwili zmienić lub odwołać.</p>
+    <p>Osoba upoważniona, która odbiera dokumentację, pokazuje swój dokument tożsamości.</p>
+  </section>
+
+  <section aria-labelledby="dostepnosc">
+    <h2 id="dostepnosc">Pacjent z niepełnosprawnością i cudzoziemiec</h2>
+    <p>Na wizytę może z Tobą przyjść osoba bliska lub asystent. Jeśli potrzebujesz pomocy w przychodni, powiedz o tym przy rejestracji – postaramy się ją zorganizować.</p>
+    <div class="box box--notice">
+      <p>[DO UZUPEŁNIENIA: czy przychodnia zapewnia tłumacza polskiego języka migowego (PJM) i jak go zamówić (z ilu dni wyprzedzeniem, przez SMS lub e-mail); kontakt dla osób głuchych; obsługa w językach obcych].</p>
+    </div>
+    <p>Informacje o budynku i dojeździe znajdziesz w <a href="/deklaracja-dostepnosci/#budynek">deklaracji dostępności</a>.</p>
+  </section>
+
+  <section aria-labelledby="zrodla">
+    <h2 id="zrodla">Przepisy i źródła</h2>
+    <ul>
+      <li><a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20090520417" rel="noopener">Ustawa z 6 listopada 2008 r. o prawach pacjenta i Rzeczniku Praw Pacjenta<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://www.gov.pl/web/rpp" rel="noopener">Rzecznik Praw Pacjenta – gov.pl<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://www.gov.pl/web/rpp/dostep-do-dokumentacji-medycznej-likwidacja-placowki-medycznej-smierc-lekarza-czas-przechowywania" rel="noopener">Rzecznik Praw Pacjenta – czas przechowywania dokumentacji<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://pacjent.gov.pl" rel="noopener">Internetowe Konto Pacjenta – pacjent.gov.pl<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+    </ul>
+  </section>
+</div>

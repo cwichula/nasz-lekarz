@@ -1,0 +1,16 @@
+[
+  {
+    "id": "czy-badania-krwi-sa-platne",
+    "topic": "krew",
+    "q": "Czy badania krwi są płatne?",
+    "a": "Nie, jeśli badanie zlecił lekarz rodzinny z naszej przychodni w ramach NFZ. Badania wykonywane na własną prośbę, bez skierowania, mogą być płatne.",
+    "link": { "url": "/uslugi/pobieranie-krwi/", "text": "Pobieranie krwi – szczegóły" }
+  },
+  {
+    "id": "czy-trzeba-sie-umawiac-na-pobranie",
+    "topic": "krew",
+    "q": "Czy na pobranie krwi trzeba się umówić?",
+    "a": "Zapytaj w gabinecie zabiegowym. Numer telefonu i aktualne godziny pobrań znajdziesz na stronie o pobieraniu krwi.",
+    "link": { "url": "/uslugi/pobieranie-krwi/", "text": "Godziny pobrań i telefon" }
+  }
+]

@@ -1,0 +1,51 @@
+---
+layout: layouts/base.njk
+title: Najczęstsze pytania pacjentów – przychodnia Nasz-Lekarz
+description: "Odpowiedzi na pytania pacjentów przychodni Nasz-Lekarz w Jeleniej Górze: czy wizyta jest bezpłatna, jak się zapisać, pobieranie krwi, recepty i wizyty domowe."
+heading: Najczęstsze pytania pacjentów
+crumbs:
+  - { name: "Start", url: "/" }
+eleventyComputed:
+  answer: "Tu zebraliśmy odpowiedzi na pytania, które pacjenci zadają najczęściej. Nie ma tu Twojego pytania? Zadzwoń do rejestracji, {{ clinic.hours.rejestracja.days | daysLabel }} w godzinach {{ clinic.hours.rejestracja | timeRange }}, tel. <a href=\"tel:{{ clinic.phones.rejestracja.e164 }}\">{{ clinic.phones.rejestracja.display }}</a>."
+topicOrder: [ogolne, zapisy, recepty, krew, szczepienia, ekg, domowe, pielegniarka, pogodzinach]
+topicNames:
+  krew: "Pobieranie krwi"
+  zapisy: "Zapisy i deklaracje"
+  recepty: "Recepty i e-usługi"
+  szczepienia: "Szczepienia"
+  ekg: "EKG"
+  domowe: "Wizyty domowe"
+  pielegniarka: "Pielęgniarka środowiskowa"
+  ogolne: "Ogólne"
+  pogodzinach: "Gdy przychodnia jest zamknięta"
+ctaText: Nie znalazłeś odpowiedzi? Zadzwoń do rejestracji
+---
+{%- from "macros.njk" import faqList, emergencyBox -%}
+{#- Kolejność tematów: najpierw topicOrder, potem pozostałe pliki z src/_data/faq/ (alfabetycznie). -#}
+{%- set topics = [] -%}
+{%- for t in topicOrder %}{% if faq[t] and faq[t].length %}{% set _ = topics.push(t) %}{% endif %}{% endfor -%}
+{%- for t, items in faq %}{% if not (t in topicOrder) and items.length %}{% set _ = topics.push(t) %}{% endif %}{% endfor -%}
+{%- set questions = [] -%}
+{%- for t in topics %}{% for q in faq[t] %}{% set _ = questions.push({ "@type": "Question", "name": q.q, "acceptedAnswer": { "@type": "Answer", "text": (q.a | striptags) } }) %}{% endfor %}{% endfor -%}
+<script type="application/ld+json">
+{{ { "@context": "https://schema.org", "@type": "FAQPage", "url": (page.url | absUrl(clinic.url)), "inLanguage": "pl", "mainEntity": questions } | json | safe }}
+</script>
+<div class="container prose">
+  <nav aria-labelledby="spis">
+    <h2 id="spis">Tematy</h2>
+    <ul>
+      {%- for t in topics %}
+      <li><a href="#temat-{{ t }}">{{ topicNames[t] or ("[DO UZUPEŁNIENIA: nazwa tematu " + t + " w topicNames]") }}</a></li>
+      {%- endfor %}
+    </ul>
+  </nav>
+
+  {%- for t in topics %}
+  <section aria-labelledby="temat-{{ t }}">
+    <h2 id="temat-{{ t }}">{{ topicNames[t] or ("[DO UZUPEŁNIENIA: nazwa tematu " + t + " w topicNames]") }}</h2>
+    {{ faqList(faq[t]) }}
+  </section>
+  {%- endfor %}
+
+  {{ emergencyBox() }}
+</div>

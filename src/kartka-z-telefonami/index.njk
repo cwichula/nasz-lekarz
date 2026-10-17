@@ -1,0 +1,78 @@
+---
+layout: layouts/base.njk
+title: Kartka z telefonami i godzinami – NZOZ Nasz-Lekarz
+description: "Wydrukuj jedną kartkę A4 z numerami telefonów, godzinami i adresem przychodni NZOZ Nasz-Lekarz w Jeleniej Górze oraz nocnej i świątecznej opieki zdrowotnej."
+heading: Kartka z telefonami – do wydrukowania
+answer: "Wydrukuj tę kartkę i powieś ją przy telefonie lub na lodówce. Zmieści się na jednej stronie A4."
+crumbs:
+  - { name: "Start", url: "/" }
+noCta: true
+---
+{%- set nc = clinic.nightCare -%}
+<div class="container prose">
+  <p class="no-print">
+    <button class="btn" type="button" data-print hidden><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-printer"></use></svg>Wydrukuj</button>
+  </p>
+
+  <div class="print-sheet">
+    <h2 id="przychodnia">{{ clinic.fullName }}</h2>
+    <p class="address">{{ clinic.address.street }}, {{ clinic.address.floor }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}</p>
+
+    <table>
+      <caption class="visually-hidden">Telefony przychodni</caption>
+      <thead>
+        <tr><th scope="col">Dział</th><th scope="col">W jakiej sprawie</th><th scope="col">Telefon</th></tr>
+      </thead>
+      <tbody>
+        {%- for key in ["rejestracja", "zabiegowy", "biuro"] %}
+        {%- set p = clinic.phones[key] %}
+        <tr>
+          <th scope="row">{{ p.label }}<br><span class="note">{{ p.hoursText }}</span></th>
+          <td>{{ p.purpose }}</td>
+          <td class="num"><a href="tel:{{ p.e164 }}">{{ p.display }}</a></td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+
+    <h2 id="godziny">Godziny</h2>
+    <table>
+      <caption class="visually-hidden">Godziny pracy przychodni</caption>
+      <tbody>
+        {%- for key in ["przychodnia", "rejestracja", "pobrania"] %}
+        {%- set h = clinic.hours[key] %}
+        <tr><th scope="row">{{ h.label }}</th><td>{{ h.days | daysLabel }}</td><td class="num">{{ h | timeRange }}</td></tr>
+        {%- endfor %}
+        <tr><th scope="row">Lekarze</th><td colspan="2">
+          {%- for doc in team.doctors %}{{ doc.title }} {{ doc.name }}: {% for s in doc.schedule %}{{ s.days | daysLabel }} {{ s | timeRange }}{% if not loop.last %}; {% endif %}{% endfor %}{% if not loop.last %}<br>{% endif %}{% endfor -%}
+        </td></tr>
+      </tbody>
+    </table>
+    <p>{{ clinic.hoursNote }}</p>
+
+    <h2 id="zamknieta">Gdy przychodnia jest zamknięta</h2>
+    <table>
+      <caption class="visually-hidden">Telefony poza godzinami pracy przychodni</caption>
+      <tbody>
+        <tr>
+          <th scope="row">Zagrożenie życia</th>
+          <td>Numer alarmowy / pogotowie ratunkowe</td>
+          <td class="num"><a href="tel:112">112</a> / <a href="tel:999">999</a></td>
+        </tr>
+        <tr>
+          <th scope="row">Nocna i świąteczna opieka zdrowotna</th>
+          <td>{{ nc.address }}<br><span class="note">{{ nc.hours }}</span></td>
+          <td class="num">{% if nc.phone %}<a href="tel:{{ nc.phone.e164 }}">{{ nc.phone.display }}</a>{% else %}[DO UZUPEŁNIENIA]{% endif %}</td>
+        </tr>
+        {%- for h in clinic.helplines %}
+        <tr>
+          <th scope="row">{{ h.label }}</th>
+          <td>{{ h.hours }}</td>
+          <td class="num"><a href="tel:{{ h.e164 }}">{{ h.display }}</a></td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+    <p class="note">Strona przychodni: {{ clinic.domain }}</p>
+  </div>
+</div>

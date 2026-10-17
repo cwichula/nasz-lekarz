@@ -1,0 +1,116 @@
+---
+layout: layouts/base.njk
+title: Lekarz rodzinny NFZ Jelenia Góra | NZOZ Nasz-Lekarz
+eleventyComputed:
+  description: "Lekarz rodzinny i pielęgniarki NFZ w Jeleniej Górze, {{ clinic.address.street }} ({{ clinic.address.floor }}). Wizyty bezpłatne. Rejestracja {{ clinic.hours.rejestracja.days | daysLabel(true) }} {{ clinic.hours.rejestracja | timeRange }}, tel. {{ clinic.phones.rejestracja.display }}."
+ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
+---
+{%- from "macros.njk" import phoneCards, hoursList, closedBox, tile, personCard -%}
+<section class="hero" aria-labelledby="h1">
+  <div class="container hero__grid">
+    <div>
+      <h1 id="h1">Przychodnia NZOZ „Nasz-Lekarz” – lekarz rodzinny NFZ w Jeleniej Górze</h1>
+      <p class="lead">Podstawowa opieka zdrowotna <strong>bezpłatnie w ramach NFZ</strong>.{% if clinic.foundingNote %} {{ clinic.foundingNote }}{% endif %}</p>
+      <ul class="badges">
+        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Umowa z NFZ</li>
+        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>{{ clinic.hours.przychodnia.days | daysLabel(true) }} {{ clinic.hours.przychodnia | timeRange }}</li>
+        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>{{ clinic.address.street }}</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>Rejestracja {{ clinic.phones.rejestracja.display }}</a>
+        <a class="btn btn--outline" href="/jak-sie-zapisac/">Jak się zapisać</a>
+      </div>
+    </div>
+    <div class="hero__art" aria-hidden="true">
+      {% include "partials/hero-art.njk" %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="telefony">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="telefony">Zadzwoń – w jakiej sprawie?</h2>
+      <p>Wybierz numer według sprawy. Zadzwonić może też ktoś z rodziny.</p>
+    </div>
+    {{ phoneCards(clinic.phones) }}
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="zadania">
+  <div class="container">
+    <div class="section__head"><h2 id="zadania">Co chcesz załatwić?</h2></div>
+    <ul class="tiles">
+      {{ tile("/kontakt/#jak-umowic", "stethoscope", "Umówić wizytę", "Telefonicznie lub osobiście w rejestracji") }}
+      {{ tile("/uslugi/wizyty-domowe/", "home", "Wizyta domowa", "Dla osób, które nie mogą przyjść") }}
+      {{ tile("/recepty-i-e-uslugi/", "pill", "Recepta na stałe leki", "E-recepta, kod SMS, IKP") }}
+      {{ tile("/uslugi/pobieranie-krwi/", "test-tube", "Pobranie krwi", "Rano, " ~ (clinic.hours.pobrania | timeRange)) }}
+      {{ tile("/uslugi/szczepienia/", "syringe", "Szczepienia", "Dzieci, dorośli, seniorzy") }}
+      {{ tile("/jak-sie-zapisac/", "file-text", "Zapisać się do nas", "Deklaracja POZ – bezpłatnie") }}
+      {{ tile("/uslugi/ekg/", "heart-pulse", "Badanie EKG", "Na zlecenie lekarza rodzinnego") }}
+      {{ tile("/uslugi/pielegniarka-srodowiskowa/", "bandage", "Pielęgniarka środowiskowa – opieka w domu", "Zastrzyki i opatrunki w domu") }}
+    </ul>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="godziny">
+  <div class="container">
+    <h2 id="godziny">Godziny pracy</h2>
+    {{ hoursList(clinic) }}
+    <p>{{ clinic.hoursNote }} <a href="/kontakt/#godziny">Pełne godziny i grafik lekarzy</a></p>
+    {{ closedBox(clinic) }}
+  </div>
+</section>
+
+<section class="section section--warm" aria-labelledby="zapisy">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="zapisy">Jak zapisać się do przychodni – 3 kroki</h2>
+      <p>Zapis jest bezpłatny. Nie trzeba wypisywać się z poprzedniej przychodni.</p>
+    </div>
+    <ol class="steps steps--row">
+      <li><h3>Weź deklarację</h3><p>W rejestracji lub <a href="/jak-sie-zapisac/#druki">pobierz druk</a>.</p></li>
+      <li><h3>Wypełnij</h3><p>Potrzebny jest numer PESEL. Za dziecko deklarację składa rodzic.</p></li>
+      <li><h3>Oddaj w rejestracji</h3><p>Albo złóż ją przez internet w Internetowym Koncie Pacjenta (IKP).</p></li>
+    </ol>
+    <a class="btn btn--outline" href="/jak-sie-zapisac/">Wszystko o zapisach</a>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="zespol">
+  <div class="container">
+    <div class="section__head"><h2 id="zespol">Nasi lekarze</h2></div>
+    <ul class="people">
+      {%- for doc in team.doctors %}
+      <li>{{ personCard(doc) }}</li>
+      {%- endfor %}
+    </ul>
+    <p>W przychodni pracują też pielęgniarki POZ (środowiskowe) – w gabinecie zabiegowym i w domu pacjenta. <a href="/zespol/">Cały zespół i grafik</a></p>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="zabierz">
+  <div class="container grid-2">
+    <div>
+      <h2 id="zabierz">Co zabrać na wizytę</h2>
+      <ul class="checklist">
+        <li>Dowód osobisty lub inny dokument z numerem PESEL</li>
+        <li>Listę leków, które przyjmujesz (albo opakowania)</li>
+        <li>Wyniki badań i wypisy ze szpitala, jeśli je masz</li>
+        <li>Okulary do czytania</li>
+      </ul>
+    </div>
+    <div>
+      <h2 id="dojazd">Dojazd</h2>
+      <address class="address">
+        <strong>{{ clinic.fullName }}</strong><br>
+        {{ clinic.address.street }}, {{ clinic.address.floor }}<br>
+        {{ clinic.address.postalCode }} {{ clinic.address.city }}
+      </address>
+      <div class="btn-row">
+        <a class="btn btn--outline" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ (clinic.address.streetSchema + ', ' + clinic.address.postalCode + ' ' + clinic.address.city) | urlencode }}" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>Wyznacz trasę<span class="visually-hidden"> (otwiera się w nowym oknie)</span></a>
+        <a class="btn btn--outline no-print" href="/kartka-z-telefonami/"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-printer"></use></svg>Kartka z telefonami do druku</a>
+      </div>
+    </div>
+  </div>
+</section>

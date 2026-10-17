@@ -1,0 +1,96 @@
+---
+layout: layouts/base.njk
+title: Standardy ochrony małoletnich | NZOZ Nasz-Lekarz
+description: "Standardy ochrony małoletnich w NZOZ Nasz-Lekarz w Jeleniej Górze: wersja skrócona dla dzieci, wersja pełna do pobrania, osoba odpowiedzialna i telefony pomocy."
+heading: Standardy ochrony małoletnich
+eleventyComputed:
+  answer: "Każde dziecko w naszej przychodni ma prawo czuć się bezpiecznie. Przyjęliśmy zasady ochrony dzieci przed krzywdą, tak jak wymaga prawo. Pytania o standardy: biuro przychodni, tel. <a href=\"tel:{{ clinic.phones.biuro.e164 }}\">{{ clinic.phones.biuro.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: biuro
+ctaText: Pytanie o standardy ochrony dzieci? Zadzwoń do biura
+---
+{#-
+  WZÓR DO ZATWIERDZENIA PRZEZ KIEROWNIKA PRZYCHODNI.
+  Treść poniżej to szablon. Przed publikacją kierownik musi przyjąć standardy (zarządzenie),
+  uzupełnić osobę odpowiedzialną, datę przyjęcia i dołączyć pełny dokument PDF.
+  Podstawa: art. 22b–22c ustawy z 13.05.2016 o przeciwdziałaniu zagrożeniom przestępczością na tle seksualnym
+  i ochronie małoletnich; art. 22c ust. 7 – standardy na stronie internetowej i w lokalu,
+  w wersji zupełnej oraz skróconej, przeznaczonej dla małoletnich.
+  DO WERYFIKACJI: brzmienie art. 22c po nowelizacjach z 2026 r. (ISAP) oraz wymagany cykl przeglądu standardów.
+-#}
+{%- from "macros.njk" import download -%}
+<div class="container prose">
+  <section aria-labelledby="dla-dzieci">
+    <h2 id="dla-dzieci">Dla dzieci i młodzieży</h2>
+    <div class="box box--info">
+      <p><strong>Ta część jest dla Ciebie.</strong> Przeczytaj ją sam albo z rodzicem.</p>
+      <ul class="checklist">
+        <li>W przychodni jesteś bezpieczny. Nikt nie może Cię bić, wyśmiewać, straszyć ani krzywdzić.</li>
+        <li>Lekarz i pielęgniarka powiedzą Ci, co będą robić i dlaczego. Możesz pytać o wszystko.</li>
+        <li>Na wizycie jest z Tobą rodzic albo inna dorosła osoba, której ufasz.</li>
+        <li>Twoje ciało należy do Ciebie. Jeśli coś Cię boli, krępuje albo jest dla Ciebie dziwne – powiedz o tym.</li>
+        <li>Nikt nie może prosić Cię o zachowanie w tajemnicy czegoś, co sprawia, że czujesz się źle.</li>
+        <li>Jeśli ktoś Cię krzywdzi – w domu, w szkole, w internecie albo gdziekolwiek – powiedz o tym dorosłemu, któremu ufasz. Możesz też powiedzieć lekarzowi, pielęgniarce albo osobie w rejestracji. Pomożemy Ci.</li>
+        <li>To nigdy nie jest Twoja wina.</li>
+      </ul>
+    </div>
+
+    <h3>Gdzie zadzwonić, gdy potrzebujesz pomocy</h3>
+    {# DO WERYFIKACJI: godziny pracy konsultantów 116 111 i 800 12 12 12 (brpd.gov.pl, 116111.pl) przed publikacją. #}
+    <ul>
+      <li><a href="tel:116111"><strong>116 111</strong></a> – telefon zaufania dla dzieci i młodzieży. Bezpłatny. Możesz porozmawiać o wszystkim, co Cię martwi.</li>
+      <li><a href="tel:+48800121212"><strong>800 12 12 12</strong></a> – Dziecięcy Telefon Zaufania Rzecznika Praw Dziecka. Bezpłatny. Mogą tu dzwonić dzieci i dorośli.</li>
+      <li><a href="tel:112"><strong>112</strong></a> – numer alarmowy. Dzwoń, gdy dzieje się coś groźnego teraz.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="dla-rodzicow">
+    <h2 id="dla-rodzicow">Informacja dla rodziców i opiekunów</h2>
+    <p>Od 15 sierpnia 2024 r. każda placówka, która pracuje z dziećmi – także przychodnia – musi mieć <strong>standardy ochrony małoletnich</strong>. Małoletni to osoba, która nie ukończyła 18 lat.</p>
+    <p>Standardy to spisane zasady, które opisują między innymi:</p>
+    <ul>
+      <li>jak personel ma się zachowywać wobec dzieci,</li>
+      <li>co robimy, gdy podejrzewamy, że dziecko jest krzywdzone,</li>
+      <li>kto i w jaki sposób zawiadamia odpowiednie służby,</li>
+      <li>jak pomagamy dziecku, które doświadczyło krzywdy,</li>
+      <li>jak chronimy informacje o dziecku,</li>
+      <li>jak sprawdzamy, czy osoby zatrudniane do pracy z dziećmi nie figurują w Rejestrze Sprawców Przestępstw na Tle Seksualnym,</li>
+      <li>jak często przeglądamy i poprawiamy standardy.</li>
+    </ul>
+    <p>Standardy wiszą też w widocznym miejscu w przychodni.</p>
+  </section>
+
+  <section aria-labelledby="wersja-pelna">
+    <h2 id="wersja-pelna">Wersja pełna</h2>
+    <ul class="downloads">
+      {# DO UZUPEŁNIENIA: po dodaniu pliku src/pliki/standardy-ochrony-maloletnich.pdf zamień poniższy <li> na:
+         {{ download("/pliki/standardy-ochrony-maloletnich.pdf", "Standardy ochrony małoletnich – wersja pełna", "PDF") }} #}
+      <li>Standardy ochrony małoletnich – wersja pełna (PDF): [DO UZUPEŁNIENIA – dokument przyjęty przez przychodnię]</li>
+    </ul>
+    <p>Jeśli nie możesz otworzyć pliku PDF, zadzwoń do biura – wydrukujemy go dla Ciebie lub przeczytamy go z Tobą w przychodni.</p>
+  </section>
+
+  <section aria-labelledby="osoba">
+    <h2 id="osoba">Osoba odpowiedzialna</h2>
+    <p>Za standardy w przychodni odpowiada: <strong>[DO UZUPEŁNIENIA: imię, nazwisko i funkcja osoby odpowiedzialnej za standardy ochrony małoletnich]</strong>.</p>
+    <p>Kontakt: biuro przychodni, tel. <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>, albo osobiście: {{ clinic.address.street }}, {{ clinic.address.floor }}.</p>
+  </section>
+
+  <section aria-labelledby="daty">
+    <h2 id="daty">Daty</h2>
+    <ul>
+      <li>Data przyjęcia standardów: <strong>[DO UZUPEŁNIENIA]</strong></li>
+      <li>Data ostatniego przeglądu: <strong>[DO UZUPEŁNIENIA]</strong></li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="zrodla">
+    <h2 id="zrodla">Przepisy i źródła</h2>
+    <ul>
+      <li><a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20160000862" rel="noopener">Ustawa z 13 maja 2016 r. o przeciwdziałaniu zagrożeniom przestępczością na tle seksualnym i ochronie małoletnich<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://brpd.gov.pl" rel="noopener">Rzecznik Praw Dziecka – brpd.gov.pl<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://116111.pl" rel="noopener">Telefon zaufania dla dzieci i młodzieży – 116111.pl<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+    </ul>
+  </section>
+</div>

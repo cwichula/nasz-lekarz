@@ -1,0 +1,21 @@
+{
+  "name": "nasz-lekarz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Strona informacyjna NZOZ Nasz-Lekarz, Jelenia Góra (POZ, NFZ)",
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "test": "node --test tests/*.test.js",
+    "images": "node scripts/generate-images.js",
+    "check:links": "node scripts/check-links.js",
+    "check:seo": "node scripts/check-seo.js",
+    "check": "npm run build && npm run check:links && npm run check:seo"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.7",
+    "@fontsource/atkinson-hyperlegible-next": "^5.3.0",
+    "puppeteer-core": "^24.43.1"
+  }
+}

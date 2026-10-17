@@ -1,0 +1,123 @@
+---
+layout: layouts/base.njk
+title: Polityka prywatności i RODO | NZOZ Nasz-Lekarz
+description: "Jak NZOZ Nasz-Lekarz w Jeleniej Górze przetwarza dane osobowe: administrator, IOD, cele, prawa pacjenta. Strona nie używa cookies ani narzędzi śledzących."
+heading: Polityka prywatności i ochrona danych
+eleventyComputed:
+  answer: "Twoje dane osobowe przetwarza {{ clinic.fullName }}, {{ clinic.address.street }}, {{ clinic.address.postalCode }} {{ clinic.address.city }}. Ta strona nie używa plików cookies ani narzędzi śledzących. Pytania o dane: biuro, tel. <a href=\"tel:{{ clinic.phones.biuro.e164 }}\">{{ clinic.phones.biuro.display }}</a>."
+crumbs:
+  - { name: "Start", url: "/" }
+ctaPhone: biuro
+ctaText: Pytanie o Twoje dane? Zadzwoń do biura
+---
+{#- Podstawy: RODO (rozporządzenie UE 2016/679) art. 6, 9, 13, 15–21, 77; ustawa o prawach pacjenta art. 24 i 29. -#}
+<div class="container prose">
+  <section aria-labelledby="administrator">
+    <h2 id="administrator">Kto jest administratorem danych</h2>
+    <p><strong>Administrator danych</strong> to podmiot, który decyduje, po co i jak są przetwarzane Twoje dane. Jest nim:</p>
+    <div class="box box--info">
+      <p><strong>{{ clinic.legalName }}</strong><br>
+      {{ clinic.fullName }}<br>
+      {{ clinic.address.street }}, {{ clinic.address.floor }}<br>
+      {{ clinic.address.postalCode }} {{ clinic.address.city }}</p>
+      <p>Telefon (biuro): <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>{% if clinic.email %}<br>E-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a>{% endif %}</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="iod">
+    <h2 id="iod">Inspektor ochrony danych (IOD)</h2>
+    <p><strong>Inspektor ochrony danych</strong> to osoba, która pilnuje, aby przychodnia przestrzegała przepisów o ochronie danych. Możesz się z nią kontaktować we wszystkich sprawach dotyczących Twoich danych.</p>
+    {%- if clinic.dpo.name or clinic.dpo.email %}
+    <p>{% if clinic.dpo.name %}<strong>{{ clinic.dpo.name }}</strong>{% endif %}{% if clinic.dpo.email %}, e-mail: <a href="mailto:{{ clinic.dpo.email }}">{{ clinic.dpo.email }}</a>{% endif %}</p>
+    {%- else %}
+    <p>[DO UZUPEŁNIENIA: imię i nazwisko lub nazwa inspektora ochrony danych oraz adres e-mail do kontaktu].</p>
+    {%- endif %}
+  </section>
+
+  <section aria-labelledby="strona">
+    <h2 id="strona">Ta strona internetowa</h2>
+    <h3>Brak plików cookies i narzędzi śledzących</h3>
+    <p>Strona <strong>nie używa plików cookies</strong> (ciasteczek), nie ma statystyk odwiedzin, reklam ani wtyczek serwisów społecznościowych. Nie łączy się z obcymi serwerami. Dlatego nie wyświetlamy okienka ze zgodą na cookies.</p>
+
+    <h3>Ustawienie wielkości tekstu</h3>
+    <p>Gdy wybierzesz większy tekst przyciskiem <strong>A+</strong> lub <strong>A++</strong>, Twoja przeglądarka zapamięta ten wybór w swojej pamięci (tzw. <em>localStorage</em>). Zapisujemy tylko jedną wartość: wybraną wielkość tekstu. Ta informacja zostaje na Twoim urządzeniu i nie jest do nas wysyłana. Możesz ją usunąć, czyszcząc dane strony w przeglądarce.</p>
+
+    <h3>Logi serwera</h3>
+    <p>Stronę przechowuje firma hostingowa <strong>OVHcloud</strong>. Jej serwery, jak każde serwery internetowe, automatycznie zapisują podstawowe informacje o połączeniu, tak zwane <strong>logi</strong>: adres IP, datę i godzinę, adres otwartej podstrony oraz rodzaj przeglądarki. Logi służą tylko do zapewnienia działania i bezpieczeństwa strony. Nie łączymy ich z innymi danymi i nie używamy ich do rozpoznawania osób.</p>
+    {# DO WERYFIKACJI: lokalizacja centrum danych OVHcloud wybranego w usłudze (UE), okres przechowywania logów oraz zawarcie umowy powierzenia (DPA) z OVHcloud. #}
+    <p>Lokalizacja serwerów: [DO UZUPEŁNIENIA: lokalizacja serwerów OVHcloud (np. Francja/Polska, UE) – sprawdzić w panelu OVHcloud i zawrzeć umowę powierzenia (DPA)]. Podstawą jest nasz prawnie uzasadniony interes – bezpieczeństwo strony (art. 6 ust. 1 lit. f RODO). Logi są przechowywane przez [DO UZUPEŁNIENIA: okres przechowywania logów].</p>
+
+    <h3>Linki do innych stron</h3>
+    <p>Na stronie są linki do innych serwisów, na przykład do mapy z wyznaczaniem trasy, NFZ czy gov.pl. Po kliknięciu linku obowiązują zasady prywatności tamtej strony.</p>
+  </section>
+
+  <section aria-labelledby="kontakt">
+    <h2 id="kontakt">Kontakt telefoniczny i e-mail</h2>
+    <p>Gdy dzwonisz do przychodni, możemy zapytać o imię i nazwisko, numer PESEL, numer telefonu i powód kontaktu. Te dane są potrzebne, aby umówić wizytę, przygotować receptę albo załatwić Twoją sprawę.</p>
+    {%- if clinic.email %}
+    <p>Gdy piszesz e-mail, przetwarzamy Twój adres e-mail i treść wiadomości – tylko po to, aby odpowiedzieć. {{ clinic.emailNote }}</p>
+    {%- else %}
+    <p>{{ clinic.emailNote }}</p>
+    {%- endif %}
+    <p>Podstawą jest udzielanie świadczeń zdrowotnych (art. 9 ust. 2 lit. h RODO) lub, w sprawach organizacyjnych, nasz prawnie uzasadniony interes – odpowiedź na Twoją wiadomość (art. 6 ust. 1 lit. f RODO).</p>
+    <p>[DO UZUPEŁNIENIA: czy rozmowy telefoniczne są nagrywane – jeśli tak, w jakim celu i jak długo przechowujemy nagrania].</p>
+  </section>
+
+  <section aria-labelledby="pacjenci">
+    <h2 id="pacjenci">Informacja dla pacjentów</h2>
+    <p>Pełną klauzulę informacyjną otrzymasz w przychodni. Najważniejsze informacje:</p>
+
+    <h3>Po co przetwarzamy dane</h3>
+    <ul>
+      <li>aby udzielać świadczeń zdrowotnych: badać, leczyć, wystawiać recepty i skierowania,</li>
+      <li>aby prowadzić i przechowywać dokumentację medyczną, tak jak wymaga prawo,</li>
+      <li>aby rozliczać świadczenia z Narodowym Funduszem Zdrowia (NFZ),</li>
+      <li>aby kontaktować się z Tobą w sprawie wizyt.</li>
+    </ul>
+
+    <h3>Na jakiej podstawie</h3>
+    <ul>
+      <li>art. 9 ust. 2 lit. h RODO – profilaktyka zdrowotna, diagnoza medyczna i leczenie,</li>
+      <li>art. 6 ust. 1 lit. c RODO – obowiązki prawne przychodni, w tym z ustawy o prawach pacjenta i Rzeczniku Praw Pacjenta (dokumentacja medyczna) oraz z ustawy o świadczeniach opieki zdrowotnej finansowanych ze środków publicznych (rozliczenia z NFZ).</li>
+    </ul>
+    <p>Podanie danych jest potrzebne, aby udzielić świadczenia i prowadzić dokumentację, której wymaga prawo.</p>
+
+    <h3>Komu przekazujemy dane</h3>
+    <ul>
+      <li>Narodowemu Funduszowi Zdrowia,</li>
+      <li>systemowi e-zdrowia (P1) – to on obsługuje e-recepty, e-skierowania i Internetowe Konto Pacjenta (IKP),</li>
+      <li>osobom, które upoważnisz,</li>
+      <li>instytucjom, które mają do tego prawo na podstawie przepisów, np. sądom,</li>
+      <li>firmom, które pracują dla przychodni na podstawie umowy, np. dostawcy systemu do dokumentacji lub laboratorium – [DO UZUPEŁNIENIA: kategorie podmiotów przetwarzających].</li>
+    </ul>
+
+    <h3>Jak długo przechowujemy dane</h3>
+    <p>Dokumentację medyczną przechowujemy co do zasady przez <strong>20 lat</strong>, licząc od końca roku, w którym był ostatni wpis. Ustawa przewiduje wyjątki, na przykład 22 lata dla dokumentacji dzieci do ukończenia 2. roku życia. Szczegóły: <a href="/prawa-pacjenta/#dokumentacja">Prawa pacjenta – dokumentacja medyczna</a>.</p>
+  </section>
+
+  <section aria-labelledby="prawa">
+    <h2 id="prawa">Twoje prawa</h2>
+    <p>Zgodnie z RODO (art. 15–21) masz prawo:</p>
+    <ul>
+      <li>wiedzieć, jakie Twoje dane mamy, i dostać ich kopię (art. 15),</li>
+      <li>poprawić dane, które są błędne (art. 16),</li>
+      <li>żądać usunięcia danych (art. 17) – nie dotyczy to dokumentacji medycznej, którą musimy przechowywać przez okres wymagany prawem,</li>
+      <li>żądać ograniczenia przetwarzania (art. 18),</li>
+      <li>otrzymać dane w formie elektronicznej, by przekazać je dalej (art. 20), gdy ma to zastosowanie,</li>
+      <li>wnieść sprzeciw wobec przetwarzania opartego na naszym prawnie uzasadnionym interesie (art. 21).</li>
+    </ul>
+    <p>Aby skorzystać z tych praw, skontaktuj się z biurem lub z inspektorem ochrony danych.</p>
+    <div class="box box--notice">
+      <p><strong>Skarga do UODO.</strong> Jeśli uważasz, że przetwarzamy Twoje dane niezgodnie z prawem, możesz złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych (art. 77 RODO): <a href="https://uodo.gov.pl" rel="noopener">uodo.gov.pl<span class="visually-hidden"> (strona zewnętrzna)</span></a>.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="zrodla">
+    <h2 id="zrodla">Przepisy i źródła</h2>
+    <ul>
+      <li><a href="https://eur-lex.europa.eu/legal-content/PL/TXT/?uri=CELEX:32016R0679" rel="noopener">RODO – rozporządzenie (UE) 2016/679<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20090520417" rel="noopener">Ustawa o prawach pacjenta i Rzeczniku Praw Pacjenta<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+      <li><a href="https://uodo.gov.pl" rel="noopener">Urząd Ochrony Danych Osobowych<span class="visually-hidden"> (strona zewnętrzna)</span></a></li>
+    </ul>
+  </section>
+</div>

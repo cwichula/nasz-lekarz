@@ -1,0 +1,28 @@
+[
+  {
+    "id": "czy-szczepienie-dziecka-jest-platne",
+    "topic": "szczepienia",
+    "q": "Czy szczepienia obowiązkowe dziecka są płatne?",
+    "a": "Nie. Szczepienia obowiązkowe z Programu Szczepień Ochronnych są bezpłatne. Termin umówisz w gabinecie zabiegowym.",
+    "link": { "url": "/uslugi/szczepienia/#dzieci", "text": "Szczepienia dzieci – szczegóły" }
+  },
+  {
+    "id": "czy-senior-zaszczepi-sie-bezplatnie",
+    "topic": "szczepienia",
+    "q": "Czy jako senior zaszczepię się bezpłatnie przeciw grypie?",
+    "a": "Wiele szczepionek dla osób po 65. roku życia jest bezpłatnych lub tańszych dzięki refundacji. Zasady się zmieniają, dlatego zapytaj lekarza podczas wizyty. Wystawi receptę, jeśli jest potrzebna.",
+    "link": { "url": "/uslugi/szczepienia/#dorosli", "text": "Szczepienia dla dorosłych i seniorów" }
+  },
+  {
+    "id": "dlaczego-zostac-po-szczepieniu",
+    "topic": "szczepienia",
+    "q": "Dlaczego po szczepieniu trzeba zostać chwilę w przychodni?",
+    "a": "Rzadko zdarza się reakcja alergiczna na szczepionkę. Zwykle pojawia się szybko. Gdy jesteś w przychodni, pomoc jest na miejscu. Zwykle czeka się 15 minut, a w niektórych przypadkach 30 minut – powie Ci pielęgniarka."
+  },
+  {
+    "id": "co-jesli-zgubilem-ksiazeczke-szczepien",
+    "topic": "szczepienia",
+    "q": "Co zrobić, jeśli nie mam książeczki szczepień?",
+    "a": "Przyjdź bez niej. Zapytaj w gabinecie zabiegowym – część szczepień może być zapisana w karcie szczepień w przychodni lub w Internetowym Koncie Pacjenta (IKP)."
+  }
+]

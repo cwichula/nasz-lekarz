@@ -1,0 +1,29 @@
+[
+  {
+    "id": "czy-wizyta-domowa-jest-platna",
+    "topic": "domowe",
+    "q": "Czy wizyta domowa lekarza jest płatna?",
+    "a": "Nie. Dla pacjentów zapisanych do naszej przychodni wizyta domowa jest bezpłatna w ramach NFZ, jeśli lekarz uzna, że stan zdrowia nie pozwala przyjść do przychodni.",
+    "link": { "url": "/uslugi/wizyty-domowe/", "text": "Wizyty domowe – szczegóły" }
+  },
+  {
+    "id": "kto-moze-zglosic-wizyte-domowa",
+    "topic": "domowe",
+    "q": "Czy wizytę domową może zgłosić ktoś z rodziny?",
+    "a": "Tak. Wizytę może zgłosić pacjent, ktoś z rodziny, opiekun lub sąsiad. Trzeba podać dane pacjenta, adres, objawy i numer telefonu do kontaktu.",
+    "link": { "url": "/uslugi/wizyty-domowe/#przygotuj", "text": "Co przygotować przed telefonem" }
+  },
+  {
+    "id": "czy-lekarz-zawsze-przyjedzie",
+    "topic": "domowe",
+    "q": "Czy lekarz zawsze przyjedzie do domu?",
+    "a": "O wizycie domowej decyduje lekarz. Czasem najpierw oddzwania i rozmawia z pacjentem. Jeśli pacjent może przyjść, lekarz zaproponuje wizytę w przychodni lub teleporadę."
+  },
+  {
+    "id": "wizyta-domowa-w-weekend",
+    "topic": "domowe",
+    "q": "Co zrobić, gdy wizyta jest potrzebna w nocy lub w weekend?",
+    "a": "Gdy przychodnia jest zamknięta, skorzystaj z nocnej i świątecznej opieki zdrowotnej. W zagrożeniu życia dzwoń pod 112 lub 999.",
+    "link": { "url": "/po-godzinach/", "text": "Pomoc po godzinach pracy przychodni" }
+  }
+]

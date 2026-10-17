@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+permalink: 404.html
+robots: "noindex"
+eleventyExcludeFromCollections: true
+title: Nie ma takiej strony – NZOZ Nasz-Lekarz
+description: "Nie znaleźliśmy tej strony. Zadzwoń do rejestracji przychodni NZOZ Nasz-Lekarz w Jeleniej Górze albo przejdź do głównych stron: telefony, zapisy, usługi."
+---
+{%- from "macros.njk" import tile, closedBox -%}
+<div class="page-head">
+  <div class="container">
+    <h1>Nie znaleźliśmy tej strony</h1>
+    <p class="answer">Ta strona nie istnieje albo zmieniła adres. W sprawie wizyty zadzwoń do rejestracji: <a href="tel:{{ clinic.phones.rejestracja.e164 }}"><strong>{{ clinic.phones.rejestracja.display }}</strong></a> ({{ clinic.phones.rejestracja.hoursText }}).</p>
+  </div>
+</div>
+
+<div class="container prose">
+  <section aria-labelledby="gdzie">
+    <h2 id="gdzie">Gdzie chcesz przejść?</h2>
+    <ul class="tiles">
+      {{ tile("/", "home", "Strona główna", "Telefony, godziny i najważniejsze informacje") }}
+      {{ tile("/kontakt/", "phone", "Telefony i godziny", "Adres, dojazd i godziny pracy") }}
+      {{ tile("/jak-sie-zapisac/", "file-text", "Jak się zapisać", "Deklaracja POZ – bezpłatnie") }}
+      {{ tile("/uslugi/", "stethoscope", "Usługi", "Wizyty, pobieranie krwi, szczepienia") }}
+      {{ tile("/zespol/", "users", "Zespół", "Lekarze i pielęgniarki") }}
+      {{ tile("/po-godzinach/", "moon", "Po godzinach", "Nocna i świąteczna pomoc") }}
+    </ul>
+  </section>
+
+  <div class="no-print">
+    {{ closedBox(clinic) }}
+  </div>
+</div>

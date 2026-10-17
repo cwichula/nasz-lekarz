@@ -1,0 +1,63 @@
+{%- from "macros.njk" import breadcrumbs, cta -%}
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  {%- set canonical = page.url | absUrl(clinic.url) %}
+  {%- if not (robots and ("noindex" in robots)) %}
+  <link rel="canonical" href="{{ canonical }}">
+  {%- endif %}
+  {%- if robots %}
+  <meta name="robots" content="{{ robots }}">
+  {%- endif %}
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0B4F6C">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pl_PL">
+  <meta property="og:site_name" content="{{ clinic.fullName }}">
+  <meta property="og:title" content="{{ ogTitle or title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:image" content="{{ '/assets/img/og-image.png' | absUrl(clinic.url) }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/print.css" media="print">
+  <script type="module" src="/assets/js/main.js"></script>
+  {% include "schema/clinic.njk" %}
+  {%- if crumbs %}{% include "schema/breadcrumb.njk" %}{% endif %}
+</head>
+<body>
+  {% include "partials/icons.njk" %}
+  <a class="skip-link" href="#tresc">Przejdź do treści</a>
+  {% include "partials/header.njk" %}
+
+  <main id="tresc" tabindex="-1">
+    {%- if crumbs %}
+    <div class="page-head">
+      <div class="container">
+        {{ breadcrumbs(crumbs, heading or title) }}
+        <h1>{{ heading }}</h1>
+        {%- if answer %}
+        <p class="answer">{{ answer | safe }}</p>
+        {%- endif %}
+      </div>
+    </div>
+    {%- endif %}
+    {{ content | safe }}
+    {%- if not noCta %}
+    {{ cta(clinic.phones[ctaPhone or "rejestracja"], ctaText) }}
+    {%- endif %}
+  </main>
+
+  {% include "partials/footer.njk" %}
+  {% include "partials/callbar.njk" %}
+</body>
+</html>
