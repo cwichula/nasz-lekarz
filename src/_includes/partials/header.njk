@@ -18,10 +18,10 @@
   <div class="container header__inner">
     <a class="brand" href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>
       {% include "partials/logo.njk" %}
-      <span class="brand__text"><span class="brand__name">{{ clinic.name }}</span><span class="brand__sub">Przychodnia NFZ · {{ clinic.address.city }}</span></span>
+      <span class="brand__text"><span class="brand__name">{{ clinic.name }}<span class="brand__dot" aria-hidden="true"></span></span><span class="brand__sub">Przychodnia NFZ · {{ clinic.address.city }}</span></span>
     </a>
     <div class="header__actions">
-      <a class="btn header__call" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg><span class="header__call-label">Rejestracja </span>{{ clinic.phones.rejestracja.display }}</a>
+      <a class="btn header__call" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg><span class="header__call-label">Rejestracja </span>{{ clinic.phones.rejestracja.display }}</a>
     </div>
     <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-menu"></use></svg><span data-menu-label>Menu</span></button>
   </div>

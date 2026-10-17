@@ -5,28 +5,23 @@ eleventyComputed:
   description: "Lekarz rodzinny i pielęgniarki NFZ w Jeleniej Górze, {{ clinic.address.street }} ({{ clinic.address.floor }}). Wizyty bezpłatne. Rejestracja {{ clinic.hours.rejestracja.days | daysLabel(true) }} {{ clinic.hours.rejestracja | timeRange }}, tel. {{ clinic.phones.rejestracja.display }}."
 ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
 ---
-{%- from "macros.njk" import phoneCards, hoursList, closedBox, tile, personCard, whereBox -%}
+{%- from "macros.njk" import phoneCards, hoursList, closedBox, tile, personCard, whereBox, statusCard, todayCard, weekSchedule -%}
 <section class="hero" aria-labelledby="h1">
-  <div class="container hero__grid">
-    <div>
-      <h1 id="h1">Przychodnia NZOZ „Nasz-Lekarz” – lekarz rodzinny NFZ w Jeleniej Górze</h1>
-      <p class="lead">Podstawowa opieka zdrowotna <strong>bezpłatnie w ramach NFZ</strong>.{% if clinic.foundingNote %} {{ clinic.foundingNote }}{% endif %}</p>
-      <ul class="badges">
-        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Umowa z NFZ</li>
-        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>{{ clinic.hours.przychodnia.days | daysLabel(true) }} {{ clinic.hours.przychodnia | timeRange }}</li>
-        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>{{ clinic.address.street }}, {{ clinic.address.floor }}</li>
-        {%- if clinic.access.lift %}
-        <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>{{ clinic.access.liftLabel }}</li>
-        {%- endif %}
-      </ul>
-      <div class="btn-row">
-        <a class="btn" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>Rejestracja {{ clinic.phones.rejestracja.display }}</a>
-        <a class="btn btn--outline" href="/jak-sie-zapisac/">Jak się zapisać</a>
-      </div>
+  <div class="container">
+    <h1 id="h1">Przychodnia NZOZ „Nasz-Lekarz” – lekarz rodzinny NFZ w Jeleniej Górze</h1>
+    <p class="lead">Podstawowa opieka zdrowotna <strong>bezpłatnie w ramach NFZ</strong>.{% if clinic.foundingNote %} {{ clinic.foundingNote }}{% endif %}</p>
+    <div class="hero__grid">
+      {{ statusCard(clinic) }}
+      {{ todayCard(clinic, team) }}
     </div>
-    <div class="hero__art" aria-hidden="true">
-      {% include "partials/hero-art.njk" %}
-    </div>
+    <ul class="badges">
+      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>Umowa z NFZ</li>
+      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-clock"></use></svg>{{ clinic.hours.przychodnia.days | daysLabel(true) }} {{ clinic.hours.przychodnia | timeRange }}</li>
+      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-map-pin"></use></svg>{{ clinic.address.street }}, {{ clinic.address.floor }}</li>
+      {%- if clinic.access.lift %}
+      <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-check"></use></svg>{{ clinic.access.liftLabel }}</li>
+      {%- endif %}
+    </ul>
   </div>
 </section>
 
@@ -36,7 +31,7 @@ ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
       <h2 id="telefony">Zadzwoń – w jakiej sprawie?</h2>
       <p>Wybierz numer według sprawy. Zadzwonić może też ktoś z rodziny.</p>
     </div>
-    {{ phoneCards(clinic.phones) }}
+    {{ phoneCards(clinic.phones, clinic.hours) }}
     <p class="phones__note">{{ clinic.afterRegistration }}</p>
   </div>
 </section>
@@ -59,9 +54,13 @@ ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
 
 <section class="section" aria-labelledby="godziny">
   <div class="container">
-    <h2 id="godziny">Godziny pracy</h2>
+    <div class="section__head">
+      <h2 id="godziny">Godziny pracy</h2>
+      <p>{{ clinic.hoursNote }}</p>
+    </div>
     {{ hoursList(clinic) }}
-    <p>{{ clinic.hoursNote }} <a href="/kontakt/#godziny">Pełne godziny i grafik lekarzy</a></p>
+    {{ weekSchedule(clinic, team) }}
+    <p><a href="/kontakt/#godziny">Pełna tabela godzin i grafik lekarzy</a></p>
     {{ closedBox(clinic) }}
   </div>
 </section>

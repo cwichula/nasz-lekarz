@@ -91,9 +91,12 @@ for (const file of files) {
 const KB = 1024;
 const size = (rel) => (existsSync(join(SITE, rel)) ? statSync(join(SITE, rel)).size : 0);
 const budgets = [
-  { name: "assets/css/main.css", bytes: size("assets/css/main.css"), max: 30 * KB },
-  { name: "index.html", bytes: size("index.html"), max: 35 * KB },
-  { name: "assets/js/main.js + holidays.js", bytes: size("assets/js/main.js") + size("assets/js/holidays.js"), max: 8 * KB },
+  // Kierunek „Puls” (docs/design/03-puls.md): karta stanu, plakietki, arkusz telefonów – budżet podniesiony z 30 KB
+  { name: "assets/css/main.css", bytes: size("assets/css/main.css"), max: 40 * KB },
+  // Strona główna „Puls”: 5 wariantów karty stanu, „Dziś w przychodni”, tydzień tekstem – budżet podniesiony z 35 KB
+  { name: "index.html", bytes: size("index.html"), max: 44 * KB },
+  // + clinic-state.js (tryby karty stanu); budżet podniesiony z 8 KB
+  { name: "assets/js/main.js + holidays.js + clinic-state.js", bytes: size("assets/js/main.js") + size("assets/js/holidays.js") + size("assets/js/clinic-state.js"), max: 14 * KB },
 ];
 for (const b of budgets) {
   console.log(`Budżet: ${b.name} = ${b.bytes} B (limit ${b.max} B)`);

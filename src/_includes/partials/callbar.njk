@@ -1,12 +1,24 @@
 <div class="callbar" role="region" aria-label="Szybki kontakt">
-  <a class="btn callbar__main" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg>Zadzwoń: Rejestracja</a>
-  <details class="callbar__more">
-    <summary>Telefony</summary>
-    <ul class="callbar__menu">
-      {%- for key, p in clinic.phones %}
-      <li><a href="tel:{{ p.e164 }}"><span class="num">{{ p.display }}</span><span class="lbl">{{ p.label }}</span></a></li>
-      {%- endfor %}
-      <li><a href="tel:112"><span class="num">112</span><span class="lbl">Numer alarmowy</span></a></li>
-    </ul>
-  </details>
+
+  <a class="btn callbar__main callbar__main--day" href="tel:{{ clinic.phones.rejestracja.e164 }}"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-phone-fill"></use></svg>Zadzwoń: Rejestracja</a>
+  <a class="btn callbar__main callbar__main--night" href="/po-godzinach/"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-moon"></use></svg>Pomoc nocna</a>
+
+  <button class="callbar__more" type="button" popovertarget="phones-sheet" data-sheet-toggle aria-controls="phones-sheet">Telefony</button>
+</div>
+
+<div class="sheet" id="phones-sheet" popover aria-labelledby="phones-sheet-title">
+  <span class="sheet__grip" aria-hidden="true"></span>
+  <h2 class="sheet__title" id="phones-sheet-title">Telefony</h2>
+  <ul class="sheet__list">
+
+    {%- for key, p in clinic.phones %}
+
+    <li><a href="tel:{{ p.e164 }}"><span class="lbl">{{ p.label }}</span><span class="num">{{ p.display }}</span></a></li>
+
+    {%- endfor %}
+
+    <li><a href="tel:{{ clinic.helplines[0].e164 }}"><span class="lbl">Teleporada NFZ</span><span class="num">{{ clinic.helplines[0].display }}</span></a></li>
+    <li class="sheet__alarm"><a href="tel:112"><span class="lbl">Numer alarmowy</span><span class="num">112</span></a></li>
+  </ul>
+  <button class="btn btn--soft sheet__close" type="button" popovertarget="phones-sheet" popovertargetaction="hide" data-sheet-close>Zamknij</button>
 </div>

@@ -20,18 +20,16 @@ const clinic = JSON.parse(readFileSync(join(ROOT, "src/_data/clinic.json"), "utf
 const logo = readFileSync(join(ROOT, "src/_includes/partials/logo.njk"), "utf8")
   .replace(/\sclass="[^"]*"/, "")
   .replace(/\saria-hidden="true"|\sfocusable="false"/g, "");
-const font = (w) => pathToFileURL(join(ROOT, `src/assets/fonts/atkinson-hyperlegible-next-latin-ext-${w}-normal.woff2`)).href;
-const fontLatin = (w) => pathToFileURL(join(ROOT, `src/assets/fonts/atkinson-hyperlegible-next-latin-${w}-normal.woff2`)).href;
+const font = pathToFileURL(join(ROOT, "src/assets/fonts/atkinson-hyperlegible-next-latin-ext-wght-normal.woff2")).href;
+const fontLatin = pathToFileURL(join(ROOT, "src/assets/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2")).href;
 
 const NAVY = "#0B4F6C";
 const CREAM = "#FDF7F0";
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
 const css = `
-@font-face { font-family: AH; font-weight: 400; src: url("${fontLatin(400)}") format("woff2"); unicode-range: U+0000-00FF; }
-@font-face { font-family: AH; font-weight: 700; src: url("${fontLatin(700)}") format("woff2"); unicode-range: U+0000-00FF; }
-@font-face { font-family: AH; font-weight: 400; src: url("${font(400)}") format("woff2"); unicode-range: U+0100-024F, U+2000-206F; }
-@font-face { font-family: AH; font-weight: 700; src: url("${font(700)}") format("woff2"); unicode-range: U+0100-024F, U+2000-206F; }
+@font-face { font-family: AH; font-weight: 200 800; src: url("${fontLatin}") format("woff2"); unicode-range: U+0000-00FF; }
+@font-face { font-family: AH; font-weight: 200 800; src: url("${font}") format("woff2"); unicode-range: U+0100-024F, U+2000-206F; }
 * { margin: 0; box-sizing: border-box; }
 html, body { font-family: AH, sans-serif; }
 `;

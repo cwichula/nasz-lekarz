@@ -1,6 +1,8 @@
 // Drobne usprawnienia strony. Bez JS strona działa w pełni – skrypt tylko dodaje wygodę.
 import { isWorkday } from "./holidays.js";
+import { toMin, clinicMode, rangeState, progress, formatDuration } from "./clinic-state.js";
 
+const DAY_NAMES = ["niedziela", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"];
 const DAYS_ACC = ["w niedzielę", "w poniedziałek", "we wtorek", "w środę", "w czwartek", "w piątek", "w sobotę"];
 
 /** Aktualna data i godzina w Polsce, niezależnie od strefy urządzenia */
@@ -18,10 +20,6 @@ function nowInPoland() {
   return { y: +parts.year, m: +parts.month, d: +parts.day, weekday, minutes: +parts.hour * 60 + +parts.minute };
 }
 
-const toMin = (t) => {
-  const [h, m] = t.split(":").map(Number);
-  return h * 60 + m;
-};
 const hm = (t) => t.replace(/^0/, "");
 
 /** Następny dzień pracy po dzisiejszym: zwraca opis "jutro" / "w poniedziałek" */
@@ -53,15 +51,94 @@ function initStatus() {
     else if (workday && now.minutes < toMin(from)) text = `${what} nieczynna – otwieramy dziś o ${hm(from)}`;
     else text = `${what} nieczynna – otwieramy ${nextWorkdayLabel(now)} o ${hm(from)}`;
     el.querySelector("[data-status-text]").textContent = text;
+    el.classList.remove("is-open", "is-closed");
     el.classList.add(open ? "is-open" : "is-closed");
     el.hidden = false;
   });
 
-  // Wyróżnienie dzisiejszego dnia w tabelach godzin
+  // Wyróżnienie dzisiejszego dnia w tabelach godzin, na osi tygodnia i w kartach lekarzy
+  document.querySelectorAll(".is-today").forEach((row) => row.classList.remove("is-today"));
   document.querySelectorAll(`[data-day="${now.weekday}"]`).forEach((row) => {
     row.classList.add("is-today");
     const label = row.querySelector("[data-today-label]");
     if (label) label.hidden = false;
+  });
+
+  initStateCard(now, workday);
+  initToday(now, workday);
+  initRanges(now, workday);
+}
+
+/** Karta stanu na stronie głównej: jeden z 5 trybów, odliczanie, pierścień postępu rejestracji */
+function initStateCard(now, workday) {
+  const card = document.querySelector("[data-state]");
+  const h = card
+    ? { reg: { from: toMin(card.dataset.regFrom), to: toMin(card.dataset.regTo) }, clinic: { from: toMin(card.dataset.clinicFrom), to: toMin(card.dataset.clinicTo) } }
+    : null;
+  if (!h) return;
+  const mode = clinicMode(now.minutes, workday, h);
+  const root = document.documentElement;
+  const changed = root.dataset.mode !== mode;
+  root.dataset.mode = mode;
+
+  card.querySelectorAll("[data-mode-panel]").forEach((p) => {
+    p.hidden = p.dataset.modePanel !== mode;
+  });
+  card.querySelectorAll('[data-countdown="reg-from"]').forEach((el) => (el.textContent = formatDuration(h.reg.from - now.minutes)));
+  card.querySelectorAll('[data-countdown="reg-to"]').forEach((el) => (el.textContent = formatDuration(h.reg.to - now.minutes)));
+  card.querySelectorAll("[data-next-open]").forEach((el) => {
+    el.textContent = workday && now.minutes < h.clinic.from ? "dziś" : nextWorkdayLabel(now);
+  });
+  // Odliczanie zmienia się co minutę – czytnik ekranu ogłasza tylko zmianę trybu
+  card.querySelector("[aria-live]")?.setAttribute("aria-live", changed ? "polite" : "off");
+
+  // CSSOM (nie atrybut style) – zgodne z CSP style-src 'self'
+  card.style.setProperty("--progress", workday ? progress(now.minutes, h.reg.from, h.reg.to).toFixed(3) : "0");
+  card.classList.add("is-live");
+}
+
+/** „Dziś w przychodni”: pokazuje listę na dziś */
+function initToday(now, workday) {
+  const box = document.querySelector("[data-today]");
+  if (!box) return;
+  const name = box.querySelector("[data-today-name]");
+  if (name) {
+    name.textContent = DAY_NAMES[now.weekday];
+    name.hidden = false;
+  }
+  const live = box.querySelector(".today__live");
+  if (live) {
+    live.hidden = !workday;
+    live.querySelectorAll("[data-days]").forEach((li) => (li.hidden = !li.dataset.days.split(",").includes(String(now.weekday))));
+  }
+  const closed = box.querySelector("[data-today-closed]");
+  if (closed) closed.hidden = workday;
+  box.classList.add("is-live");
+}
+
+/**
+ * Plakietki stanu przedziału godzin (lekarz przyjmuje teraz, linia odbiera…):
+ * [data-range] z data-from/data-to albo [data-schedule] (JSON grafiku osoby), teksty w data-l-now/-later/-done/-off.
+ */
+function initRanges(now, workday) {
+  document.querySelectorAll("[data-range], [data-schedule]").forEach((el) => {
+    let from = el.dataset.from;
+    let to = el.dataset.to;
+    let on = workday;
+    if (el.dataset.schedule) {
+      let today = null;
+      try {
+        today = JSON.parse(el.dataset.schedule).find((s) => s.days.includes(now.weekday));
+      } catch {}
+      on = workday && !!today;
+      from = today?.from;
+      to = today?.to;
+    }
+    const state = on && from && to ? rangeState(now.minutes, true, toMin(from), toMin(to)) : "off";
+    el.textContent = (el.dataset[`l${state[0].toUpperCase()}${state.slice(1)}`] || "").replace("{from}", from ? hm(from) : "");
+    el.classList.remove("is-now", "is-later", "is-done", "is-off");
+    el.classList.add(`is-${state}`);
+    el.hidden = !el.textContent;
   });
 }
 
@@ -114,22 +191,28 @@ function initPrint() {
   });
 }
 
-/** Menu „Telefony” w dolnym pasku: zamykanie klawiszem Escape, kliknięciem obok i po wyjściu fokusem */
-function initCallbar() {
-  const d = document.querySelector("details.callbar__more");
-  if (!d) return;
-  const close = () => d.removeAttribute("open");
+/** Arkusz „Telefony” w dolnym pasku: Popover API, a w starszych przeglądarkach (np. Safari < 17) – przełączanie klasą */
+function initSheet() {
+  const sheet = document.getElementById("phones-sheet");
+  if (!sheet) return;
+  if (typeof sheet.showPopover === "function") return;
+  const toggle = document.querySelector("[data-sheet-toggle]");
+  const set = (open) => {
+    sheet.classList.toggle("is-open", open);
+    toggle?.setAttribute("aria-expanded", String(open));
+    if (open) sheet.querySelector("a")?.focus();
+  };
+  sheet.classList.add("sheet--fallback");
+  toggle?.addEventListener("click", () => set(!sheet.classList.contains("is-open")));
+  sheet.querySelector("[data-sheet-close]")?.addEventListener("click", () => {
+    set(false);
+    toggle?.focus();
+  });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && d.open) {
-      close();
-      d.querySelector("summary")?.focus();
+    if (e.key === "Escape" && sheet.classList.contains("is-open")) {
+      set(false);
+      toggle?.focus();
     }
-  });
-  d.addEventListener("focusout", (e) => {
-    if (e.relatedTarget && !d.contains(e.relatedTarget)) close();
-  });
-  document.addEventListener("click", (e) => {
-    if (d.open && !d.contains(e.target)) close();
   });
 }
 
@@ -138,4 +221,13 @@ initTextSize();
 initMenu();
 initStatus();
 initPrint();
-initCallbar();
+initSheet();
+
+// Stan „teraz” odświeżany co minutę (równo z pełną minutą) i po powrocie do karty
+setTimeout(() => {
+  initStatus();
+  setInterval(initStatus, 60000);
+}, 60000 - (Date.now() % 60000));
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") initStatus();
+});

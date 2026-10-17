@@ -16,7 +16,7 @@ ctaText: Chcesz umówić wizytę? Zadzwoń do rejestracji
   <section aria-labelledby="telefony">
     <h2 id="telefony">Telefony – w jakiej sprawie dzwonić</h2>
     <p>Mamy trzy numery. Wybierz ten, który pasuje do Twojej sprawy. Jeśli nie wiesz, gdzie zadzwonić – zadzwoń do rejestracji.</p>
-    {{ phoneCards(clinic.phones) }}
+    {{ phoneCards(clinic.phones, clinic.hours) }}
     {%- if clinic.email %}
     <p><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg> E-mail: <a href="mailto:{{ clinic.email }}">{{ clinic.email }}</a>. {{ clinic.emailNote }}</p>
     {%- else %}
