@@ -133,17 +133,19 @@
   <div class="person__head">
     <div class="person__avatar">
       {%- if doc.photo %}<img src="{{ doc.photo }}" alt="{{ doc.title }} {{ doc.name }}" width="72" height="72" loading="lazy">
-      {%- else %}<span aria-hidden="true">{% for part in doc.name.split(" ") %}{{ part | first }}{% endfor %}</span>{% endif %}
+      {%- else %}{% set parts = doc.name.split(" ") %}<span aria-hidden="true">{{ parts | first | first }}{% if parts | length > 1 %}{{ parts | last | first }}{% endif %}</span>{% endif %}
     </div>
     <div class="person__id">
       <h{{ headingLevel }} class="person__name">{{ doc.title }} {{ doc.name }}</h{{ headingLevel }}>
       <p class="person__role">{{ doc.role }}{% if doc.specialty %}, {{ doc.specialty }}{% endif %}{% if doc.pwz %} · nr PWZ {{ doc.pwz }}{% endif %}</p>
     </div>
-    {%- if doc.schedule %}
+    {%- if doc.schedule | length %}
     <span class="chip person__state" data-schedule="{{ doc.schedule | json }}" data-l-now="Przyjmuje teraz" data-l-later="Dziś od {from}" data-l-done="Dziś już nie przyjmuje" data-l-off="Dziś nie przyjmuje" hidden></span>
     {%- endif %}
   </div>
-  {%- if doc.schedule %}
+  {%- if not (doc.schedule | length) %}
+  <p class="person__hours">Godziny przyjęć – zapytaj w rejestracji.</p>
+  {%- else %}
   <dl class="person__hours">
     <dt>Godziny przyjęć</dt>
     {%- for s in doc.schedule %}
@@ -274,8 +276,8 @@
 <section class="today" data-today aria-labelledby="today-title">
   <h2 id="today-title" class="today__title">Dziś w przychodni<span class="today__day" data-today-name hidden></span></h2>
   <ul class="today__list today__live" hidden>
-    {%- for x in team.doctors | shifts %}
-    <li data-days="{{ x.s.days | join(',') }}"><span class="today__what">{{ x.doc.title }} {{ x.doc.name }}</span><span class="today__when">{{ x.s | timeRange }}</span><span class="chip" data-range data-from="{{ x.s.from }}" data-to="{{ x.s.to }}" data-l-now="Przyjmuje teraz" data-l-later="Przyjmuje od {from}" data-l-done="Dziś już nie przyjmuje" hidden></span></li>
+    {%- for doc in team.doctors | sortByFirstShift %}
+    <li data-person-today="{{ doc.schedule | json }}"><span class="today__what">{{ doc.title }} {{ doc.name }}</span><span class="today__when" data-today-hours></span><span class="chip" data-schedule="{{ doc.schedule | json }}" data-l-now="Przyjmuje teraz" data-l-later="Przyjmuje od {from}" data-l-done="Dziś już nie przyjmuje" hidden></span></li>
     {%- endfor %}
     {%- set h = clinic.hours.pobrania %}
     <li data-days="{{ h.days | join(',') }}"><span class="today__what">{{ h.label }}</span><span class="today__when">{{ h | timeRange }}</span><span class="chip" data-range data-from="{{ h.from }}" data-to="{{ h.to }}" data-l-now="Trwa teraz" data-l-later="Od {from}" data-l-done="Dziś już zakończone" hidden></span></li>

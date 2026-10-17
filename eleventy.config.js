@@ -89,6 +89,15 @@ export default function (eleventyConfig) {
       .sort((a, b) => a.from.localeCompare(b.from))
   );
 
+  /** Lekarze z grafikiem, według najwcześniejszego dyżuru */
+  eleventyConfig.addFilter("sortByFirstShift", (doctors) =>
+    doctors
+      .filter((d) => d.schedule?.length)
+      .map((d) => [d, d.schedule.map((s) => s.from).sort()[0]])
+      .sort((a, b) => a[1].localeCompare(b[1]))
+      .map(([d]) => d)
+  );
+
   /** Wszystkie dyżury lekarzy jako lista [{doc, s}] według godziny rozpoczęcia */
   eleventyConfig.addFilter("shifts", (doctors) =>
     doctors.flatMap((doc) => doc.schedule.map((s) => ({ doc, s }))).sort((a, b) => a.s.from.localeCompare(b.s.from))

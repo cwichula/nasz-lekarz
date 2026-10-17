@@ -38,12 +38,6 @@ export function rangeState(minutes, workday, from, to) {
   return "done";
 }
 
-/** Ile minionej części przedziału (0–1), np. do pierścienia postępu rejestracji */
-export function progress(minutes, from, to) {
-  if (to <= from) return 0;
-  return Math.min(1, Math.max(0, (minutes - from) / (to - from)));
-}
-
 /** 200 -> "3 godz. 20 min", 45 -> "45 min", 120 -> "2 godz." */
 export function formatDuration(min) {
   const h = Math.floor(min / 60);

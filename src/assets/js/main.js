@@ -91,9 +91,20 @@ function initStateCard(now, h, mode, changed) {
   });
   card.querySelectorAll('[data-countdown="reg-from"]').forEach((el) => (el.textContent = formatDuration(h.reg.from - now.minutes)));
   card.querySelectorAll('[data-countdown="reg-to"]').forEach((el) => (el.textContent = formatDuration(h.reg.to - now.minutes)));
-  // Przy wejściu na stronę i przy odliczaniu co minutę czytnik milczy – ogłasza tylko zmianę trybu w trakcie wizyty
+  // Czytnik ogłasza tylko zmianę trybu w trakcie wizyty
   card.querySelector("[data-state-live]")?.setAttribute("aria-live", changed && !firstRun ? "polite" : "off");
   card.classList.add("is-live");
+}
+
+/** Dzisiejsze dyżury z grafiku osoby (JSON z data-schedule), według godziny */
+function todayShifts(json, weekday) {
+  try {
+    return JSON.parse(json)
+      .filter((s) => s.days.includes(weekday))
+      .sort((a, b) => toMin(a.from) - toMin(b.from));
+  } catch {
+    return [];
+  }
 }
 
 /** „Dziś w przychodni”: pokazuje listę na dziś */
@@ -109,6 +120,12 @@ function initToday(now, workday) {
   if (live) {
     live.hidden = !workday;
     live.querySelectorAll("[data-days]").forEach((li) => (li.hidden = !li.dataset.days.split(",").includes(String(now.weekday))));
+    live.querySelectorAll("[data-person-today]").forEach((li) => {
+      const shifts = todayShifts(li.dataset.personToday, now.weekday);
+      li.hidden = !shifts.length;
+      const when = li.querySelector("[data-today-hours]");
+      if (when) when.textContent = shifts.map((s) => `${hm(s.from)}–${hm(s.to)}`).join(", ");
+    });
   }
   const closed = box.querySelector("[data-today-closed]");
   if (closed) closed.hidden = workday;
@@ -125,13 +142,15 @@ function initRanges(now, workday) {
     let to = el.dataset.to;
     let on = workday;
     if (el.dataset.schedule) {
-      let today = null;
-      try {
-        today = JSON.parse(el.dataset.schedule).find((s) => s.days.includes(now.weekday));
-      } catch {}
-      on = workday && !!today;
-      from = today?.from;
-      to = today?.to;
+      // Kilka dyżurów w dniu (np. 8–11 i 15–18): liczy się trwający, potem najbliższy, potem ostatni
+      const shifts = todayShifts(el.dataset.schedule, now.weekday);
+      const pick =
+        shifts.find((s) => now.minutes >= toMin(s.from) && now.minutes < toMin(s.to)) ||
+        shifts.find((s) => now.minutes < toMin(s.from)) ||
+        shifts[shifts.length - 1];
+      on = workday && !!pick;
+      from = pick?.from;
+      to = pick?.to;
     }
     const state = on && from && to ? rangeState(now.minutes, true, toMin(from), toMin(to)) : "off";
     el.textContent = (el.dataset[`l${state[0].toUpperCase()}${state.slice(1)}`] || "").replace("{from}", from ? hm(from) : "");
@@ -190,7 +209,7 @@ function initPrint() {
   });
 }
 
-/** Arkusz „Telefony” w dolnym pasku: Popover API, a w starszych przeglądarkach (np. Safari < 17) – przełączanie klasą */
+/** Arkusz „Telefony”: Popover API, bez niego – przełączanie klasą */
 function initSheet() {
   const sheet = document.getElementById("phones-sheet");
   if (!sheet) return;

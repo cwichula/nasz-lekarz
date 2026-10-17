@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { clinicMode, rangeState, progress, formatDuration, toMin, fromMin } from "../src/assets/js/clinic-state.js";
+import { clinicMode, rangeState, formatDuration, toMin, fromMin } from "../src/assets/js/clinic-state.js";
 import { isWorkday } from "../src/assets/js/holidays.js";
 
 // Godziny jak w src/_data/clinic.json
@@ -42,10 +42,7 @@ test("stan przedziału godzin", () => {
   assert.equal(rangeState(toMin("15:00"), false, f, t), "off");
 });
 
-test("postęp i czas trwania", () => {
-  assert.equal(progress(toMin("12:00"), H.reg.from, H.reg.to), 0.5);
-  assert.equal(progress(toMin("07:00"), H.reg.from, H.reg.to), 0);
-  assert.equal(progress(toMin("20:00"), H.reg.from, H.reg.to), 1);
+test("czas trwania", () => {
   assert.equal(formatDuration(200), "3 godz. 20 min");
   assert.equal(formatDuration(120), "2 godz.");
   assert.equal(formatDuration(45), "45 min");
