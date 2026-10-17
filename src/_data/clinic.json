@@ -74,6 +74,7 @@
     "rejestracja": { "label": "Rejestracja (telefon i osobiście)", "days": [1, 2, 3, 4, 5], "from": "09:00", "to": "15:00" },
     "pobrania": { "label": "Pobieranie krwi", "days": [1, 2, 3, 4, 5], "from": "08:00", "to": "12:00", "note": "godziny wstępne – do potwierdzenia" }
   },
+  "afterRegistration": "Po 15:00 rejestracja jest nieczynna – nie zapisuje na wizyty i nie odbiera telefonów. Jeśli przyjdziesz do przychodni bez zapisu, zapytamy lekarza, czy przyjmie Cię jeszcze tego dnia. Lekarz przyjmuje do 18:00.",
   "hoursNote": "W soboty, niedziele i święta przychodnia jest nieczynna.",
 
   "homeVisits": {

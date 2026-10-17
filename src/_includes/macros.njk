@@ -21,8 +21,8 @@
 {% endmacro %}
 
 {#- Status rejestracji (wypełniany przez JS; bez JS ukryty) -#}
-{% macro status(hours, what="Rejestracja") %}
-<p class="status" data-status data-what="{{ what }}" data-from="{{ hours.from }}" data-to="{{ hours.to }}" hidden><span data-status-text>{{ what }}</span></p>
+{% macro status(hours, what="Rejestracja", until="") %}
+<p class="status" data-status data-what="{{ what }}" data-from="{{ hours.from }}" data-to="{{ hours.to }}"{% if until %} data-until="{{ until }}"{% endif %} hidden><span data-status-text>{{ what }}</span></p>
 {% endmacro %}
 
 {#- Tabela godzin tygodniowych: działy w kolumnach, dni w wierszach -#}

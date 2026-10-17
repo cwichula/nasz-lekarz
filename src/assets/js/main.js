@@ -48,6 +48,8 @@ function initStatus() {
     const open = workday && now.minutes >= toMin(from) && now.minutes < toMin(to);
     let text;
     if (open) text = `${what} czynna teraz – do ${hm(to)}`;
+    else if (workday && el.dataset.until && now.minutes >= toMin(to) && now.minutes < toMin(el.dataset.until))
+      text = `${what} nieczynna – przychodnia czynna do ${hm(el.dataset.until)}`;
     else if (workday && now.minutes < toMin(from)) text = `${what} nieczynna – otwieramy dziś o ${hm(from)}`;
     else text = `${what} nieczynna – otwieramy ${nextWorkdayLabel(now)} o ${hm(from)}`;
     el.querySelector("[data-status-text]").textContent = text;

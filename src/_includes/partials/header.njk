@@ -1,7 +1,7 @@
 {%- from "macros.njk" import status -%}
 <div class="topbar">
   <div class="container topbar__inner">
-    {{ status(clinic.hours.rejestracja) }}
+    {{ status(clinic.hours.rejestracja, "Rejestracja", clinic.hours.przychodnia.to) }}
     <div class="topbar__links">
       <span class="topbar__address">{{ clinic.address.street }} ({{ clinic.address.floor }}), {{ clinic.address.city }}</span>
       <a href="/po-godzinach/">Po godzinach</a>
