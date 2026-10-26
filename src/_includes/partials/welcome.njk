@@ -1,0 +1,11 @@
+{#- „Serdecznie zapraszamy” – powitanie ze strony z 2019 r. Tylko w wariantach (/va/, /vb/, /vc/).
+    Bez zdania „Nasi lekarze to najwyższej klasy specjaliści…” – zakaz reklamy (art. 14 ustawy o działalności leczniczej).
+    Samodzielna sekcja: można ją dołączyć na dowolnej stronie głównej. Klasę sekcji zmienisz przez
+    {% set welcomeClass = "…" %} przed {% include "partials/welcome.njk" %} (domyślnie „section section--tight”). -#}
+<section class="{{ welcomeClass or 'section section--tight' }}" aria-labelledby="zapraszamy">
+  <div class="container">
+    <h2 id="zapraszamy">Serdecznie zapraszamy</h2>
+    <p class="lead">Zapraszamy do rodzinnej przychodni, gdzie każdy pacjent jest traktowany indywidualnie.</p>
+    <p>{{ clinic.patientsNote }} <a href="/jak-sie-zapisac/">Jak zapisać się do przychodni</a></p>
+  </div>
+</section>

@@ -1,0 +1,208 @@
+---
+permalink: /test/
+eleventyExcludeFromCollections: true
+# Stara strona (2019, repo gitlab milosz.godlewski/nasz-lekarz) przebudowana według dzisiejszych standardów.
+# Treść WYŁĄCZNIE ze starego projektu – nie używa clinic.json, team.json ani layoutów obecnej strony.
+phones:
+  - { label: "Rejestracja", display: "75 64 22 550", e164: "+48756422550" }
+  - { label: "Zabiegowy", display: "75 64 22 551", e164: "+48756422551" }
+  - { label: "Biuro", display: "75 64 22 553", e164: "+48756422553" }
+hours:
+  - { label: "Rejestracja", value: "8:00–15:00" }
+  - { label: "Zabiegowy", value: "8:00–18:00" }
+services:
+  - id: leczenie
+    name: "Leczenie"
+    icon: "ikony_nasz_lekarz_LEKARZ.svg"
+    text: "Lekarz na podstawie wywiadu z pacjentem dokonuje rozpoznania choroby i prowadzi proces leczenia. Jeśli jest potrzeba, to zleca dodatkowe specjalistyczne badania lub zabiegi. Pacjent pozostaje pod nadzorem medycznym aż do wyleczenia."
+  - id: opieka
+    name: "Opieka"
+    icon: "ikony_nasz_lekarz_OPIEKA.svg"
+    text: "Pielęgniarka wykonuje zalecone przez lekarza czynności, np. badanie EKG, pomiar ciśnienia, pomiar cukru, pomiar wagi i wzrostu, pobranie krwi do dalszych badań, założenie lub zmianę opatrunku, podłączenie kroplówki, wykonanie zastrzyków, zdjęcie szwów i inne. Zdaje lekarzowi raport z wykonanych czynności i obserwacji."
+  - id: diagnostyka
+    name: "Diagnostyka"
+    icon: "ikony_nasz_lekarz_BADANIA_KRWI.svg"
+    text: "Badania laboratoryjne krwi, moczu oraz posiewy, badania radiologiczne (USG, RTG, EKG). Na miejscu można zbadać poziom cukru, ciśnienie i wykonać badanie EKG."
+  - id: wizyty-domowe
+    name: "Wizyty domowe"
+    icon: "ikony_nasz_lekarz_WIZYTY_DOMOWE.svg"
+    text: "Pacjent nie może przyjść do przychodni, dlatego zamawia wizytę domową. Lekarz lub pielęgniarka przyjeżdża pod wskazany adres i przeprowadza odpowiednie czynności medyczne na miejscu, u pacjenta w domu."
+  - id: szczepienia
+    name: "Szczepienia"
+    icon: "ikony_nasz_lekarz_SZCZEPIENIA.svg"
+    text: "Przeprowadzamy szczepienia obowiązkowe zgodnie z kalendarzem szczepień dla dzieci. Jest też możliwość dodatkowych szczepień, na przykład w przypadku wyjazdu do krajów egzotycznych lub na życzenie, np. przeciw pneumokokom, żółtaczce i inne."
+  - id: dokumentacja
+    name: "Dokumentacja medyczna"
+    icon: "ikony_nasz_lekarz_WNIOSKI.svg"
+    text: "Pacjent może uzyskać dokumenty medyczne (skierowania, wnioski itp.). W tym celu należy odpowiednio wcześniej powiadomić swojego lekarza. Przygotowanie dokumentacji trwa średnio od 1 do 3 tygodni."
+opinions:
+  - { text: "Życzliwi lekarze, którzy zawsze wysłuchają pacjenta, pomogą lub odeślą do specjalisty na szczegółową kontrolę. Najlepsza przychodnia w mieście.", name: "Marek" }
+  - { text: "Fantastyczna obsługa i profesjonalni lekarze. Pani doktor przyjechała na wizytę o 21!", name: "Agata" }
+  - { text: "Polecam bardzo tę przychodnię. Wiele spraw można załatwić przez telefon. Panie w recepcji są przemiłe i zawsze służą pomocą.", name: "Katarzyna" }
+---
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nasz Lekarz – przychodnia rodzinna w Jeleniej Górze</title>
+  <meta name="description" content="Serdecznie zapraszamy do rodzinnej przychodni, gdzie każdy jest traktowany indywidualnie. Rejestracja: 75 64 22 550, ul. Wojska Polskiego 57, Jelenia Góra.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11161d" media="(prefers-color-scheme: dark)">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" type="image/png" sizes="32x32" href="/test/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/test/assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/test/assets/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="/test/assets/favicon/site.webmanifest">
+  <link rel="stylesheet" href="/test/assets/test.css">
+</head>
+<body id="top">
+
+  <a class="skip" href="#tresc">Przejdź do treści</a>
+
+  <header class="bar">
+    <div class="wrap bar__in">
+      <a class="bar__brand" href="#top"><img src="/test/assets/nasz_lekarz_logo.svg" alt="Nasz Lekarz – strona główna" width="168" height="52"></a>
+
+      <nav class="bar__nav" aria-label="Główna">
+        <ul>
+          <li><a href="#uslugi">Usługi</a></li>
+          <li><a href="#opinie">Opinie</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <a class="bar__call" href="tel:{{ phones[0].e164 }}"><span class="bar__call-long">Rejestracja:&nbsp;</span>{{ phones[0].display }}</a>
+    </div>
+  </header>
+
+  <main id="tresc" tabindex="-1">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero__in">
+        <div class="hero__text">
+          <h1 id="hero-title">Przychodnia rodzinna Nasz Lekarz</h1>
+          <p class="hero__lead">Jelenia Góra, ul. Wojska Polskiego 57, 1. piętro. Zadzwoń lub odwiedź nas osobiście!</p>
+
+          <ul class="hero__phones">
+            {%- for p in phones %}{% if loop.index <= 2 %}
+            <li>
+              <span class="hero__phone-label">{{ p.label }}</span>
+              <a class="hero__phone" href="tel:{{ p.e164 }}">{{ p.display }}</a>
+            </li>
+            {%- endif %}{% endfor %}
+          </ul>
+
+          <p class="hero__days">Czynne od poniedziałku do piątku</p>
+          <dl class="hours hero__hours">
+            {%- for h in hours %}
+            <div><dt>{{ h.label }}</dt><dd>{{ h.value }}</dd></div>
+            {%- endfor %}
+          </dl>
+        </div>
+
+        <img class="hero__art" src="/test/assets/glowna_ilustracja.svg" alt="" width="1200" height="867" decoding="async" fetchpriority="high">
+      </div>
+    </section>
+
+    <section id="uslugi" class="services" aria-labelledby="uslugi-title">
+      <div class="wrap">
+        <h2 id="uslugi-title">Usługi</h2>
+        <p class="section-lead">Rozwiń usługę, aby przeczytać, na czym polega.</p>
+
+        <div class="services__list">
+          {%- for s in services %}
+          <details class="service" id="{{ s.id }}">
+            <summary>
+              <img src="/test/assets/uslugi/{{ s.icon }}" alt="" width="56" height="56" loading="lazy" decoding="async">
+              <span class="service__name">{{ s.name }}</span>
+              <span class="service__more" aria-hidden="true"></span>
+            </summary>
+            <p>{{ s.text }}</p>
+          </details>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="opinie" class="opinions" aria-labelledby="opinie-title">
+      <div class="wrap">
+        <h2 id="opinie-title">Nasi pacjenci mówią</h2>
+
+        <ul class="opinions__list" tabindex="0" aria-label="Opinie pacjentów – przewiń w bok, aby zobaczyć kolejne">
+          {%- for o in opinions %}
+          <li>
+            <figure class="opinion">
+              <blockquote><p>{{ o.text }}</p></blockquote>
+              <figcaption>{{ o.name }}</figcaption>
+            </figure>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </section>
+
+    <section class="about" aria-labelledby="about-title">
+      <div class="wrap about__in">
+        <img class="about__img" src="/test/assets/lekarz.png" alt="Lekarka w białym fartuchu ze stetoskopem" width="214" height="216" loading="lazy" decoding="async">
+        <div>
+          <h2 id="about-title">Serdecznie zapraszamy</h2>
+          <p class="about__text">Do rodzinnej przychodni, gdzie każdy jest traktowany indywidualnie. Nasi lekarze to najwyższej klasy specjaliści, którzy w przyjemnym otoczeniu dobiorą odpowiedni zakres leczenia.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="contact" aria-labelledby="kontakt-title">
+      <div class="wrap">
+        <h2 id="kontakt-title">Kontakt</h2>
+      </div>
+
+      <figure class="contact__map">
+        <img src="/test/assets/mapa.png" alt="Mapa okolicy: przychodnia przy alei Wojska Polskiego, na rogu ulicy Teatralnej, obok Prokuratury Rejonowej i niedaleko Urzędu Miasta" width="1821" height="542" loading="lazy" decoding="async">
+        <figcaption class="wrap"><a href="https://www.google.com/maps/search/?api=1&amp;query=Wojska+Polskiego+57%2C+58-500+Jelenia+G%C3%B3ra" rel="noopener">Otwórz w mapach i wyznacz trasę</a></figcaption>
+      </figure>
+
+      <div class="wrap contact__grid">
+        <div class="contact__block">
+          <h3>Adres</h3>
+          <address>ul. Wojska Polskiego 57<br>1. piętro<br>58-500 Jelenia Góra</address>
+        </div>
+
+        <div class="contact__block">
+          <h3>Telefon</h3>
+          <dl class="hours">
+            {%- for p in phones %}
+            <div><dt>{{ p.label }}</dt><dd><a href="tel:{{ p.e164 }}">{{ p.display }}</a></dd></div>
+            {%- endfor %}
+          </dl>
+        </div>
+
+        <div class="contact__block">
+          <h3>Czynne od poniedziałku do piątku</h3>
+          <dl class="hours">
+            {%- for h in hours %}
+            <div><dt>{{ h.label }}</dt><dd>{{ h.value }}</dd></div>
+            {%- endfor %}
+          </dl>
+        </div>
+
+        <div class="contact__block contact__join">
+          <h3>Dołącz do nas</h3>
+          <p>Poszukujemy lekarza ze specjalizacją I stopnia na stanowisko „Lekarz rodzinny”. Zapraszamy do kontaktu: <a href="tel:{{ phones[2].e164 }}">{{ phones[2].display }}</a>.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <img class="foot__logo" src="/test/assets/nasz_lekarz_logo.svg" alt="Nasz Lekarz" width="208" height="65" loading="lazy">
+      <p>© 2019 Nasz Lekarz. Realizacja <a href="https://24px.pl" rel="noopener">24px</a></p>
+      <a class="foot__top" href="#top"><img src="/test/assets/strzalka_do_gory.svg" alt="" width="15" height="22">Do góry</a>
+    </div>
+  </footer>
+
+</body>
+</html>

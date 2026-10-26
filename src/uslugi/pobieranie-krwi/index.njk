@@ -29,6 +29,15 @@ ctaText: Pytanie o pobranie krwi? Zadzwoń do gabinetu zabiegowego
     <h2 id="skierowanie">Kto może przyjść</h2>
     <p>Bezpłatnie pobieramy krew pacjentom naszej przychodni, którzy mają <strong>skierowanie od lekarza rodzinnego</strong> z naszej przychodni. Skierowanie wystawia lekarz podczas wizyty lub teleporady.</p>
   </section>
+  {%- if variant %}
+
+  {#- Badania moczu i posiewy – ze strony z 2019 r. (tylko w wariantach). Bez USG i RTG – przychodnia ich nie wykonuje. #}
+  <section aria-labelledby="mocz-posiewy">
+    <h2 id="mocz-posiewy">Badania moczu i posiewy</h2>
+    <p>Na zlecenie lekarza rodzinnego oprócz badań krwi wykonujemy też <strong>badania moczu</strong> i <strong>posiewy</strong>, na przykład posiew moczu. Posiew to badanie, które sprawdza, czy w próbce są bakterie i jaki lek na nie działa.</p>
+    <p>Jak pobrać próbkę i kiedy ją przynieść, powie Ci lekarz lub pielęgniarka. Możesz też zapytać w gabinecie zabiegowym, tel. <a href="tel:{{ clinic.phones.zabiegowy.e164 }}">{{ clinic.phones.zabiegowy.display }}</a>.</p>
+  </section>
+  {%- endif %}
 
   <section aria-labelledby="przygotowanie">
     <h2 id="przygotowanie">Jak się przygotować</h2>

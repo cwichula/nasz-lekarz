@@ -1,0 +1,232 @@
+{#- Wariant A (/va/): strona główna jako jeden dokument w wyglądzie strony z 2019 r. (krzyż, #0071df, ilustracja),
+    ale z danymi z clinic.json i team.json oraz ze stanem „teraz” (assets/js/main.js, te same atrybuty data-* co w base.njk).
+    Treść strony „Puls” (content) jest tu pomijana. Podstrony wariantu A używają zwykłego layouts/base.njk.
+    Bez JS: stałe godziny, numery i grafik tygodniowy – wszystko działa. -#}
+{%- from "macros.njk" import statusCard, todayCard -%}
+{%- set reg = clinic.hours.rejestracja %}{% set cl = clinic.hours.przychodnia %}{% set pob = clinic.hours.pobrania %}
+{%- set nc = clinic.nightCare %}{% set tele = clinic.helplines[0] %}
+{#- Usługi: ikony ze strony z 2019 r., opisy prostym językiem, linki do podstron „Puls”. Bez USG, RTG i szczepień dzieci. -#}
+{%- set services = [
+  { icon: "LEKARZ", name: "Wizyta u lekarza rodzinnego", text: "Lekarz bada, rozpoznaje chorobę i prowadzi leczenie. Gdy trzeba, zleca badania albo wystawia e-skierowanie do specjalisty.", url: "/kontakt/#jak-umowic", link: "Jak umówić wizytę" },
+  { icon: "OPIEKA", name: "Gabinet zabiegowy", text: "Pielęgniarka wykonuje czynności zlecone przez lekarza: EKG, pomiar ciśnienia, cukru, wagi i wzrostu, pobranie krwi, opatrunki, kroplówki, zastrzyki, zdjęcie szwów.", url: "/uslugi/ekg/", link: "Badanie EKG" },
+  { icon: "BADANIA_KRWI", name: "Badania krwi i moczu", text: "Badania krwi i moczu oraz posiewy – na zlecenie lekarza. Krew pobieramy rano, " ~ (pob.days | daysLabel(true)) ~ " " ~ (pob | timeRange) ~ ".", url: "/uslugi/pobieranie-krwi/", link: "Jak się przygotować" },
+  { icon: "WIZYTY_DOMOWE", name: "Wizyty domowe", text: "Gdy chory nie może przyjść do przychodni, lekarz lub pielęgniarka przyjedzie do domu. Wizytę zgłoś w rejestracji.", url: "/uslugi/wizyty-domowe/", link: "Kiedy i jak zgłosić" },
+  { icon: "SZCZEPIENIA", name: "Szczepienia dorosłych", text: "Szczepimy dorosłych i seniorów. Na życzenie albo przed wyjazdem za granicę – także dodatkowe szczepienia, np. przeciw pneumokokom albo WZW (żółtaczce).", url: "/uslugi/szczepienia/", link: "Szczepienia w przychodni" },
+  { icon: "WNIOSKI", name: "Dokumentacja medyczna", text: "Skierowania, wnioski i inne dokumenty przygotujemy na Twoją prośbę. Powiedz o tym lekarzowi wcześniej – trwa to średnio od 1 do 3 tygodni.", url: "tel:" ~ clinic.phones.biuro.e164, link: "Biuro: " ~ clinic.phones.biuro.display }
+] -%}
+<!doctype html>
+<html lang="pl" class="va" data-reg-from="{{ reg.from }}" data-reg-to="{{ reg.to }}" data-clinic-from="{{ cl.from }}" data-clinic-to="{{ cl.to }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11161d" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/variant-a/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/assets/variant-a/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/atkinson-hyperlegible-next-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/variant-a/variant-a.css">
+  <script type="module" src="/assets/js/main.js"></script>
+  {% include "schema/clinic.njk" %}
+</head>
+<body id="top">
+  {% include "partials/icons.njk" %}
+  <a class="skip" href="#tresc">Przejdź do treści</a>
+
+  <header class="bar">
+    <div class="wrap bar__in">
+      <a class="bar__brand" href="/" aria-current="page"><img src="/assets/variant-a/nasz_lekarz_logo.svg" alt="{{ clinic.fullName }} – strona główna" width="168" height="52"></a>
+
+      <nav class="bar__nav" aria-label="Na tej stronie">
+        <ul>
+          <li><a href="#telefony">Telefony</a></li>
+          <li><a href="#godziny">Godziny</a></li>
+          <li><a href="#uslugi">Usługi</a></li>
+          <li><a href="#kontakt">Dojazd</a></li>
+        </ul>
+      </nav>
+
+      {#- Jedna akcja, zależna od trybu (html[data-mode] ustawia main.js); bez JS – rejestracja #}
+      <a class="bar__call when-day" href="tel:{{ clinic.phones.rejestracja.e164 }}"><span class="bar__call-long">Rejestracja </span>{{ clinic.phones.rejestracja.display }}</a>
+      <a class="bar__call when-clinic" href="#kontakt">Przyjdź do {{ cl.to | hm }}</a>
+      <a class="bar__call when-after" href="#zamknieta">Pomoc nocna</a>
+    </div>
+  </header>
+
+  <main id="tresc" tabindex="-1">
+
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero__in">
+        <div class="hero__text">
+          <h1 id="h1">Lekarz rodzinny NFZ w&nbsp;Jeleniej Górze<span class="visually-hidden"> – przychodnia {{ clinic.fullName }}</span></h1>
+          <p class="hero__lead">Przychodnia {{ clinic.fullName }}, {{ clinic.address.street }}, {{ clinic.address.floor }}. Wizyty są bezpłatne w&nbsp;ramach NFZ.</p>
+          {{ statusCard(clinic) }}
+        </div>
+        <img class="hero__art" src="/assets/variant-a/glowna_ilustracja.svg" alt="" width="1200" height="867" decoding="async" fetchpriority="high">
+      </div>
+    </section>
+
+    <section id="telefony" class="phones" aria-labelledby="telefony-title">
+      <div class="wrap">
+        <h2 id="telefony-title">Zadzwoń – w jakiej sprawie?</h2>
+        <p class="section-lead">Wybierz numer według sprawy. Zadzwonić może też ktoś z rodziny.</p>
+        <ul class="phones__list">
+          {%- for key in ["rejestracja", "zabiegowy", "biuro"] %}
+          {%- set p = clinic.phones[key] %}
+          <li class="phone{% if loop.first %} phone--main{% endif %}">
+            <h3 class="phone__label">{{ p.label }}</h3>
+            {%- if loop.first %}
+            <span class="chip phone__state" data-range data-from="{{ reg.from }}" data-to="{{ reg.to }}" data-l-now="Odbiera teraz" data-l-later="Nie odbiera teraz" data-l-done="Nie odbiera teraz" data-l-off="Nie odbiera teraz" hidden></span>
+            {%- endif %}
+            <a class="phone__num" href="tel:{{ p.e164 }}"><span class="visually-hidden">{{ p.callLabel }}: </span>{{ p.display }}</a>
+            <p class="phone__purpose">{{ p.purpose }}</p>
+            <p class="phone__hours">{{ p.hoursText | patientHours }}</p>
+          </li>
+          {%- endfor %}
+        </ul>
+        <p class="phones__note">{{ clinic.afterRegistration }}</p>
+      </div>
+    </section>
+
+    <section id="godziny" class="hours-band" aria-labelledby="godziny-title">
+      <div class="wrap hours-band__in">
+        {{ todayCard(clinic, team) }}
+        <div class="hours-band__week">
+          <h2 id="godziny-title">Godziny pracy</h2>
+          <dl class="hours">
+            <div><dt>Przychodnia</dt><dd>{{ cl.days | daysLabel(true) }} {{ cl | timeRange }}</dd></div>
+            <div><dt>Rejestracja</dt><dd>{{ reg.days | daysLabel(true) }} {{ reg | timeRange }}</dd></div>
+            <div><dt>Gabinet zabiegowy</dt><dd>{{ clinic.phones.zabiegowy.hoursText | replace("poniedziałek–piątek", "pn–pt") | patientHours }}</dd></div>
+            <div><dt>Pobieranie krwi</dt><dd>{{ pob.days | daysLabel(true) }} {{ pob | timeRange }}</dd></div>
+          </dl>
+          <p class="note">{{ clinic.hoursNote }}{% if pob.note %} Pobieranie krwi: {{ pob.note }}.{% endif %}</p>
+          <p><a class="more" href="/kontakt/#godziny">Pełna tabela godzin</a></p>
+        </div>
+        {#- Lekarze pod obiema kolumnami: karta „Dziś” i godziny kończą się mniej więcej na tej samej wysokości #}
+        <div class="hours-band__doctors">
+          <h3>Nasi lekarze</h3>
+          <ul class="doctors">
+            {%- for doc in team.doctors %}
+            <li><a href="/zespol/#{{ doc.slug }}">{{ doc.title }} {{ doc.name }}</a><span class="doctors__role">{{ doc.role }}{% if doc.specialty %}, {{ doc.specialty }}{% endif %}</span>
+              <span class="doctors__hours">{%- for s in doc.schedule %}{{ s.days | daysLabel }} {{ s | timeRange }}{% if not loop.last %}; {% endif %}{% else %}godziny przyjęć – zapytaj w rejestracji{% endfor %}</span></li>
+            {%- endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="uslugi" class="services" aria-labelledby="uslugi-title">
+      <div class="wrap">
+        <h2 id="uslugi-title">Usługi</h2>
+        <p class="section-lead">Dla pacjentów zapisanych do przychodni wszystko jest bezpłatne w&nbsp;ramach NFZ. Opiekujemy się dorosłymi.</p>
+        <ul class="services__list">
+          {%- for s in services %}
+          <li class="service">
+            <img src="/assets/variant-a/uslugi/ikony_nasz_lekarz_{{ s.icon }}.svg" alt="" width="56" height="56" decoding="async">
+            <div>
+              <h3>{{ s.name }}</h3>
+              <p>{{ s.text }}</p>
+              <a class="more" href="{{ s.url }}">{{ s.link }}</a>
+            </div>
+          </li>
+          {%- endfor %}
+        </ul>
+        <p class="services__all"><a class="btn btn--outline" href="/uslugi/">Wszystkie usługi</a></p>
+      </div>
+    </section>
+
+    <div class="about">
+      <div class="wrap about__in">
+        {%- set welcomeClass = "about__welcome" %}
+        {% include "partials/welcome.njk" %}
+        <section class="about__join" aria-labelledby="dolacz">
+          <h2 id="dolacz">Dołącz do nas</h2>
+          <p>Szukamy lekarza ze specjalizacją I&nbsp;stopnia na stanowisko „lekarz rodzinny”. Zadzwoń do biura: <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>.</p>
+        </section>
+      </div>
+    </div>
+
+    <section id="kontakt" class="contact" aria-labelledby="kontakt-title">
+      <div class="wrap">
+        <h2 id="kontakt-title">Gdzie jesteśmy</h2>
+        <div class="contact__grid">
+          <div class="contact__block">
+            <h3>Adres</h3>
+            <address>{{ clinic.address.street }}<br>{{ clinic.address.floor }}<br>{{ clinic.address.postalCode }} {{ clinic.address.city }}</address>
+            {%- if clinic.access.lift %}
+            <p class="contact__lift">{{ clinic.access.liftLabel }} – dla osób na wózku i tych, którym trudno wejść po schodach.</p>
+            {%- endif %}
+            <p class="contact__links">
+              <a class="more" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ (clinic.address.streetSchema + ', ' + clinic.address.postalCode + ' ' + clinic.address.city) | urlencode }}" rel="noopener" target="_blank">Wyznacz trasę<span class="visually-hidden"> (otwiera się w nowym oknie)</span></a>
+              <a class="more" href="/kartka-z-telefonami/">Kartka z telefonami do druku</a>
+            </p>
+          </div>
+
+          <div class="contact__block">
+            <h3>Telefony</h3>
+            <dl class="hours">
+              {%- for key, p in clinic.phones %}
+              <div><dt>{{ p.label }}</dt><dd><a href="tel:{{ p.e164 }}">{{ p.display }}</a></dd></div>
+              {%- endfor %}
+            </dl>
+            <p class="note">Rejestracja odbiera {{ reg.days | daysLabel(true) }} {{ reg | timeRange }}.</p>
+          </div>
+
+          <div id="zamknieta" class="contact__block contact__closed">
+            <h3>Gdy przychodnia jest zamknięta</h3>
+            <p>Pomoc nocna i świąteczna – bez skierowania i bez rejestracji: <strong>{{ nc.address }}</strong>, tel. <a href="tel:{{ nc.phone.e164 }}">{{ nc.phone.display }}</a>.</p>
+            <p class="note">Czynne {{ nc.hours }}.</p>
+            <p>Teleporada NFZ: <a href="tel:{{ tele.e164 }}">{{ tele.display }}</a>. Zagrożenie życia: <a class="alarm" href="tel:112">112</a> lub <a class="alarm" href="tel:999">999</a>.</p>
+            <p><a class="more" href="/po-godzinach/">Pomoc po godzinach</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__grid">
+        <div>
+          <img class="foot__logo" src="/assets/variant-a/nasz_lekarz_logo.svg" alt="{{ clinic.fullName }}" width="208" height="65" loading="lazy">
+          <p class="foot__addr">{{ clinic.address.street }} ({{ clinic.address.floor }})<br>{{ clinic.address.postalCode }} {{ clinic.address.city }}</p>
+        </div>
+        <nav aria-labelledby="f-strony">
+          <h2 id="f-strony">Strony</h2>
+          <ul>
+            {%- for item in nav %}{% if item.url != "/" %}
+            <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+            {%- endif %}{% endfor %}
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-pacjent">
+          <h2 id="f-pacjent">Dla pacjenta</h2>
+          <ul>
+            <li><a href="/recepty-i-e-uslugi/">Recepty i e-usługi</a></li>
+            <li><a href="/po-godzinach/">Gdy przychodnia jest zamknięta</a></li>
+            <li><a href="/kartka-z-telefonami/">Kartka z telefonami do druku</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="f-prawne">
+          <h2 id="f-prawne">Informacje prawne</h2>
+          <ul>
+            <li><a href="/prawa-pacjenta/">Prawa pacjenta i skargi</a></li>
+            <li><a href="/standardy-ochrony-maloletnich/">Standardy ochrony małoletnich</a></li>
+            <li><a href="/polityka-prywatnosci/">Polityka prywatności (RODO)</a></li>
+            <li><a href="/deklaracja-dostepnosci/">Deklaracja dostępności</a></li>
+            <li><a href="/dane-spolki/">Dane spółki</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="foot__bottom">
+        <p>Świadczenia w ramach umowy z Narodowym Funduszem Zdrowia – bezpłatnie dla osób ubezpieczonych. © {{ clinic.fullName }}. Strona nie używa plików cookies.</p>
+        <a class="foot__top" href="#top"><img src="/assets/variant-a/strzalka_do_gory.svg" alt="" width="15" height="22">Do góry</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

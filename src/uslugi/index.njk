@@ -54,6 +54,15 @@ ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
     <p>Bez skierowania możesz pójść na NFZ do: ginekologa i położnika, dentysty, dermatologa-wenerologa, onkologa i psychiatry.</p>
     <p><a href="/recepty-i-e-uslugi/">E-skierowanie, e-recepta i IKP – jak to działa</a></p>
   </section>
+  {%- if variant %}
+
+  {#- Dokumentacja medyczna – ze strony z 2019 r. (tylko w wariantach). DO WERYFIKACJI: czas przygotowania 1–3 tygodnie. #}
+  <section aria-labelledby="dokumenty">
+    <h2 id="dokumenty">Dokumenty medyczne – zgłoś wcześniej</h2>
+    <p>Jeśli potrzebujesz dokumentów medycznych, na przykład skierowania lub wniosku, powiedz o tym swojemu lekarzowi <strong>z wyprzedzeniem</strong>. Przygotowanie dokumentacji trwa średnio <strong>od 1 do 3 tygodni</strong>.</p>
+    <p>W sprawie dokumentacji zadzwoń do biura: tel. <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>, {{ clinic.phones.biuro.hoursText | patientHours }}.</p>
+  </section>
+  {%- endif %}
 
   <section aria-labelledby="transport">
     <h2 id="transport">Transport sanitarny</h2>

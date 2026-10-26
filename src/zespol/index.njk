@@ -66,7 +66,12 @@ ctaText: Chcesz umówić się do lekarza? Zadzwoń do rejestracji
     <h2 id="pielegniarki">Pielęgniarki</h2>
     <p>Pielęgniarka POZ (podstawowej opieki zdrowotnej) to inaczej pielęgniarka środowiskowa lub rodzinna. Pracuje w gabinecie zabiegowym i odwiedza pacjentów w domu. Wystarczy <strong>jedna deklaracja wyboru pielęgniarki POZ</strong> – to osobny dokument, inny niż deklaracja wyboru lekarza.</p>
     <h3>W gabinecie zabiegowym</h3>
+    {%- if variant %}
+    {% include "partials/nurse-scope.njk" %}
+    <p>Pielęgniarki wykonują też szczepienia.</p>
+    {%- else %}
     <p>W gabinecie zabiegowym pielęgniarki pobierają krew, wykonują szczepienia, zastrzyki, opatrunki i EKG zlecone przez lekarza. Mierzą ciśnienie i pomagają przygotować się do wizyty.</p>
+    {%- endif %}
     {%- if team.nurses.poz and team.nurses.poz.length %}
     <ul>
       {%- for n in team.nurses.poz %}<li>{{ (n.title + " " if n.title) }}{{ n.name or n }}</li>{% endfor %}
@@ -93,4 +98,12 @@ ctaText: Chcesz umówić się do lekarza? Zadzwoń do rejestracji
       {{ phoneCard(clinic.phones.biuro) }}
     </div>
   </section>
+  {%- if variant %}
+
+  {#- „Dołącz do nas” – ogłoszenie ze strony z 2019 r. (tylko w wariantach). DO WERYFIKACJI: czy rekrutacja jest nadal aktualna. #}
+  <section aria-labelledby="dolacz">
+    <h2 id="dolacz">Dołącz do nas</h2>
+    <p>Szukamy lekarza ze specjalizacją I stopnia na stanowisko lekarza rodzinnego. Zadzwoń do biura: tel. <a href="tel:{{ clinic.phones.biuro.e164 }}">{{ clinic.phones.biuro.display }}</a>, {{ clinic.phones.biuro.hoursText | patientHours }}.</p>
+  </section>
+  {%- endif %}
 </div>

@@ -68,6 +68,10 @@ ctaText: Nie wiesz, gdzie zadzwonić? Zacznij od rejestracji
     <a class="btn btn--outline" href="/jak-sie-zapisac/">Wszystko o zapisach</a>
   </div>
 </section>
+{%- if variant %}
+
+{% include "partials/welcome.njk" %}
+{%- endif %}
 
 <section class="section" aria-labelledby="zespol">
   <div class="container">

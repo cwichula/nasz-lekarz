@@ -29,6 +29,14 @@ ctaText: Potrzebna pielęgniarka w domu? Zadzwoń do gabinetu zabiegowego
       <li><strong>Edukacja</strong> – nauka opieki nad chorym dla rodziny, nauka samodzielnego podawania leków, np. insuliny.</li>
     </ul>
   </section>
+  {%- if variant %}
+
+  <section aria-labelledby="gabinet">
+    <h2 id="gabinet">W gabinecie zabiegowym</h2>
+    {% include "partials/nurse-scope.njk" %}
+    <p>Gabinet zabiegowy: tel. <a href="tel:{{ clinic.phones.zabiegowy.e164 }}">{{ clinic.phones.zabiegowy.display }}</a>, {{ clinic.phones.zabiegowy.hoursText }}.</p>
+  </section>
+  {%- endif %}
 
   <section aria-labelledby="komu">
     <h2 id="komu">Komu przysługuje opieka w domu</h2>

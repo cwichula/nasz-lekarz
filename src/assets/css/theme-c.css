@@ -1,0 +1,69 @@
+/* Wariant C – motyw „stara tożsamość” (krzyż z logo z 2019 r., akcent #0071df, ilustracja izometryczna).
+   Ładowany tylko w buildzie VARIANT=c, po main.css; nadpisuje tokeny i kilka miejsc, układ zostaje z „Pulsu”.
+   Kontrast: treść i linki ≥ 7:1 (jak w main.css), białe napisy na przyciskach #0071df – 4,7:1 (WCAG AA). */
+
+/* ---------- Tokeny ---------- */
+:root {
+  --accent: #0071df;          /* kolor marki z 2019 r.: logo, przyciski; jako tekst za jasny (4,4:1 na --bg) */
+  --primary: #004f9e;         /* ten sam odcień, przyciemniony: 7,5:1 na --bg, 8:1 na --surface */
+  --primary-hover: #003b78;   /* 10,3:1 */
+  --on-primary: #ffffff;
+  --primary-soft: #ebf4fe;    /* --primary 7,2:1, --text-muted 7,25:1 na tym tle */
+  --focus: #004f9e;
+  --btn: var(--accent);
+  --btn-hover: #005bb4;       /* biały 6,7:1 */
+  --btn-shadow: 0 4px 12px -4px rgb(0 113 223 / 0.45);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #8cc4ff;       /* 9,4:1 na --surface, 8,5:1 na --surface-2 */
+    --primary-hover: #b5d8ff;
+    --on-primary: #0b1015;    /* 10,4:1 na --primary */
+    --primary-soft: #11243a;  /* --primary 8,6:1, --text 14:1 */
+    --focus: #eff2f5;         /* jak w main.css: jasny obrys na ciemnym tle (ciemnoniebieski --focus z :root wyżej byłby tu niewidoczny) */
+    --btn: var(--primary);    /* jak w „Pulsie”: jasny przycisk z ciemnym napisem */
+    --btn-hover: var(--primary-hover);
+    --btn-shadow: none;
+  }
+}
+
+/* ---------- Przyciski ---------- */
+/* Tylko przyciski główne; odmiany .btn--* zostają przy tokenach z main.css */
+.btn:not([class*="btn--"]) { background: var(--btn); color: var(--on-primary); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), var(--btn-shadow); }
+@media (prefers-color-scheme: dark) {
+  .btn:not([class*="btn--"]) { box-shadow: none; }
+}
+/* Inne wypełnione elementy akcji – ten sam błękit co przyciski (ikona/napis biały: 4,7:1) */
+.phone-card__call, .textsize button[aria-pressed="true"] { background: var(--btn); color: var(--on-primary); }
+@media (hover: hover) and (pointer: fine) {
+  .btn:not([class*="btn--"]):hover { background: var(--btn-hover); color: var(--on-primary); }
+}
+
+/* ---------- Znak (krzyż) ---------- */
+/* <img> z partials/logo.njk – bez zaokrąglonego kwadratu, sam krzyż */
+.brand__logo--krzyz { border-radius: 0; }
+/* Stopka: ten sam znak przy nazwie przychodni */
+.footer #f-kontakt { display: flex; align-items: center; gap: var(--s2); }
+.footer #f-kontakt::before {
+  content: ""; flex: none; width: 1.75rem; height: 1.75rem;
+  background: url("../variant-c/krzyz.svg") center / contain no-repeat;
+}
+
+/* ---------- Ilustracja w hero (strona główna) ---------- */
+/* Od 75em (pełna szerokość kontenera): tekst w kolumnie 2fr, ilustracja nad kartą „Dziś” (1fr), karty stanu bez zmian pod spodem.
+   Węższe ekrany i większy tekst (A+, A++) – bez ilustracji: H1 mieści się w dwóch wierszach, a karta stanu na pierwszym ekranie. */
+@media (min-width: 75em) {
+  html:not([data-text-size="1"]):not([data-text-size="2"]) .hero > .container {
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); column-gap: var(--s4);
+    /* nadmiar wysokości ilustracji idzie pod lead, nie między H1 a lead */
+    grid-template-rows: auto 1fr;
+  }
+  html:not([data-text-size="1"]):not([data-text-size="2"]) .hero > .container > * { grid-column: 1; }
+  html:not([data-text-size="1"]):not([data-text-size="2"]) .hero > .container > .hero__grid { grid-column: 1 / -1; }
+  html:not([data-text-size="1"]):not([data-text-size="2"]) .hero > .container::after {
+    content: ""; grid-column: 2; grid-row: 1 / span 2; align-self: end;
+    height: 11rem; margin-bottom: var(--s3);
+    background: url("../variant-c/glowna_ilustracja.svg") right bottom / contain no-repeat;
+  }
+}

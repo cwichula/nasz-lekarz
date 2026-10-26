@@ -29,11 +29,17 @@ jobs:
       - run: npm test
       - name: Kontrola linków i SEO (wersja produkcyjna)
         run: npm run check
-      - name: Budowanie wersji testowej
-        run: npx @11ty/eleventy
+      # Do oceny przez właściciela: obok strony głównej także /origin/, /test/ i warianty /va/ /vb/ /vc/
+      - name: Budowanie wersji testowej i wariantów
+        run: |
+          npx @11ty/eleventy
+          for v in a b c; do
+            VARIANT=$v PATH_PREFIX="${PATH_PREFIX}v$v/" npx @11ty/eleventy --output=_site/v$v
+          done
         env:
           PATH_PREFIX: /${{ github.event.repository.name }}/
           TEST_SITE: "1"
+          PREVIEWS: "1"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

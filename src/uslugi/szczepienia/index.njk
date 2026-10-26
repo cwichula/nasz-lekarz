@@ -52,6 +52,15 @@ ctaText: Chcesz umówić szczepienie? Zadzwoń do gabinetu zabiegowego
     </ul>
     <p>Telefoniczna Informacja Pacjenta NFZ: <a href="tel:{{ clinic.helplines[1].e164 }}">{{ clinic.helplines[1].display }}</a> ({{ clinic.helplines[1].hours }}).</p>
   </section>
+  {%- if variant %}
+
+  {#- Szczepienia na życzenie i przed podróżą – ze strony z 2019 r. (tylko w wariantach, tylko dorośli). #}
+  <section aria-labelledby="na-zyczenie">
+    <h2 id="na-zyczenie">Szczepienia na życzenie i przed podróżą</h2>
+    <p>Możesz się też zaszczepić na własne życzenie albo przed wyjazdem do innego kraju, na przykład przeciw pneumokokom lub wirusowemu zapaleniu wątroby (WZW, potocznie żółtaczce).</p>
+    <p>Przed podróżą zadzwoń odpowiednio wcześniej. Niektóre szczepionki podaje się w kilku dawkach, w odstępach czasu. Które szczepienia są Ci potrzebne, ustalisz z lekarzem przy kwalifikacji.</p>
+  </section>
+  {%- endif %}
 
   <section aria-labelledby="co-zabrac">
     <h2 id="co-zabrac">Co zabrać na szczepienie</h2>
